@@ -1,0 +1,1202 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Blockwise: a personal scheduler that ranks work by priority and time needed, fits it around classes and routines, and explains every block. Live demo with a sample student.">
+<title>Blockwise · demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#F2F4F7; --surface:#FFFFFF; --surface-2:#E9EDF2; --ink:#161E2A; --muted:#5A6576; --faint:#8A94A3; --line:#D6DCE5;
+  --accent:#1E6A86; --accent-ink:#FFFFFF; --focus:#1E6A86;
+  --ok:#1F7A45; --ok-bg:#DDF2E4; --warn:#8A5A00; --warn-bg:#FBEDC7; --orange:#A84A0C; --orange-bg:#FBE0CC; --bad:#A3261E; --bad-bg:#F9DCD8;
+  --k-class-bg:#DCE2EB; --k-class:#27344A;
+  --k-club-bg:#FAD6C4; --k-club:#8A2E0B;
+  --k-gym-bg:#CBEAD4; --k-gym:#1B5B31;
+  --k-leisure-bg:#E3DBF6; --k-leisure:#48318C;
+  --k-intern-bg:#FAE8B8; --k-intern:#735000;
+  --k-study-bg:#D0E4F6; --k-study:#15477A;
+  --k-prep-bg:#F6D3E3; --k-prep:#81204C;
+  --k-meal-bg:#ECEFF3; --k-meal:#687384;
+  --k-int-bg:#1E6A86; --k-int:#FFFFFF;
+  --k-exam-bg:#A3261E; --k-exam:#FFFFFF;
+  --k-event-bg:#E4E7EA; --k-event:#3C4550;
+  --hour:46px;
+  --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
+  --body:"Figtree", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0F141B; --surface:#171E28; --surface-2:#1F2833; --ink:#E6EBF2; --muted:#9AA5B5; --faint:#6D7888; --line:#2A3441;
+    --accent:#5DB3D3; --accent-ink:#0B1218; --focus:#5DB3D3;
+    --ok:#6FD39A; --ok-bg:#15301F; --warn:#F0C65E; --warn-bg:#352A0E; --orange:#FFA66B; --orange-bg:#3B2213; --bad:#FF8F85; --bad-bg:#3A1714;
+    --k-class-bg:#27313F; --k-class:#C9D4E4; --k-club-bg:#43251A; --k-club:#FFB894; --k-gym-bg:#183626; --k-gym:#94E0AE;
+    --k-leisure-bg:#2C2446; --k-leisure:#C8B8FA; --k-intern-bg:#3A2F10; --k-intern:#F5D27A; --k-study-bg:#15314B; --k-study:#9CCAF4;
+    --k-prep-bg:#40192C; --k-prep:#F7A8CB; --k-meal-bg:#1C232D; --k-meal:#8792A2; --k-int-bg:#5DB3D3; --k-int:#0B1218;
+    --k-exam-bg:#FF8F85; --k-exam:#1A0B09; --k-event-bg:#252C35; --k-event:#C3CAD3;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0F141B; --surface:#171E28; --surface-2:#1F2833; --ink:#E6EBF2; --muted:#9AA5B5; --faint:#6D7888; --line:#2A3441;
+  --accent:#5DB3D3; --accent-ink:#0B1218; --focus:#5DB3D3;
+  --ok:#6FD39A; --ok-bg:#15301F; --warn:#F0C65E; --warn-bg:#352A0E; --orange:#FFA66B; --orange-bg:#3B2213; --bad:#FF8F85; --bad-bg:#3A1714;
+  --k-class-bg:#27313F; --k-class:#C9D4E4; --k-club-bg:#43251A; --k-club:#FFB894; --k-gym-bg:#183626; --k-gym:#94E0AE;
+  --k-leisure-bg:#2C2446; --k-leisure:#C8B8FA; --k-intern-bg:#3A2F10; --k-intern:#F5D27A; --k-study-bg:#15314B; --k-study:#9CCAF4;
+  --k-prep-bg:#40192C; --k-prep:#F7A8CB; --k-meal-bg:#1C232D; --k-meal:#8792A2; --k-int-bg:#5DB3D3; --k-int:#0B1218;
+  --k-exam-bg:#FF8F85; --k-exam:#1A0B09; --k-event-bg:#252C35; --k-event:#C3CAD3;
+}
+[hidden]{display:none!important}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.5 var(--body);padding-inline:16px;padding-block:0 48px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.wrap{max-width:1440px;margin:0 auto}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.01em}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--muted)} .small{font-size:12.5px}
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding-block:18px 14px}
+.brand{display:flex;align-items:baseline;gap:10px;margin-right:auto}
+.brand h1{font-size:26px;font-weight:700}
+.brand span{color:var(--muted);font-size:13px}
+.tabs{display:flex;flex-wrap:wrap;background:var(--surface-2);border-radius:10px;padding:3px;gap:2px}
+.tabs button{border:0;background:transparent;padding:7px 12px;border-radius:8px;font-weight:600;color:var(--muted);font-size:14px}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.saved{font-size:12px;color:var(--faint)}
+.btn{border:1px solid var(--line);background:var(--surface);padding:7px 13px;border-radius:8px;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--faint)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--muted)}
+.btn.danger{color:var(--bad)}
+.btn:disabled{opacity:.5;cursor:default}
+.mini{border:1px solid var(--line);background:var(--surface);border-radius:6px;font-size:12px;padding:3px 8px;font-weight:600}
+.mini.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px}
+.card h2{font-size:17px;font-weight:600;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.card h2 small{font-family:var(--body);font-size:12px;color:var(--muted);font-weight:500;margin-left:auto}
+.empty{color:var(--muted);font-size:14px;margin:8px 0 0}
+.notice{background:var(--warn-bg);color:var(--warn);border-radius:10px;padding:10px 14px;font-size:14px;margin-bottom:14px}
+
+/* pills */
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+.pill::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.lv-ok{background:var(--ok-bg);color:var(--ok)} .lv-warn{background:var(--warn-bg);color:var(--warn)} .lv-orange{background:var(--orange-bg);color:var(--orange)} .lv-bad{background:var(--bad-bg);color:var(--bad)} .lv-done{background:var(--surface-2);color:var(--muted)}
+.chip{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:2px 7px;border-radius:5px;white-space:nowrap}
+.pr-Critical{background:var(--bad-bg);color:var(--bad)} .pr-High{background:var(--orange-bg);color:var(--orange)} .pr-Medium{background:var(--warn-bg);color:var(--warn)} .pr-Low,.pr-Later{background:var(--surface-2);color:var(--muted)}
+.tag{font-size:11.5px;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:1px 6px;white-space:nowrap}
+.tag.warn{border-color:transparent;background:var(--warn-bg);color:var(--warn)}
+
+/* today */
+.today{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:20px;align-items:start}
+@media (max-width:1060px){.today{grid-template-columns:1fr}}
+.tcol{display:flex;flex-direction:column;gap:16px}
+.brief h2{font-size:24px}
+.brief p{margin:10px 0 0;max-width:72ch}
+.brief .impact{margin-top:10px;padding:10px 12px;border-radius:8px;background:var(--surface-2);font-size:14px}
+.pressure{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:12px}
+.meter{flex:1 1 220px;height:8px;border-radius:5px;background:var(--surface-2);overflow:hidden;position:relative;min-width:160px}
+.meter i{position:absolute;inset:0 auto 0 0;border-radius:5px}
+.stats{display:flex;flex-wrap:wrap;gap:8px 26px;margin-top:14px}
+.stat{display:flex;flex-direction:column}
+.stat b{font-family:var(--display);font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;line-height:1.1}
+.stat small{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.group h3{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-family:var(--body);font-weight:700;margin:0 0 6px;display:flex;gap:8px;align-items:center}
+.group h3 span{font-family:var(--mono);letter-spacing:0;text-transform:none;font-weight:500}
+.items{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.item{display:grid;grid-template-columns:70px 10px minmax(0,1fr) auto;gap:4px 10px;align-items:start;padding:10px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item .when{font:12px/1.9 var(--mono);color:var(--muted)}
+.item .dot{width:10px;height:10px;border-radius:3px;margin-top:6px}
+.item .what b{display:block;font-weight:600;line-height:1.35}
+.item .what .sub{font-size:13px;color:var(--muted)}
+.item .what .why{font-size:12.5px;color:var(--muted);margin-top:2px}
+.item .acts{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+.item.done .what b{text-decoration:line-through;color:var(--muted)}
+.partial{display:flex;gap:6px;align-items:center;margin-top:6px}
+.partial input{width:80px}
+.fixedlist{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.fixedlist span{font-size:12.5px;padding:3px 8px;border-radius:6px}
+
+/* week */
+.weekbar{display:flex;flex-wrap:wrap;gap:10px 20px;align-items:center;margin-bottom:12px}
+.weeknav{margin-left:auto;display:flex;align-items:center;gap:6px}
+.weeknav .lbl{min-width:150px;text-align:center;font-weight:600;font-size:14px;line-height:1.3}
+.gridwrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.grid{display:grid;grid-template-columns:50px repeat(7,minmax(100px,1fr));min-width:790px}
+.dh{position:sticky;top:0;padding:8px 6px 6px;border-bottom:1px solid var(--line);border-left:1px solid var(--line);background:var(--surface);z-index:3;min-height:64px}
+.dh .d{font-weight:700;font-size:13px}
+.dh .d span{color:var(--muted);font-weight:500}
+.dh.today .d{color:var(--accent)}
+.dh.past{opacity:.6}
+.load{height:4px;border-radius:2px;background:var(--surface-2);margin-top:4px;overflow:hidden}
+.load i{display:block;height:100%}
+.load-l{font:10.5px var(--mono);color:var(--muted)}
+.due{display:block;margin-top:3px;font-size:11px;line-height:1.25;padding:2px 5px;border-radius:4px;background:var(--bad-bg);color:var(--bad);font-weight:600;border:0;text-align:left;width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hrs{position:relative}
+.hrs div{position:absolute;right:6px;font:11px var(--mono);color:var(--faint);transform:translateY(-7px)}
+.col{position:relative;border-left:1px solid var(--line);background-image:repeating-linear-gradient(to bottom,var(--line) 0 1px,transparent 1px var(--hour));background-color:var(--surface)}
+.col.today{background-color:color-mix(in srgb,var(--accent) 4%,var(--surface))}
+.col.past{background-color:var(--bg)}
+.nowline{position:absolute;left:0;right:0;height:2px;background:var(--bad);z-index:5;pointer-events:none}
+.nowline::before{content:"";position:absolute;left:-4px;top:-3px;width:8px;height:8px;border-radius:50%;background:var(--bad)}
+.blk{position:absolute;left:3px;right:3px;border:0;border-radius:6px;padding:3px 6px;text-align:left;overflow:hidden;font-size:12px;line-height:1.25;z-index:1;display:flex;flex-direction:column;gap:1px}
+.blk .t{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.blk .s{opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.blk .tm{font:10.5px var(--mono);opacity:.8}
+.blk.fixed{box-shadow:inset 0 0 0 1px color-mix(in srgb,currentColor 18%,transparent)}
+.blk.flex{border:1px dashed color-mix(in srgb,currentColor 45%,transparent)}
+.blk.done{opacity:.55}
+.blk.done .t{text-decoration:line-through}
+.blk.done .t::before{content:"✓ "}
+.blk:hover{filter:brightness(.97);z-index:4}
+.blk.tiny .s,.blk.tiny .tm{display:none}
+.blk.k-buffer{background:repeating-linear-gradient(135deg,transparent 0 5px,color-mix(in srgb,var(--faint) 30%,transparent) 5px 6px);color:var(--faint);z-index:0;padding:0 6px;font-size:10.5px;justify-content:center}
+.blk.k-buffer .tm,.blk.k-buffer .s{display:none}
+.blk.k-leisure{z-index:0}
+.k-class{background:var(--k-class-bg);color:var(--k-class)} .k-club{background:var(--k-club-bg);color:var(--k-club)} .k-gym{background:var(--k-gym-bg);color:var(--k-gym)}
+.k-leisure{background:var(--k-leisure-bg);color:var(--k-leisure)} .k-intern{background:var(--k-intern-bg);color:var(--k-intern)} .k-study{background:var(--k-study-bg);color:var(--k-study)}
+.k-prep,.k-meet{background:var(--k-prep-bg);color:var(--k-prep)} .k-meal{background:var(--k-meal-bg);color:var(--k-meal)} .k-interview{background:var(--k-int-bg);color:var(--k-int)}
+.k-exam{background:var(--k-exam-bg);color:var(--k-exam)} .k-event,.k-busy{background:var(--k-event-bg);color:var(--k-event)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--muted);padding:10px 2px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:5px}
+
+/* tasks */
+.tasks-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.tasks-head p{margin:0;color:var(--muted);flex:1 1 300px;max-width:75ch}
+.rank{display:flex;flex-direction:column}
+.rrow{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:4px 10px;align-items:start;padding:10px 4px;border-top:1px solid var(--line);border-left:0;border-right:0;border-bottom:0;background:transparent;text-align:left;width:100%}
+.rrow:first-child{border-top:0}
+.rrow:hover{background:var(--surface-2);border-radius:8px}
+.rrow .n{font:13px/1.6 var(--mono);color:var(--faint)}
+.rrow .ttl{font-weight:600}
+.rrow .meta{font-size:12.5px;color:var(--muted)}
+.bar{height:5px;border-radius:3px;background:var(--surface-2);overflow:hidden;margin:6px 0 4px;display:flex;max-width:360px}
+.bar i{display:block;height:100%;background:var(--ok)}
+.bar u{display:block;height:100%;background:color-mix(in srgb,var(--k-study) 55%,transparent)}
+.stages{display:flex;gap:3px;margin-top:6px;flex-wrap:wrap}
+.stages span{font-size:11px;padding:1px 6px;border-radius:4px;background:var(--surface-2);color:var(--muted)}
+.stages span.on{background:var(--k-study-bg);color:var(--k-study);font-weight:600}
+.stages span.ok{text-decoration:line-through}
+.coursegrp{margin-top:18px}
+.coursegrp h3{font-size:15px;margin-bottom:8px;display:flex;gap:10px;align-items:baseline}
+.coursegrp h3 small{font-family:var(--body);font-weight:500;color:var(--muted);font-size:12.5px}
+.tlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.tcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:5px}
+.tcard .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tcard .ttl{font-weight:700;font-size:15.5px;flex:1 1 180px}
+.tcard .facts{display:flex;flex-wrap:wrap;gap:3px 14px;font-size:13px;color:var(--muted)}
+.tcard .facts b{color:var(--ink);font-weight:600}
+.tcard .acts{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.twocol{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+@media (max-width:900px){.twocol{grid-template-columns:1fr}}
+
+/* forms */
+input[type=text],input[type=number],input[type=time],input[type=date],select,textarea{border:1px solid var(--line);background:var(--bg);border-radius:7px;padding:6px 8px;width:100%;min-width:0}
+textarea{min-height:90px;resize:vertical}
+.days{display:flex;gap:3px;flex-wrap:wrap}
+.days button{width:30px;height:30px;border-radius:6px;border:1px solid var(--line);background:var(--bg);font-size:12px;font-weight:700;color:var(--muted);padding:0}
+.days button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px 12px}
+label.f,div.f{display:flex;flex-direction:column;gap:4px;font-size:12.5px;font-weight:600;color:var(--muted)}
+label.f.row{flex-direction:row;align-items:center;gap:8px;color:var(--ink);font-weight:500;font-size:14px}
+label.f.row input{width:auto}
+.x{border:0;background:transparent;color:var(--faint);font-size:20px;line-height:1;width:34px;height:34px;border-radius:6px;flex:none}
+.x:hover{background:var(--surface-2);color:var(--bad)}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:16px;align-items:start}
+.rgrid .wide{grid-column:1/-1}
+.card p.help{margin:4px 0 12px;color:var(--muted);font-size:13.5px;max-width:75ch}
+.tbl{overflow-x:auto}
+.tbl table{border-collapse:collapse;width:100%;min-width:900px;font-size:14px}
+.tbl th{text-align:left;font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:6px}
+.tbl td{padding:6px;border-top:1px solid var(--line);vertical-align:top}
+.gymrow{display:grid;grid-template-columns:48px 1fr 1fr minmax(0,1.4fr);gap:8px;align-items:center;padding:6px 0;border-top:1px solid var(--line)}
+.gymrow:first-of-type{border-top:0}
+.seg{display:flex;gap:4px}
+.seg label{flex:1}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:block;text-align:center;padding:6px 4px;border:1px solid var(--line);border-radius:7px;font-weight:600;font-size:13px;color:var(--muted);background:var(--bg)}
+.seg input:checked+span{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.seg input:focus-visible+span{outline:2px solid var(--focus);outline-offset:2px}
+
+/* pipeline */
+.stage-sel{font-weight:600}
+
+/* rules */
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.rules ol,.rules ul{margin:8px 0 0;padding-left:20px;font-size:14px;max-width:70ch}
+.rules li{margin:4px 0}
+.formula{font:13px/1.6 var(--mono);background:var(--surface-2);padding:10px 12px;border-radius:8px;margin-top:10px;overflow-x:auto}
+
+/* editor */
+.overlay{position:fixed;inset:0;background:rgba(10,15,22,.45);z-index:20;display:flex;justify-content:flex-end}
+.sheet{background:var(--surface);width:min(620px,100%);height:100%;overflow-y:auto;padding:20px 20px calc(24px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:16px}
+.sheet header{display:flex;align-items:center;gap:10px}
+.sheet header h2{font-size:22px;flex:1}
+fieldset{border:1px solid var(--line);border-radius:10px;padding:12px;margin:0;display:flex;flex-direction:column;gap:10px}
+legend{font-size:12px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:0 6px}
+fieldset p{margin:0;font-size:13px;color:var(--muted)}
+.stagerow{display:grid;grid-template-columns:minmax(0,1fr) 80px auto 34px;gap:6px;align-items:center}
+.estout{font-size:13.5px;background:var(--bg);border-radius:8px;padding:10px 12px}
+.estout ol{margin:6px 0;padding-left:20px}
+.sheet footer{display:flex;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.sheet footer .sp{flex:1}
+.err{color:var(--bad);font-size:13px;margin:0}
+.pop{position:fixed;z-index:30;background:var(--surface);border:1px solid var(--line);border-radius:10px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:12px 14px;width:280px;display:flex;flex-direction:column;gap:6px}
+.pop h3{font-size:16px}
+.pop .meta{font-size:13px;color:var(--muted)}
+.pop .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
+@media (prefers-reduced-motion:no-preference){.blk,.rrow,.btn{transition:filter .12s,background-color .12s,border-color .12s}}
+</style>
+
+<div class="wrap">
+  <div class="top">
+    <div class="brand"><h1>Blockwise</h1><span>What to work on, for how long, and why</span></div>
+    <div class="tabs" role="tablist">
+      <button role="tab" id="tab-today" data-tab="today">Today</button>
+      <button role="tab" id="tab-week" data-tab="week">Week</button>
+      <button role="tab" id="tab-tasks" data-tab="tasks">Tasks</button>
+      <button role="tab" id="tab-recruit" data-tab="recruit">Recruiting</button>
+      <button role="tab" id="tab-routine" data-tab="routine">Routine</button>
+      <button role="tab" id="tab-rules" data-tab="rules">How it decides</button>
+    </div>
+    <span class="saved" id="saved">Loading…</span>
+  </div>
+  <div class="notice" id="notice" hidden></div>
+  <section id="view-today" hidden></section>
+  <section id="view-week" hidden></section>
+  <section id="view-tasks" hidden></section>
+  <section id="view-recruit" hidden></section>
+  <section id="view-routine" hidden></section>
+  <section id="view-rules" hidden></section>
+</div>
+
+<div class="overlay" id="editor" hidden>
+  <form class="sheet" id="taskForm" novalidate>
+    <header><h2 id="edTitle">New task</h2><button type="button" class="x" data-close aria-label="Close">×</button></header>
+    <div class="fields">
+      <label class="f" style="grid-column:1/-1">What is it?<input type="text" id="f-title" placeholder="e.g. Problem Set D"></label>
+      <label class="f">Course or area<input type="text" id="f-course" list="courseList" placeholder="FIN 301"></label>
+      <label class="f">Type<select id="f-type"></select></label>
+    </div>
+    <div class="f">Importance (stable, set once)
+      <div class="seg" role="radiogroup" aria-label="Importance">
+        <label><input type="radio" name="imp" value="4" id="f-i4"><span>Very high</span></label>
+        <label><input type="radio" name="imp" value="3" id="f-i3"><span>High</span></label>
+        <label><input type="radio" name="imp" value="2" id="f-i2"><span>Medium</span></label>
+        <label><input type="radio" name="imp" value="1" id="f-i1"><span>Low</span></label>
+      </div>
+      <span class="small muted" style="font-weight:500">Priority is computed from this, the work left and the time left. It rises on its own as the date gets close.</span>
+    </div>
+    <div class="fields">
+      <label class="f">Due date<input type="date" id="f-due"></label>
+      <label class="f">Start no earlier than<input type="date" id="f-start"></label>
+      <label class="f">Finish early by (days)<input type="number" id="f-early" min="0" max="10" step="1"></label>
+      <label class="f">% of course grade<input type="number" id="f-weight" min="0" max="100" step="0.25"></label>
+      <label class="f" style="grid-column:1/-1">Builds toward (optional)<select id="f-feeds"></select></label>
+      <label class="f">Estimated hours<input type="number" id="f-est" min="0" step="0.25"></label>
+      <label class="f">Already done (hours)<input type="number" id="f-done" min="0" step="0.25"></label>
+    </div>
+    <div class="f">How sure is the estimate?
+      <div class="seg" role="radiogroup" aria-label="Confidence">
+        <label><input type="radio" name="conf" value="high" id="f-chigh"><span>Sure</span></label>
+        <label><input type="radio" name="conf" value="med" id="f-cmed"><span>Roughly</span></label>
+        <label><input type="radio" name="conf" value="low" id="f-clow"><span>Guessing</span></label>
+      </div>
+      <span class="small muted" style="font-weight:500" id="confNote"></span>
+    </div>
+    <p class="small muted" id="learnNote" hidden></p>
+    <fieldset>
+      <legend>Stages, in order</legend>
+      <p>Work is scheduled stage by stage. A group step is booked as a meeting, and the stages after it wait until the next day.</p>
+      <div id="stageList" style="display:flex;flex-direction:column;gap:6px"></div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" class="btn" id="addStage">Add stage</button><button type="button" class="btn ghost" id="resetStages">Rebuild from type + hours</button></div>
+    </fieldset>
+    <fieldset id="claudeBox" hidden>
+      <legend>Estimate from instructions</legend>
+      <p>Paste the assignment instructions or rubric. Claude breaks it into stages and suggests a total. Check your course's AI policy before pasting course material.</p>
+      <textarea id="f-instr" placeholder="Paste instructions here"></textarea>
+      <div><button type="button" class="btn" id="askClaude">Estimate with Claude</button></div>
+      <div class="estout" id="estOut" hidden></div>
+    </fieldset>
+    <fieldset>
+      <legend>Sessions</legend>
+      <div class="fields">
+        <label class="f">Shortest session (min)<input type="number" id="f-minb" min="15" step="15"></label>
+        <label class="f">Longest session (min)<input type="number" id="f-maxb" min="30" step="15"></label>
+      </div>
+      <label class="f">Notes<textarea id="f-notes" style="min-height:60px"></textarea></label>
+    </fieldset>
+    <p class="err" id="formErr" hidden></p>
+    <footer>
+      <button type="button" class="btn danger" id="delTask" hidden>Delete</button>
+      <button type="button" class="btn" id="completeTask" hidden>Mark complete</button>
+      <span class="sp"></span>
+      <button type="button" class="btn ghost" data-close>Cancel</button>
+      <button type="submit" class="btn primary">Save</button>
+    </footer>
+  </form>
+</div>
+<datalist id="courseList"></datalist>
+<div class="pop" id="pop" hidden></div>
+
+<div id="demoRibbon" style="position:fixed;left:12px;bottom:12px;z-index:9999;display:flex;gap:8px;align-items:center;padding:7px 12px;border-radius:999px;background:#161E2A;color:#fff;font:500 12px/1.2 system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.25)">
+  <b>Demo</b><span>A sample student. Changes stay in your browser.</span>
+  <button onclick="try{['blockwise-demo.v1','blockwise-demo.ui1','blockwise-demo.frozen1'].forEach(k=>localStorage.removeItem(k))}catch(e){};location.reload()" style="font:inherit;color:#161E2A;background:#fff;border:0;border-radius:999px;padding:3px 9px;cursor:pointer">Reset</button>
+  <button onclick="this.parentNode.remove()" aria-label="Hide" style="font:inherit;color:#fff;background:transparent;border:0;cursor:pointer">✕</button>
+</div>
+<script id="seedData" type="application/json">{"v": 2, "updated": 1790000000000, "seedRev": 1, "demoBase": "2026-10-19", "settings": {"wake": {"wk": "07:30", "we": "09:00"}, "bed": {"wk": "00:00", "we": "01:00"}, "softEnd": "20:00", "hardEnd": "22:30", "classBuffer": 30, "warmup": 20, "focusCap": {"wk": 360, "we": 480}, "meals": {"lunch": {"win": ["11:00", "14:30"], "min": 30}, "dinner": {"win": ["17:30", "20:30"], "min": 45}}}, "gym": {"minutes": 75, "detail": "55 min weights + 20 min run", "pplStart": "2026-10-19", "days": {"1": {"win": ["15:30", "19:00"], "note": "After class"}, "2": {"win": ["07:30", "10:30"], "note": "Before class"}, "3": {"win": ["15:30", "19:00"], "note": "After class"}, "4": {"win": ["07:30", "10:30"], "note": "Before class"}, "5": {"win": ["07:30", "15:00"], "note": "Any time before 3pm", "flex": true}}, "skips": []}, "club": {"title": "Table tennis practice", "days": [1, 4], "start": "18:30", "end": "19:30", "overrides": {}}, "recruit": {"minutes": 45, "win": ["09:00", "20:00"], "label": "Internship applications"}, "weekly": [{"id": "wfin", "title": "Practice problems", "course": "FIN 301", "minutes": 90, "block": 45, "from": "2026-08-24", "until": "2026-12-04"}, {"id": "wstat", "title": "R practice exercises", "course": "STAT 220", "minutes": 60, "block": 30, "from": "2026-08-24", "until": "2026-12-04"}], "classes": [{"id": "cfin", "code": "FIN 301", "title": "Corporate Finance", "room": "Business Hall 210", "days": [1, 3], "start": "09:30", "end": "10:45", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-25"]}, {"id": "cacc", "code": "ACCT 310", "title": "Intermediate Accounting", "room": "Business Hall 118", "days": [1, 3], "start": "13:00", "end": "14:15", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-25"]}, {"id": "cmkt", "code": "MKT 340", "title": "Consumer Behavior", "room": "Commons 104", "days": [2, 4], "start": "11:00", "end": "12:15", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-26"]}, {"id": "cstat", "code": "STAT 220", "title": "Business Statistics", "room": "Science Center 2B", "days": [2, 4], "start": "14:00", "end": "15:15", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-26"]}, {"id": "cmgt", "code": "MGMT 350", "title": "Organizational Behavior", "room": "Business Hall 330", "days": [5], "start": "10:00", "end": "12:30", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-27"]}], "events": [{"id": "estatrev", "kind": "event", "title": "STAT 220 quiz review (optional)", "date": "2026-10-22", "start": "16:00", "end": "17:00"}, {"id": "efinmid", "kind": "exam", "title": "FIN 301 Midterm", "date": "2026-10-28", "start": "09:30", "end": "10:45"}, {"id": "eacc2", "kind": "exam", "title": "ACCT 310 Exam 2", "date": "2026-11-11", "start": "13:00", "end": "14:15"}, {"id": "efinfin", "kind": "exam", "title": "FIN 301 Final exam", "date": "2026-12-09", "start": "09:00", "end": "11:00"}], "pipeline": [{"id": "pnorth", "company": "Northwind Capital", "role": "Investment Banking Summer Analyst", "stage": "1st round", "next": "Interview Friday morning", "events": [{"date": "2026-10-23", "start": "10:00", "end": "10:45", "label": "Interview (A. Rivera)"}], "thanks": false}, {"id": "pharbor", "company": "Harbor & Pine Advisors", "role": "Corporate Finance Intern", "stage": "Video interview", "next": "Record the on-demand interview by Friday", "events": [], "thanks": false}, {"id": "psummit", "company": "Summit Ridge Bank", "role": "Commercial Banking Intern", "stage": "Final round", "next": "Superday in two weeks", "events": [{"date": "2026-11-06", "start": "13:00", "end": "16:00", "label": "Superday (M. Chen, J. Okafor)"}], "thanks": false}, {"id": "pblue", "company": "Bluefield Partners", "role": "Private Equity Intern", "stage": "Applied", "next": "Waiting to hear back", "events": [], "thanks": false}, {"id": "pcres", "company": "Crescent Analytics", "role": "FP&A Intern", "stage": "Networking", "next": "Send a thank-you after the alum coffee chat", "events": [], "thanks": false}, {"id": "plark", "company": "Larkspur Group", "role": "Wealth Management Intern", "stage": "Applied", "next": "Follow up in a week", "events": [], "thanks": false}], "tasks": [{"id": "tharbor", "title": "Harbor & Pine on-demand video interview", "course": "Recruiting", "type": "video", "importance": 4, "due": "2026-10-23", "start": "2026-10-19", "finishEarly": 0, "estMin": 75, "conf": "high", "pid": "pharbor", "notes": "Three recorded answers, 2 minutes each. Laptop with a webcam.", "stages": [{"label": "Research Harbor & Pine: clients, deal types, recent news", "min": 15}, {"label": "Why this firm, why corporate finance (pitch)", "min": 15}, {"label": "Practice 3 answers on camera with a timer", "min": 20}, {"label": "Set up camera, lighting, outfit", "min": 10}, {"label": "Record the interview", "min": 15}]}, {"id": "tfinmid", "title": "Midterm study", "course": "FIN 301", "type": "exam", "importance": 4, "due": "2026-10-28", "start": "2026-10-19", "finishEarly": 1, "estMin": 360, "conf": "high", "eventId": "efinmid", "notes": "Chapters 1–8. Formula sheet allowed.", "stages": [{"label": "List topics + weak spots", "min": 30}, {"label": "Time value of money + bond pricing review", "min": 90}, {"label": "NPV, IRR and capital budgeting problems", "min": 90}, {"label": "Timed practice midterm", "min": 90}, {"label": "Fix weak areas + formula sheet", "min": 60}]}, {"id": "tfinps4", "title": "Problem Set 4 (NPV and IRR)", "course": "FIN 301", "type": "assignment", "importance": 3, "due": "2026-10-22", "start": "2026-10-19", "finishEarly": 1, "estMin": 120, "conf": "med", "feeds": "tfinmid", "notes": "Due 11:59pm. Builds directly toward the midterm."}, {"id": "taccthw", "title": "Homework 6 (leases)", "course": "ACCT 310", "type": "assignment", "importance": 2, "due": "2026-10-21", "start": "2026-10-19", "finishEarly": 0, "estMin": 120, "conf": "high"}, {"id": "tacc2", "title": "Exam 2 study", "course": "ACCT 310", "type": "exam", "importance": 4, "due": "2026-11-11", "start": "2026-11-01", "finishEarly": 1, "estMin": 420, "conf": "med", "eventId": "eacc2"}, {"id": "tmktproj", "title": "Consumer journey project", "course": "MKT 340", "type": "group", "importance": 3, "due": "2026-11-06", "start": "2026-10-22", "finishEarly": 1, "estMin": 285, "conf": "med", "notes": "Team of four. Each person owns one stage of the journey.", "stages": [{"label": "Group: split up the research", "min": 60, "gate": true}, {"label": "Draft your section", "min": 120}, {"label": "Group: review the deck", "min": 60, "gate": true}, {"label": "Polish your slides", "min": 45}]}, {"id": "tstatquiz", "title": "Quiz 5: regression", "course": "STAT 220", "type": "quiz", "importance": 2, "due": "2026-10-23", "start": "2026-10-20", "finishEarly": 0, "estMin": 60, "conf": "med"}, {"id": "tstatproj", "title": "Data project: pick a dataset and question", "course": "STAT 220", "type": "project", "importance": 3, "due": "2026-11-06", "start": "2026-10-26", "finishEarly": 1, "estMin": 300, "conf": "low"}, {"id": "tmgmtread", "title": "Read chapters 9–10", "course": "MGMT 350", "type": "reading", "importance": 1, "due": "2026-10-24", "start": "2026-10-19", "finishEarly": 0, "estMin": 80, "conf": "high"}, {"id": "tmgmtcase", "title": "Case write-up: team conflict at a startup", "course": "MGMT 350", "type": "case", "importance": 2, "due": "2026-11-02", "start": "2026-10-26", "finishEarly": 1, "estMin": 180, "conf": "med"}, {"id": "texcel", "title": "Excel financial modeling certificate", "course": "Recruiting", "type": "cert", "importance": 2, "due": "2026-11-13", "start": "2026-10-26", "finishEarly": 1, "estMin": 240, "conf": "low", "notes": "Self-paced. Recruiters keep asking about modeling skills."}, {"id": "tresume", "title": "Update résumé with this semester's projects", "course": "Recruiting", "type": "other", "importance": 3, "due": "2026-10-25", "start": "2026-10-19", "finishEarly": 1, "estMin": 60, "conf": "high"}, {"id": "tthanks", "title": "Thank-you note to the Crescent alum", "course": "Recruiting", "type": "other", "importance": 2, "due": "2026-10-21", "start": "2026-10-20", "finishEarly": 0, "estMin": 15, "conf": "high", "pid": "pcres"}], "logs": [], "skips": [], "history": []}</script>
+<script>
+(function(){
+const LS='blockwise-demo.v1', LSUI='blockwise-demo.ui1', LSF='blockwise-demo.frozen1', DOC='planner/state', CELL=15, MAXWEEK=5;
+const DAY=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], DAYL=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'], DAY1=['S','M','T','W','T','F','S'];
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const IW={1:1,2:1.5,3:2.2,4:3}, IMP={1:'Low',2:'Medium',3:'High',4:'Very high'};
+const CONF={high:1,med:1.15,low:1.3}, CONFL={high:'Sure',med:'Roughly',low:'Guessing'};
+const PPL=['Push','Pull','Legs'];
+const STAGES=['Applied','Assessment','Video interview','1st round','Final round','Waiting','Offer','Closed'];
+const TYPES={exam:'Exam',assignment:'Problem set / assignment',group:'Group assignment',case:'Team case write-up',project:'Team project',interview:'Interview prep',video:'Video interview',reading:'Reading',quiz:'Quiz',cert:'Certification',other:'Other'};
+const TPL={
+  exam:[['List topics + weak spots',.05],['Review lecture slides + notes',.35],['Redo homework + practice problems',.30],['Timed practice exam',.15],['Fix weak areas + condensed review',.15]],
+  assignment:[['Read instructions + set up',.10],['Work the problems',.65],['Check, format, submit',.25]],
+  group:[['Group: split the work',30,1],['Your part',.65],['Group: combine + check',45,1],['Final polish + submit',.35]],
+  case:[['Team kickoff: read case, split questions',45,1],['Your analysis',.5],['Team: merge the draft',60,1],['Edit to 2 pages + exhibits',.35],['Final check + submit',.15]],
+  project:[['Team kickoff: scope + roles',45,1],['Research',.4],['Build your slides',.35],['Team check-in: merge deck',60,1],['Rehearse + polish',.25]],
+  interview:[['Company + role research',.2],['Why this firm, why this role',.1],['Behavioral STAR stories',.25],['Technical review',.3],['Questions for interviewers',.08],['Final run-through',.07]],
+  video:[['Prep answers + test camera, lighting, outfit',.6],['Record + submit',.4]],
+  reading:[['Read + note discussion points',1]],
+  quiz:[['Read assigned material',.65],['Take quiz',.35]],
+  cert:[['Work through modules',1]],
+  other:[['Work',1]]
+};
+const $=s=>document.querySelector(s);
+const pad=n=>String(n).padStart(2,'0');
+const tm=s=>{if(!s)return 0;const [h,m]=String(s).split(':').map(Number);return (h||0)*60+(m||0)};
+const hm=m=>pad(Math.floor(m/60)%24)+':'+pad(m%60);
+const fmtT=m=>{let h=Math.floor(m/60)%24,mm=m%60;const ap=h>=12?'pm':'am';h=h%12||12;return h+(mm?':'+pad(mm):'')+ap};
+const fmtD=min=>{min=Math.max(0,Math.round(min));const h=Math.floor(min/60),m=min%60;return h?(h+'h'+(m?' '+m+'m':'')):m+'m'};
+const dkey=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const pkey=k=>{const [y,m,d]=k.split('-').map(Number);return new Date(y,m-1,d)};
+const addDays=(d,n)=>{const x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()+n);return x};
+const addK=(k,n)=>dkey(addDays(pkey(k),n));
+const span=(a,b)=>Math.round((pkey(b)-pkey(a))/864e5);
+const mondayOf=d=>addDays(d,-((d.getDay()+6)%7));
+const nice=k=>{if(!k)return '';const d=pkey(k);return DAY[d.getDay()]+' '+MON[d.getMonth()]+' '+d.getDate()};
+const short=k=>{const d=pkey(k);return (d.getMonth()+1)+'/'+d.getDate()};
+const r15=m=>Math.max(15,Math.round(m/15)*15);
+const uid=()=>Math.random().toString(36).slice(2,9);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clone=o=>JSON.parse(JSON.stringify(o));
+const isWork=k=>k==='study'||k==='prep'||k==='meet'||k==='intern';
+
+function buildStages(type,est){
+  const tpl=TPL[type]||TPL.other; let fixed=0;
+  tpl.forEach(s=>{if(s[2])fixed+=s[1]});
+  const rest=Math.max(0,est-fixed);
+  return tpl.map(s=>s[2]?{label:s[0],min:s[1],gate:true}:{label:s[0],min:r15(rest*s[1])});
+}
+function emptyState(){return {v:2,updated:0,settings:{wake:{wk:'07:30',we:'09:30'},bed:{wk:'00:00',we:'01:00'},softEnd:'20:00',hardEnd:'22:30',classBuffer:30,warmup:20,focusCap:{wk:360,we:420},meals:{lunch:{win:['11:00','14:30'],min:30},dinner:{win:['17:30','20:30'],min:45}}},
+  gym:{minutes:90,detail:'',pplStart:'',days:{},skips:[]},club:{title:'',days:[],start:'18:30',end:'19:30',overrides:{}},recruit:{minutes:0,win:['09:00','20:00'],label:'Applications'},
+  weekly:[],classes:[],events:[],pipeline:[],tasks:[],logs:[],skips:[],history:[]}}
+function migrate(s){
+  const e=emptyState(); s=Object.assign(e,s||{});
+  s.settings=Object.assign(e.settings,s.settings||{});
+  ['weekly','classes','events','pipeline','tasks','logs','skips','history','dismissed'].forEach(k=>{if(!Array.isArray(s[k]))s[k]=[]});
+  s.gym=Object.assign({minutes:90,days:{},skips:[]},s.gym||{}); s.gym.skips=s.gym.skips||[];
+  s.club=Object.assign({days:[],overrides:{}},s.club||{}); s.club.overrides=s.club.overrides||{};
+  s.tasks.forEach(t=>{if(!Array.isArray(t.stages)||!t.stages.length)t.stages=buildStages(t.type||'other',t.estMin||60);t.doneMin=t.doneMin||0;t.conf=t.conf||'med';if(t.importance==null)t.importance=2;if(t.finishEarly==null)t.finishEarly=1});
+  const cutoff=dkey(addDays(new Date(),-45)); s.logs=s.logs.filter(l=>l.date>=cutoff); s.skips=s.skips.filter(l=>l.date>=cutoff);
+  return s;
+}
+
+/* ---------- connected prep: interviews + exams create their own prep tasks ---------- */
+function interviewStages(p){
+  const C=p.company||'the company', R=p.role||'this role', fin=/final/i.test(p.stage||'');
+  const who=(p.events||[]).map(e=>(e.label||'').match(/\(([^)]+)\)/)).filter(Boolean).map(m=>m[1].split(',')[0]);
+  const s=[[`Research ${C}: business lines, clients, recent news`,30],[`Learn ${C}'s values + culture; match 2 of your stories to them`,30],
+    [`The team behind ${R}: what it does, what interns work on`,20],[`Why ${C}, why this role (60-sec pitch)`,20],['Walk me through your résumé (90-sec pitch)',20],
+    ['Behavioral STAR stories: leadership, teamwork, conflict, failure',40],[`Technical review for ${R}: 3 statements, valuation basics`,45],
+    [who.length?`Look up ${who.join(' + ')} on LinkedIn`:'Look up your interviewers on LinkedIn',15],['Questions for your interviewers (2–3 each)',15],['Mock interview out loud, on camera',20]];
+  if(fin)s.unshift(['Revisit notes + feedback from earlier rounds',20]);
+  return s.map(([label,min])=>({label,min}));
+}
+function examStages(){return [['List topics + weak spots',30],['Review lecture slides + notes, topic by topic',180],['Redo homework + practice problems',150],['Timed practice exam',90],['Fix weak areas + condensed review',75]].map(([label,min])=>({label,min}))}
+let dismissed=null;
+function ensureLinked(){
+  const S=state, tKey=dkey(new Date()); let changed=false;
+  S.dismissed=S.dismissed||[];
+  S.pipeline.forEach(p=>{
+    const fut=(p.events||[]).filter(e=>e.date&&e.date>tKey).map(e=>e.date).sort();
+    const linked=S.tasks.find(t=>t.pid===p.id&&t.type==='interview');
+    if(linked){if(fut.length&&!linked.completed&&linked.due!==fut[0]){linked.due=fut[0];changed=true}return}
+    if(!fut.length||S.dismissed.includes('p:'+p.id))return;
+    const stg=interviewStages(p);
+    S.tasks.push({id:'auto-'+p.id,title:`${p.company} ${/final/i.test(p.stage||'')?'final round':'interview'} prep`,course:'Recruiting',type:'interview',importance:4,due:fut[0],start:tKey,finishEarly:span(tKey,fut[0])>=2?1:0,estMin:stg.reduce((a,x)=>a+x.min,0),conf:'med',stages:stg,pid:p.id,auto:true,doneMin:0,notes:'Created automatically from the interview on '+nice(fut[0])+'. Edit the stages to fit.'});
+    changed=true;
+  });
+  S.events.filter(e=>e.kind==='exam'&&e.date>tKey).forEach(e=>{
+    const linked=S.tasks.find(t=>t.eventId===e.id);
+    if(linked){if(!linked.completed&&linked.due!==e.date){linked.due=e.date;changed=true}return}
+    if(S.dismissed.includes('e:'+e.id))return;
+    const m=(e.title||'').match(/^([A-Z]{2,5}\s?\d{3}[A-Z]?)\s*(.*)$/), stg=examStages();
+    S.tasks.push({id:'auto-'+e.id,title:m?m[2]||'Exam':e.title,course:m?m[1]:'',type:'exam',importance:4,due:e.date,start:addK(e.date,-10)>tKey?addK(e.date,-10):tKey,finishEarly:1,estMin:stg.reduce((a,x)=>a+x.min,0),conf:'med',stages:stg,eventId:e.id,auto:true,doneMin:0,notes:'Created automatically from the exam on '+nice(e.date)+'. Swap the generic stages for the syllabus topics.'});
+    changed=true;
+  });
+  return changed;
+}
+function mergeSeed(local,seed){
+  const out=clone(seed), lt={}; (local.tasks||[]).forEach(t=>lt[t.id]=t);
+  out.tasks.forEach(t=>{const o=lt[t.id];if(o){t.doneMin=o.doneMin||0;if(o.completed)t.completed=true}});
+  const ids=new Set(out.tasks.map(t=>t.id)); (local.tasks||[]).forEach(t=>{if(!ids.has(t.id))out.tasks.push(t)});
+  const lp={}; (local.pipeline||[]).forEach(p=>lp[p.id]=p); out.pipeline.forEach(p=>{if(lp[p.id]){p.thanks=lp[p.id].thanks;p.stage=lp[p.id].stage}});
+  ['logs','skips','history','dismissed'].forEach(k=>{if(Array.isArray(local[k]))out[k]=local[k]});
+  (local.events||[]).filter(e=>e.kind==='busy').forEach(e=>out.events.push(e));
+  out.updated=Math.max(local.updated||0,seed.updated||0);
+  return out;
+}
+
+let state=null, ui={tab:'today',week:0}, db=null, sample=null, dbReadonly=false, loaded=false;
+const hasData=s=>s&&s.v>=2&&((s.tasks||[]).length||(s.classes||[]).length);
+let SEED=null; try{SEED=JSON.parse(document.getElementById('seedData').textContent)}catch(e){}
+const DEMO_MON=(()=>{const d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')})(); // the demo always starts "today"
+const wkday=v=>{const d=new Date(v+'T12:00:00Z'),w=d.getUTCDay();if(w===6)d.setUTCDate(d.getUTCDate()-1);if(w===0)d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10)};
+function demoShift(o){
+  if(!o||!o.demoBase||o.demoBase===DEMO_MON)return o;
+  const days=Math.round((Date.parse(DEMO_MON+'T12:00:00Z')-Date.parse(o.demoBase+'T12:00:00Z'))/864e5), re=/^\d{4}-\d{2}-\d{2}$/;
+  const sh=v=>{const d=new Date(v+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+days);return d.toISOString().slice(0,10)};
+  const walk=x=>{if(Array.isArray(x))return x.map(walk);if(x&&typeof x==='object'){const r={};for(const k in x)r[re.test(k)?sh(k):k]=walk(x[k]);return r}return typeof x==='string'&&re.test(x)?sh(x):x};
+  const out=walk(o); out.demoBase=DEMO_MON;
+  (out.events||[]).forEach(e=>{if(e.kind!=='busy'&&e.date)e.date=wkday(e.date)}); // exams and reviews stay on weekdays
+  (out.pipeline||[]).forEach(p=>(p.events||[]).forEach(e=>{if(e.date)e.date=wkday(e.date)}));
+  return out;
+}
+SEED=demoShift(SEED);
+try{const raw=localStorage.getItem('blockwise-demo.v1');if(raw){const p=JSON.parse(raw);if(p&&p.demoBase&&p.demoBase!==DEMO_MON){localStorage.setItem('blockwise-demo.v1',JSON.stringify(demoShift(p)));localStorage.removeItem('blockwise-demo.frozen1')}}}catch(e){}
+try{const raw=localStorage.getItem(LS);if(raw){let p=JSON.parse(raw);if(hasData(p)){if(hasData(SEED)&&(p.seedRev||0)<(SEED.seedRev||0))p=mergeSeed(p,SEED);state=migrate(p)}}}catch(e){}
+if(!state)state=migrate(hasData(SEED)?clone(SEED):emptyState());
+try{Object.assign(ui,JSON.parse(localStorage.getItem(LSUI)||'{}'))}catch(e){}
+ui.week=0;
+
+/* ---------- persistence ---------- */
+let saveTimer;
+function setSaved(t){$('#saved').textContent=t}
+function commit(){
+  state.updated=Date.now();
+  try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}
+  clearTimeout(saveTimer); setSaved('Saving…'); saveTimer=setTimeout(pushDb,700);
+}
+async function pushDb(){
+  if(!db||dbReadonly){setSaved(db?'View only. Changes stay in this browser':'Saved in this browser');return}
+  try{await db.doc(DOC).set(clone(state));setSaved('Saved')}
+  catch(e){if(e&&e.code==='invalid_argument'){dbReadonly=true;setSaved('View only. Changes stay in this browser')}else setSaved('Couldn’t sync. Changes kept in this browser')}
+}
+function saveUi(){try{localStorage.setItem(LSUI,JSON.stringify({tab:ui.tab}))}catch(e){}}
+
+/* ---------- scheduler helpers ---------- */
+function mark(occ,s,len,v){for(let c=Math.floor(s/CELL);c<Math.ceil((s+len)/CELL)&&c<96;c++)if(c>=0)occ[c]=v||1}
+function findSlot(occ,len,from,to){
+  const n=Math.ceil(len/CELL),a=Math.max(0,Math.ceil(from/CELL)),b=Math.min(96,Math.floor(to/CELL));
+  for(let c=a;c+n<=b;c++){let ok=true;for(let i=0;i<n;i++)if(occ[c+i]){ok=false;c+=i;break}if(ok)return c*CELL}
+  return -1;
+}
+function freeIn(occ,from,to){let n=0;for(let c=Math.max(0,Math.ceil(from/CELL));c<Math.min(96,Math.floor(to/CELL));c++)if(!occ[c])n++;return n*CELL}
+function gymLabel(k){
+  const ref=state.gym.pplStart; if(!ref)return '';
+  const d=span(ref,k); if(d<0)return ''; const w=Math.floor(d/7), r=d%7; if(r>4)return '';
+  return PPL[(w*5+r)%3];
+}
+function allEvents(){
+  const ev=state.events.map(e=>Object.assign({},e));
+  state.pipeline.forEach(p=>(p.events||[]).forEach((x,i)=>ev.push({id:p.id+':'+i,kind:'interview',title:p.company+' — '+(x.label||'Interview'),sub:p.role,date:x.date,start:x.start,end:x.end,pid:p.id})));
+  return ev;
+}
+function stageAt(j){let c=0;for(let i=0;i<j.stages.length;i++){const s=j.stages[i];if(j.pos<c+s.min)return {i,rem:c+s.min-j.pos};c+=s.min}return null}
+function untilGate(j){let c=0,started=false,total=0;for(let i=0;i<j.stages.length;i++){const s=j.stages[i];const endc=c+s.min;if(j.pos<endc){if(s.gate&&started)break;if(s.gate&&!started)return 0;total+=endc-Math.max(c,j.pos);started=true}c=endc}return total}
+function taskStages(t){const f=CONF[t.conf]||1;return (t.stages||[]).map(s=>({label:s.label,gate:!!s.gate,min:s.gate?r15(s.min):r15(s.min*f)}))}
+function taskTotal(t){return taskStages(t).reduce((a,s)=>a+s.min,0)}
+
+/* ---------- scheduler ---------- */
+function buildPlan(){
+  const S=state, st=S.settings, now=new Date(), tKey=dkey(now), nowMin=now.getHours()*60+now.getMinutes();
+  const viewStart=addDays(mondayOf(now),-7);
+  let end=addDays(now,27);
+  S.tasks.forEach(t=>{if(!t.completed&&t.due){const d=pkey(t.due);if(d>end)end=d}});
+  const lastView=addDays(mondayOf(now),7*(MAXWEEK+1)-1); if(lastView>end)end=lastView;
+  const maxEnd=addDays(now,100); if(end>maxEnd)end=maxEnd;
+  const endKey=dkey(end), soft=tm(st.softEnd)||1200, hard=Math.max(soft,tm(st.hardEnd)||1350), buf=st.classBuffer||0;
+  const days={}, order=[], events=allEvents();
+  const evBy={}; events.forEach(e=>{(evBy[e.date]=evBy[e.date]||[]).push(e)});
+  for(let d=viewStart;dkey(d)<=endKey;d=addDays(d,1)){
+    const k=dkey(d), dow=d.getDay(), we=dow===0||dow===6, ds=tm(we?st.wake.we:st.wake.wk);
+    const occ=new Uint8Array(96); for(let c=0;c<96;c++) if(c*CELL<ds) occ[c]=1;
+    const day={key:k,dow,we,occ,blocks:[],focus:0,ds,cap:we?st.focusCap.we:st.focusCap.wk,bufCells:new Uint8Array(96),fixedCells:new Uint8Array(96)};
+    const addFixed=(b,bufMin)=>{day.blocks.push(Object.assign({fixed:true},b));mark(occ,b.start,b.len);mark(day.fixedCells,b.start,b.len);
+      if(bufMin){mark(day.bufCells,Math.max(ds,b.start-bufMin),Math.min(b.start,b.start)-Math.max(ds,b.start-bufMin));mark(day.bufCells,b.start+b.len,bufMin)}};
+    S.classes.forEach(c=>{if((c.days||[]).includes(dow)&&(!c.from||k>=c.from)&&(!c.until||k<=c.until)&&!(c.skip||[]).includes(k)){const s=tm(c.start),e=tm(c.end);if(e>s)addFixed({kind:'class',title:c.code,sub:c.title+(c.room?' · '+c.room:''),start:s,len:e-s,why:'Class. '+buf+'-min buffer before and after.'},buf)}});
+    (evBy[k]||[]).forEach(e=>{const s=tm(e.start),en=tm(e.end);if(en<=s)return;
+      const kind=e.kind==='interview'?'interview':e.kind==='exam'?'exam':e.kind==='busy'?'busy':'event';
+      addFixed({kind,title:e.title,sub:e.sub||'',start:s,len:en-s,evId:e.id,why:kind==='busy'?'You marked this time as busy.':kind==='exam'?'Exam. Buffer before and after.':kind==='interview'?'Interview. Warm-up booked just before.':'One-off event.'},kind==='exam'?buf:0);
+      if(kind==='interview'&&st.warmup&&k>=tKey){const ws=s-st.warmup;if(findSlot(occ,st.warmup,ws,s)===ws){day.blocks.push({kind:'prep',title:'Warm-up: '+(e.title.split(' — ')[0]),sub:'Review notes, test camera + audio',start:ws,len:st.warmup,fixed:true,why:'Automatic warm-up before every live interview.'});mark(occ,ws,st.warmup)}}
+    });
+    // merge buffers not covered by fixed items
+    let c=0; while(c<96){ if(day.bufCells[c]&&!day.fixedCells[c]&&!occ[c]){let e=c;while(e<96&&day.bufCells[e]&&!day.fixedCells[e]&&!occ[e])e++;day.blocks.push({kind:'buffer',title:'Buffer',start:c*CELL,len:(e-c)*CELL,fixed:true,why:'Transition time around class.'});mark(occ,c*CELL,(e-c)*CELL);c=e}else c++ }
+    days[k]=day; order.push(k);
+  }
+  // club: once per week on the first of its days that is free
+  const cl=S.club;
+  if(cl&&cl.days&&cl.days.length){
+    for(let w=mondayOf(viewStart);dkey(w)<=endKey;w=addDays(w,7)){
+      const mk=dkey(w), s=tm(cl.start), len=tm(cl.end)-s; if(len<=0)continue;
+      let opts=cl.days.map(dw=>addK(mk,(dw+6)%7)).filter(k=>days[k]);
+      const ov=cl.overrides[mk]; if(ov!=null){const ok=addK(mk,(ov+6)%7);opts=[ok].concat(opts.filter(x=>x!==ok))}
+      const pick=opts.find(k=>findSlot(days[k].occ,len,s,s+len)===s)||opts[0]; if(!pick)continue;
+      const other=cl.days.filter(dw=>dw!==pkey(pick).getDay()).map(dw=>DAY[dw]).join('/');
+      days[pick].blocks.push({kind:'club',title:cl.title,sub:'Required once a week',start:s,len,fixed:true,club:mk,why:'Weekly required practice. Placed on '+DAY[pkey(pick).getDay()]+(other?' ('+other+' is the backup).':'.')});
+      mark(days[pick].occ,s,len);
+    }
+  }
+  // logged work
+  S.logs.forEach(l=>{const day=days[l.date];if(!day)return;const t=S.tasks.find(x=>x.id===l.taskId);
+    day.blocks.push({kind:l.kind||'study',title:l.title||(t?t.title:'Work'),sub:t?t.course:'',start:l.start,len:l.min,done:true,logId:l.id,taskId:l.taskId,why:'Logged '+fmtD(l.min)+(l.planned&&l.planned!==l.min?' (planned '+fmtD(l.planned)+')':'')});
+    mark(day.occ,l.start,l.min); if(isWork(l.kind||'study'))day.focus+=l.min});
+
+  // jobs
+  const jobs=[];
+  S.tasks.filter(t=>!t.completed).forEach(t=>{
+    const stages=taskStages(t), total=stages.reduce((a,s)=>a+s.min,0), pos=Math.min(t.doneMin||0,total);
+    let target,last,pastDue=false;
+    if(t.due){last=t.due;target=addK(t.due,-(t.finishEarly??1));
+      if(t.due<tKey){pastDue=true;last=endKey;target=tKey}else if(target<tKey)target=tKey}
+    else{target=addK(tKey,13);last=endKey}
+    const start=t.start&&t.start>tKey?t.start:tKey;
+    jobs.push({t,id:t.id,label:t.title,course:t.course||'',stages,total,pos,pos0:pos,rem0:total-pos,start,target,last,pastDue,iw:IW[t.importance]||1.5,minBlock:t.minBlock||45,maxBlock:Math.max(t.maxBlock||(t.type==='exam'?90:120),t.minBlock||45),kind:t.course==='Recruiting'?'intern':'study',planned:0,sessions:0,firstKey:null,lastKey:null,todayMin:0});
+  });
+  // weekly goals
+  (S.weekly||[]).forEach(g=>{for(let w=mondayOf(now);dkey(w)<=endKey;w=addDays(w,7)){
+    const mk=dkey(w), sk=addK(mk,6); if(g.until&&mk>g.until)break; if(g.from&&sk<g.from)continue;
+    const logged=S.logs.filter(l=>l.taskId==='wk:'+g.id&&l.date>=mk&&l.date<=sk).reduce((a,l)=>a+l.min,0);
+    const rem=Math.max(0,(g.minutes||0)-logged); if(!rem)continue;
+    jobs.push({weekly:true,id:'wk:'+g.id,label:g.title,course:g.course||'',stages:[{label:'Weekly goal',min:rem}],total:rem,pos:0,pos0:0,rem0:rem,start:mk<tKey?tKey:mk,target:sk,last:sk,iw:1.5,minBlock:g.block||45,maxBlock:g.block||60,kind:'study',planned:0,sessions:0,todayMin:0});
+  }});
+  // thank-you notes after live interviews
+  S.pipeline.forEach(p=>{if(p.thanks)return;const evs=(p.events||[]).filter(e=>e.date);if(!evs.length)return;
+    const lastD=evs.map(e=>e.date).sort().pop(); if(span(lastD,tKey)>3)return;
+    const start=lastD>=tKey?addK(lastD,1):tKey;
+    jobs.push({thanks:true,pid:p.id,id:'thanks:'+p.id,label:'Thank-you notes: '+p.company,course:'Recruiting',stages:[{label:'Write + send',min:15}],total:15,pos:0,pos0:0,rem0:15,start,target:start,last:addK(start,2),iw:2.2,minBlock:15,maxBlock:15,kind:'intern',planned:0,sessions:0,todayMin:0});
+  });
+
+  const place=(day,b)=>{day.blocks.push(b);mark(day.occ,b.start,b.len);
+    if(isWork(b.kind)){day.focus+=b.len;const c=(b.start+b.len)/CELL;if(c<96&&!day.occ[c])day.occ[c]=1}};
+  const recruitLogged=k=>S.logs.filter(l=>l.taskId==='recruit'&&l.date===k).reduce((a,l)=>a+l.min,0);
+
+  function alloc(j,day,k,q,B,endMin,evening){
+    while(q>0&&B.v>=15&&j.pos<j.total){
+      const sa=stageAt(j); if(!sa)break; const sg=j.stages[sa.i];
+      if(sg.gate){
+        if(j.gateWait&&k<j.gateWait)break;
+        const len=sa.rem; if(B.v<len)break;
+        const s=findSlot(day.occ,len,Math.max(day.ds,600),Math.min(Math.max(endMin,soft),1260)); if(s<0)break;
+        place(day,{kind:'meet',title:sg.label,sub:j.label+(j.course?' · '+j.course:''),start:s,len,flex:true,taskId:j.id,stage:sg.label,why:'Group step. The stages after it start the next day, once the work is split up.'});
+        j.pos+=len;B.v-=len;j.planned+=len;j.sessions++;j.firstKey=j.firstKey||k;j.lastKey=k;if(k===tKey)j.todayMin+=len;
+        j.gateWait=addK(k,1); break;
+      }
+      const ug=untilGate(j); if(ug<=0)break;
+      const want=Math.min(j.maxBlock,Math.max(Math.ceil(q/CELL)*CELL,30),Math.ceil(ug/CELL)*CELL,Math.floor(B.v/CELL)*CELL);
+      if(want<15)break;
+      const minLen=Math.min(want,Math.max(15,Math.min(30,ug)));
+      let s=-1,len=want; for(;len>=minLen;len-=CELL){s=findSlot(day.occ,len,day.ds,endMin);if(s>=0)break}
+      if(s<0)break;
+      const cov=[];{let c=0;for(const x of j.stages){const e0=c+x.min;if(e0>j.pos&&c<j.pos+len)cov.push(x.label);c=e0}}
+      place(day,{kind:j.kind,title:j.label,sub:(j.course?j.course+' · ':'')+sg.label+(cov.length>1?' (+'+(cov.length-1)+' more)':''),start:s,len,flex:true,taskId:j.thanks?'thanks:'+j.pid:j.id,stage:sg.label,
+        why:(cov.length>1?'This session: '+cov.join('; ')+'. ':'')+j._why+(evening&&s+len>soft?' Evening slot used because the deadline is close.':'')});
+      j.pos=Math.min(j.total,j.pos+len);q-=len;B.v-=len;j.planned+=len;j.sessions++;j.firstKey=j.firstKey||k;j.lastKey=k;if(k===tKey)j.todayMin+=len;
+    }
+  }
+
+  for(const k of order){
+    if(k<tKey)continue;
+    const day=days[k], dow=day.dow;
+    if(k===tKey){const c=Math.ceil((nowMin+5)/CELL);for(let i=0;i<c&&i<96;i++)day.occ[i]=1}
+    // gym
+    const g=S.gym.days&&S.gym.days[dow];
+    if(g&&S.gym.minutes>0&&!(S.gym.skips||[]).includes(k)){
+      let s=findSlot(day.occ,S.gym.minutes,tm(g.win[0]),tm(g.win[1])),moved=false;
+      if(s<0){s=findSlot(day.occ,S.gym.minutes,day.ds,soft);moved=true}
+      const lb=gymLabel(k);
+      if(s>=0)place(day,{kind:'gym',title:'Gym'+(lb?' · '+lb:''),sub:S.gym.detail||'',start:s,len:S.gym.minutes,flex:true,gym:true,why:moved?'Moved: your usual window ('+g.note+') was full today.':'Protected: '+(g.note||'your usual time')+'. Kept unless workload gets extreme.'});
+      else day.gymMissed=true;
+    }
+    // meals
+    const ml=st.meals||{};
+    [['Lunch',ml.lunch],['Dinner',ml.dinner]].forEach(([nm,m])=>{if(!m||!m.min)return;
+      let s=findSlot(day.occ,m.min,tm(m.win[0]),tm(m.win[1]));
+      if(s<0)s=findSlot(day.occ,m.min,tm(m.win[0])-60,tm(m.win[1])+60);
+      if(s>=0)place(day,{kind:'meal',title:nm,start:s,len:m.min,flex:true,why:'First open slot in your '+nm.toLowerCase()+' window.'});
+    });
+    day.freeSoft=freeIn(day.occ,day.ds,soft);
+    const B={v:Math.max(0,day.cap-day.focus)};
+    const act=jobs.filter(j=>j.pos<j.total&&k>=j.start&&k<=j.last).map(j=>{
+      const left=k<=j.target?span(k,j.target)+1:1;
+      j._left=left; j._quota=Math.min(j.total-j.pos,Math.max(j.minBlock,(j.total-j.pos)/left));
+      j._urg=j.iw*(j.total-j.pos)/left; j._press=j.pastDue||left<=2||(j.t&&j.t.due&&span(k,j.t.due)<=1);
+      j._why=fmtD(j.total-j.pos)+' left, '+(left===1?'and the target is today':left+' days to your target ('+nice(j.target)+')')+'. About '+fmtD(Math.ceil((j.total-j.pos)/left/CELL)*CELL)+' a day keeps it on track.';
+      if(j.t&&j.t.feeds){const f=S.tasks.find(x=>x.id===j.t.feeds);if(f&&!f.completed)j._why+=' Also builds toward '+(f.course?f.course+' ':'')+f.title+'.'}
+      if(j.t&&j.t.pid){const p=S.pipeline.find(x=>x.id===j.t.pid),ev=p&&(p.events||[]).filter(e=>e.date>=k).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start))[0];if(ev)j._why+=' Prep for your '+p.company+' interview on '+nice(ev.date)+' at '+fmtT(tm(ev.start))+'.'}
+      if(j.t&&j.t.type==='exam'){const n=S.tasks.filter(x=>x.feeds===j.id&&!x.completed).length;j._why+=' Stages run in syllabus order, so the practice exam lands near the end.'+(n?' '+n+' linked assignment'+(n>1?'s':'')+' also cover this material.':'')}
+      if(j.weekly)j._why='Weekly goal: '+fmtD(j.total-j.pos)+' left this week.';
+      if(j.thanks)j._why='Send within a day of the interview.';
+      return j}).sort((a,b)=>b._urg-a._urg);
+    act.filter(j=>j._press).forEach(j=>alloc(j,day,k,j._quota,B,hard,true));
+    // daily recruiting habit
+    const rc=S.recruit; if(rc&&rc.minutes>0){
+      let rem=rc.minutes-recruitLogged(k);
+      const from=Math.max(day.ds,tm(rc.win[0])), to=Math.min(soft,tm(rc.win[1]));
+      while(rem>=15&&B.v>=15){let len=Math.min(rem,Math.floor(B.v/CELL)*CELL),s=-1;for(;len>=Math.min(rem,30);len-=CELL){s=findSlot(day.occ,len,from,to);if(s>=0)break}
+        if(s<0)break; place(day,{kind:'intern',title:rc.label,sub:'Daily habit',start:s,len,flex:true,taskId:'recruit',why:'Daily habit. Kept to '+fmtD(rc.minutes)+' so coursework still fits.'}); rem-=len; B.v-=len}
+    }
+    act.filter(j=>!j._press).forEach(j=>alloc(j,day,k,j._quota,B,soft,false));
+    // downtime
+    let c=Math.ceil(soft/CELL); while(c<96&&day.occ[c])c++;
+    if(c<96){let e=c;while(e<96&&!day.occ[e])e++;
+      const bed=day.we||dow===5?st.bed.we:st.bed.wk;
+      if(e-c>=2)day.blocks.push({kind:'leisure',title:'Downtime',sub:'Until bed ~'+fmtT(tm(bed)),start:c*CELL,len:(e-c)*CELL,flex:true,why:'Protected downtime after '+fmtT(soft)+'. Work only lands here when a deadline is a day or two out.'});}
+  }
+  // job summaries
+  jobs.forEach(j=>{
+    j.remaining=j.total-j.pos0; j.unsched=j.total-j.pos;
+    if(j.weekly||j.thanks)return;
+    const t=j.t, left=Math.max(1,span(tKey,j.target)+1);
+    j.score=j.iw*(j.remaining/60)/left;
+    const dueSoon=t.due&&span(tKey,t.due)<=1&&j.remaining>0;
+    j.priority=j.remaining<=0?'Low':j.start>tKey&&span(tKey,j.start)>2?'Later':(dueSoon||j.score>=2)?'Critical':j.score>=1?'High':j.score>=0.4?'Medium':'Low';
+    if(j.remaining<=0)j.status=['lv-done','Ready to mark complete','All planned time is logged.'];
+    else if(j.pastDue)j.status=['lv-bad','Past due',j.unsched?fmtD(j.unsched)+' still unscheduled.':'Planned to wrap up '+nice(j.lastKey)+'.'];
+    else if(j.unsched>0)j.status=['lv-bad','At risk',fmtD(j.unsched)+' won’t fit before '+(t.due?nice(t.due):'the plan ends')+'. Start now, raise your daily cap, or trim the estimate.'];
+    else if(j.lastKey&&j.lastKey>j.target)j.status=['lv-orange','Tight','Last session lands on '+nice(j.lastKey)+', after your finish-early target.'];
+    else j.status=['lv-ok','On track','Done by '+nice(j.lastKey||tKey)+(t.due?', '+span(j.lastKey||tKey,t.due)+' day'+(span(j.lastKey||tKey,t.due)===1?'':'s')+' early.':'.')];
+  });
+  // pressure over the next 7 days
+  const k6=addK(tKey,6); let demand=0,capacity=0;
+  jobs.forEach(j=>{if(j.rem0<=0)return;const s0=j.start>tKey?j.start:tKey;if(s0>k6)return;
+    if(j.target<=k6)demand+=j.rem0;else demand+=j.rem0*(span(s0,k6)+1)/(span(s0,j.target)+1)});
+  for(let i=0;i<7;i++){const k=addK(tKey,i),d=days[k];if(!d)continue;
+    const rec=S.recruit&&S.recruit.minutes?S.recruit.minutes:0; demand+=Math.max(0,rec-(i===0?recruitLogged(k):0));
+    capacity+=Math.min(Math.max(0,d.cap-(i===0?S.logs.filter(l=>l.date===k&&isWork(l.kind)).reduce((a,l)=>a+l.min,0):0)),(d.freeSoft||0)+(i===0?0:0))}
+  const ratio=capacity?demand/capacity:(demand?9:0), risk=jobs.some(j=>j.status&&j.status[1]==='At risk');
+  let lvl=ratio<.7?0:ratio<.85?1:ratio<1?2:3; if(risk&&lvl<2)lvl=2;
+  const pressure={demand,capacity,ratio,lvl,name:['Comfortable','Attention needed','Getting constrained','Over capacity'][lvl],cls:['lv-ok','lv-warn','lv-orange','lv-bad'][lvl]};
+  return {days,jobs,tKey,nowMin,pressure,soft,hard,taskJobs:jobs.filter(j=>!j.weekly&&!j.thanks)};
+}
+
+/* ---------- frozen plan for check-ins ---------- */
+function updateFrozen(){
+  let fr={}; try{fr=JSON.parse(localStorage.getItem(LSF)||'{}')}catch(e){}
+  const k=plan.tKey, d=plan.days[k]; if(!d)return fr;
+  const keep=(fr[k]||[]).filter(b=>b.start+b.len<=plan.nowMin);
+  const cur=d.blocks.filter(b=>!b.done&&!b.fixed&&isWork(b.kind)).map(b=>({taskId:b.taskId,title:b.title,sub:b.sub,kind:b.kind,start:b.start,len:b.len,stage:b.stage||''}));
+  const seen=new Set(keep.map(b=>b.taskId+'@'+b.start));
+  fr[k]=keep.concat(cur.filter(b=>!seen.has(b.taskId+'@'+b.start)));
+  const cutoff=addK(k,-3); Object.keys(fr).forEach(x=>{if(x<cutoff)delete fr[x]});
+  try{localStorage.setItem(LSF,JSON.stringify(fr))}catch(e){}
+  return fr;
+}
+function pendingCheckins(){
+  const fr=updateFrozen(), out=[];
+  [addK(plan.tKey,-1),plan.tKey].forEach(k=>(fr[k]||[]).forEach(b=>{
+    if(k===plan.tKey&&b.start+b.len>plan.nowMin)return;
+    if(state.logs.some(l=>l.date===k&&l.taskId===b.taskId&&Math.abs(l.start-b.start)<CELL))return;
+    if(state.skips.some(s=>s.date===k&&s.taskId===b.taskId&&s.start===b.start))return;
+    if(b.taskId&&!b.taskId.startsWith('wk:')&&b.taskId!=='recruit'&&!b.taskId.startsWith('thanks:')){const t=state.tasks.find(x=>x.id===b.taskId);if(!t||t.completed)return}
+    out.push(Object.assign({date:k},b));
+  }));
+  return out;
+}
+
+/* ---------- logging ---------- */
+function logWork(b,date,min){
+  min=Math.max(5,Math.round(min));
+  state.logs.push({id:uid(),taskId:b.taskId,kind:b.kind,title:b.title,date,start:b.start,min,planned:b.len});
+  if(b.taskId&&b.taskId.startsWith('thanks:')){const p=state.pipeline.find(x=>'thanks:'+x.id===b.taskId);if(p)p.thanks=true}
+  const t=state.tasks.find(x=>x.id===b.taskId); if(t)t.doneMin=(t.doneMin||0)+min;
+  commit(); renderAll();
+}
+function undoLog(id){
+  const i=state.logs.findIndex(l=>l.id===id); if(i<0)return; const l=state.logs[i]; state.logs.splice(i,1);
+  const t=state.tasks.find(x=>x.id===l.taskId); if(t)t.doneMin=Math.max(0,(t.doneMin||0)-l.min);
+  commit(); renderAll();
+}
+function completeTask(t){
+  t.completed=true; state.history.push({course:t.course,type:t.type,est:t.estMin,actual:t.doneMin||0,date:plan?plan.tKey:dkey(new Date())}); commit(); renderAll();
+}
+
+/* ---------- rendering ---------- */
+let plan=null;
+function renderAll(){
+  for(const t of ['today','week','tasks','recruit','routine','rules']){$('#view-'+t).hidden=ui.tab!==t;$('#tab-'+t).setAttribute('aria-selected',ui.tab===t)}
+  if(loaded&&ensureLinked())commit();
+  plan=buildPlan();
+  const assumed=state.tasks.filter(t=>t.assumed&&!t.completed);
+  const n=$('#notice');
+  if(loaded&&!state.tasks.length&&!state.classes.length){n.hidden=false;n.textContent='No plan data yet. Add your classes in Routine and your work in Tasks.'}
+  else if(assumed.length){n.hidden=false;n.innerHTML='<b>Check these dates:</b> '+assumed.map(t=>esc(t.title)+' ('+nice(t.due)+')').join(', ')+'. They are placeholders until you confirm them. Open a task to fix its date.'}
+  else n.hidden=true;
+  ({today:renderToday,week:renderWeek,tasks:renderTasks,recruit:renderRecruit,routine:renderRoutine,rules:renderRules})[ui.tab]();
+  $('#courseList').innerHTML=[...new Set(state.tasks.map(t=>t.course).concat(state.classes.map(c=>c.code)).filter(Boolean))].map(c=>`<option value="${esc(c)}">`).join('');
+}
+function kindCls(k){return 'k-'+(k==='meet'?'prep':k)}
+function jobFor(id){return plan.jobs.find(j=>j.id===id)}
+
+function pressureHtml(){
+  const p=plan.pressure, pct=Math.min(100,Math.round(p.ratio*100));
+  const col=['var(--ok)','var(--warn)','var(--orange)','var(--bad)'][p.lvl];
+  return `<div class="pressure"><span class="pill ${p.cls}">${p.name}</span>
+    <div class="meter" role="img" aria-label="Schedule pressure ${pct}%"><i style="width:${pct}%;background:${col}"></i></div>
+    <span class="small muted">Next 7 days: <b class="mono">${fmtD(p.demand)}</b> of work needed for <b class="mono">${fmtD(p.capacity)}</b> of realistic focus time (${Math.round(p.ratio*100)}%)</span></div>`;
+}
+
+function classify(b){
+  if(b.kind==='interview'||b.kind==='exam')return 'must';
+  if(b.kind==='gym'||b.kind==='meal'||b.kind==='club'||b.kind==='leisure')return 'maint';
+  if(b.kind==='class'||b.kind==='buffer'||b.kind==='event'||b.kind==='busy')return 'fixed';
+  if(b.taskId==='recruit'||(b.taskId||'').startsWith('wk:'))return 'should';
+  if((b.taskId||'').startsWith('thanks:'))return 'should';
+  const j=jobFor(b.taskId); if(j&&(j.priority==='Critical'||j.priority==='High'||j._press))return 'must';
+  if(b.kind==='prep'&&b.fixed)return 'must';
+  return 'should';
+}
+function itemHtml(b,k,withActs){
+  const canLog=withActs&&isWork(b.kind)&&!b.done&&b.taskId;
+  const idx=plan.days[k].blocks.indexOf(b);
+  return `<li class="item${b.done?' done':''}"><span class="when">${fmtT(b.start)}</span><span class="dot ${kindCls(b.kind)}"></span>
+    <span class="what"><b>${esc(b.title)}</b><span class="sub">${fmtD(b.len)}${b.sub?' · '+esc(b.sub):''}${b.len>=50&&isWork(b.kind)?' · ≈'+Math.round(b.len/30)+' pomodoros':''}</span>${b.why?`<div class="why">${esc(b.why)}</div>`:''}</span>
+    <span class="acts">${canLog?`<button class="mini primary" data-logq="${k}|${idx}">Done</button>`:''}${b.done?'<span class="small muted">Logged</span>':''}<button class="mini" data-open="${k}|${idx}" aria-label="More options">•••</button></span></li>`;
+}
+function renderToday(){
+  const k=plan.tKey, d=plan.days[k], now=new Date(), R=state;
+  if(!d){$('#view-today').innerHTML='<p class="empty">Loading…</p>';return}
+  const upcoming=d.blocks.filter(b=>!b.done&&b.start+b.len>plan.nowMin).sort((a,b)=>a.start-b.start);
+  const groups={must:[],should:[],maint:[],fixed:[]};
+  upcoming.forEach(b=>groups[classify(b)].push(b));
+  const doneToday=d.blocks.filter(b=>b.done).sort((a,b)=>a.start-b.start);
+  const workToday=d.blocks.filter(b=>isWork(b.kind)).reduce((a,b)=>a+b.len,0);
+  const plannedLeft=upcoming.filter(b=>isWork(b.kind)).reduce((a,b)=>a+b.len,0);
+  const freeLeft=d.freeSoft||0, workBeforeSoft=upcoming.filter(b=>isWork(b.kind)).reduce((a,b)=>a+Math.max(0,Math.min(b.start+b.len,plan.soft)-b.start),0);
+  const tj=plan.taskJobs.filter(j=>j.todayMin>0).sort((a,b)=>b.score-a.score)[0];
+  const gym=d.blocks.find(b=>b.kind==='gym');
+  const nextDue=plan.taskJobs.filter(j=>j.t.due&&j.t.due>=k).sort((a,b)=>a.t.due.localeCompare(b.t.due)).slice(0,6);
+  let impact='';
+  if(tj){const left=Math.max(1,span(k,tj.target)+1);
+    impact=left>1?`Doing today's ${fmtD(tj.todayMin)} on <b>${esc(tj.label)}</b> keeps it on track to finish by ${nice(tj.lastKey)}. Skipping it adds about ${fmtD(Math.ceil(tj.todayMin/(left-1)/CELL)*CELL)} to each of the ${left-1} remaining day${left-1===1?'':'s'} before your target.`
+      :`<b>${esc(tj.label)}</b> hits its finish-early target today, so today's ${fmtD(tj.todayMin)} is the last planned push.`}
+  const risk=plan.taskJobs.filter(j=>j.status&&(j.status[1]==='At risk'||j.status[1]==='Past due'));
+  const checks=pendingCheckins();
+  // optional: get ahead
+  let optional='';
+  const capLeft=d.cap-d.focus; const slot=findSlot(d.occ,30,Math.max(d.ds,plan.nowMin),plan.soft);
+  if(capLeft>=30&&slot>=0){const cand=plan.taskJobs.filter(j=>j.unsched===0&&j.remaining>j.todayMin&&j.start<=k).sort((a,b)=>b.score-a.score)[0];
+    if(cand)optional=`<li class="item"><span class="when">${fmtT(slot)}</span><span class="dot k-study"></span><span class="what"><b>Get ahead: +30 min on ${esc(cand.label)}</b><span class="sub">${esc(cand.course)} · optional</span><div class="why">You have ${fmtD(capLeft)} of focus capacity left today. Extra time here shortens a later session.</div></span><span></span></li>`}
+  const grp=(key,title,list,extra)=>`<div class="card group"><h3>${title} <span>${list.length?fmtD(list.filter(b=>b.kind!=='leisure').reduce((a,b)=>a+b.len,0)):''}</span></h3><ul class="items">${list.map(b=>itemHtml(b,k,true)).join('')||extra||'<li class="empty">Nothing here.</li>'}</ul></div>`;
+  $('#view-today').innerHTML=`<div class="today"><div class="tcol">
+    <div class="card brief">
+      <h2>${DAYL[now.getDay()]} plan</h2>
+      <p>You have <b>${fmtD(freeLeft)}</b> of open time left before ${fmtT(plan.soft)}, after classes, interviews, gym and meals. Recommended focus for the rest of today: <b>${fmtD(plannedLeft)}</b>${tj?`. Top priority: <b>${esc(tj.label)}</b> (${esc(tj.course)})`:''}. ${gym?`Gym is protected at ${fmtT(gym.start)}.`:d.gymMissed?'Gym didn’t fit today.':''} ${fmtD(Math.max(0,freeLeft-workBeforeSoft))} stays open as buffer.</p>
+      ${impact?`<div class="impact">${impact}</div>`:''}
+      ${risk.length?`<div class="impact" style="background:var(--bad-bg);color:var(--bad)"><b>At risk:</b> ${risk.map(j=>esc(j.label)+' ('+esc(j.status[2])+')').join(' · ')}</div>`:''}
+      ${pressureHtml()}
+      <div class="stats"><div class="stat"><b>${fmtD(workToday)}</b><small>Focus today</small></div><div class="stat"><b>${fmtD(d.cap)}</b><small>Daily cap</small></div><div class="stat"><b>${doneToday.filter(b=>isWork(b.kind)).length}</b><small>Sessions logged</small></div><div class="stat"><b>${plan.taskJobs.filter(j=>j.status&&j.status[1]==='On track').length}/${plan.taskJobs.length}</b><small>Tasks on track</small></div></div>
+    </div>
+    ${checks.length?`<div class="card group"><h3>Check in <span>${checks.length}</span></h3><p class="small muted" style="margin:0 0 6px">How did these go? Anything not done moves to a later slot on its own.</p><ul class="items">${checks.map((b,i)=>`<li class="item"><span class="when">${b.date===k?'':short(b.date)+' '}${fmtT(b.start)}</span><span class="dot ${kindCls(b.kind)}"></span><span class="what"><b>${esc(b.title)}</b><span class="sub">Planned ${fmtD(b.len)}${b.sub?' · '+esc(b.sub):''}</span><div class="partial" id="pt-${i}" hidden><input type="number" min="5" step="5" id="ptv-${i}" value="${b.len}" aria-label="Minutes actually spent"><span class="small muted">min</span><button class="mini primary" data-ptsave="${i}">Save</button></div></span>
+      <span class="acts"><button class="mini primary" data-ck="${i}|done">Done</button><button class="mini" data-ck="${i}|part">Different time</button><button class="mini" data-ck="${i}|skip">Skipped</button></span></li>`).join('')}</ul></div>`:''}
+    ${grp('must','Must do',groups.must)}
+    ${grp('should','Should do',groups.should)}
+    <div class="card group"><h3>Optional</h3><ul class="items">${optional||'<li class="empty">No spare capacity today. That’s fine.</li>'}</ul></div>
+    ${grp('maint','Maintenance',groups.maint)}
+    ${doneToday.length?`<div class="card group"><h3>Done today <span>${fmtD(doneToday.reduce((a,b)=>a+b.len,0))}</span></h3><ul class="items">${doneToday.map(b=>itemHtml(b,k,false)).join('')}</ul></div>`:''}
+  </div>
+  <aside class="tcol">
+    <div class="card"><h2>Fixed today</h2>${groups.fixed.filter(b=>b.kind!=='buffer').length?`<ul class="items">${groups.fixed.filter(b=>b.kind!=='buffer').map(b=>`<li class="item" style="grid-template-columns:70px 10px minmax(0,1fr)"><span class="when">${fmtT(b.start)}</span><span class="dot ${kindCls(b.kind)}"></span><span class="what"><b>${esc(b.title)}</b><span class="sub">${fmtT(b.start)}–${fmtT(b.start+b.len)}${b.sub?' · '+esc(b.sub):''}</span></span></li>`).join('')}</ul>`:'<p class="empty">No more classes or events today.</p>'}</div>
+    <div class="card"><h2>Priority ranking <small>changes daily</small></h2><div class="rank">${rankRows(6)}</div><button class="btn" style="margin-top:10px;width:100%" data-tab="tasks">All tasks</button></div>
+    <div class="card"><h2>Coming up</h2><ul class="items">${nextDue.map(j=>`<li class="item" style="grid-template-columns:78px minmax(0,1fr) auto"><span class="when">${nice(j.t.due)}</span><span class="what"><b>${esc(j.label)}</b><span class="sub">${esc(j.course)}</span></span><span class="pill ${j.status[0]}">${j.status[1]}</span></li>`).join('')||'<li class="empty">Nothing due.</li>'}</ul></div>
+  </aside></div>`;
+  $('#view-today')._checks=checks;
+}
+function rankRows(n){
+  const js=plan.taskJobs.filter(j=>j.remaining>0).sort((a,b)=>b.score-a.score).slice(0,n||99);
+  return js.map((j,i)=>{const t=j.t, done=Math.min(j.total,j.pos0), pDone=j.total?done/j.total*100:0, pPlan=j.total?Math.min(100-pDone,j.planned/j.total*100):0;
+    const sa=stageAt({stages:j.stages,pos:j.pos0});
+    return `<button class="rrow" data-edit="${t.id}"><span class="n">${i+1}</span><span><span class="ttl">${esc(t.title)}</span><br>
+      <span class="meta">${esc(t.course)}${t.due?' · due '+nice(t.due):''} · importance ${IMP[t.importance]}</span>
+      <span class="bar"><i style="width:${pDone}%"></i><u style="width:${pPlan}%"></u></span>
+      <span class="meta">${fmtD(done)} of ${fmtD(j.total)} · next: ${sa?esc(j.stages[sa.i].label):'wrap up'} · ${esc(j.status[2])}</span></span>
+      <span style="display:flex;flex-direction:column;gap:4px;align-items:flex-end"><span class="chip pr-${j.priority}">${j.priority}</span><span class="pill ${j.status[0]}">${j.status[1]}</span></span></button>`}).join('')||'<p class="empty">Nothing open.</p>';
+}
+
+function weekKeys(){const ws=addDays(mondayOf(new Date()),7*ui.week);return Array.from({length:7},(_,i)=>dkey(addDays(ws,i)))}
+function renderWeek(){
+  const keys=weekKeys(), st=state.settings;
+  let focus=0,leis=0,gym=0,rec=0;
+  keys.forEach(k=>{const d=plan.days[k];if(!d)return;d.blocks.forEach(b=>{if(isWork(b.kind))focus+=b.len;if(b.kind==='leisure')leis+=b.len;if(b.kind==='gym')gym++;if(b.taskId==='recruit')rec+=b.len})});
+  const ws=pkey(keys[0]),we=pkey(keys[6]);
+  const lbl=ui.week===0?'This week':ui.week===1?'Next week':ui.week===-1?'Last week':'In '+ui.week+' weeks';
+  let lo=24*60,hi=0; keys.forEach(k=>{const d=plan.days[k];if(!d)return;lo=Math.min(lo,d.ds);d.blocks.forEach(b=>{if(b.kind!=='leisure'){lo=Math.min(lo,b.start);hi=Math.max(hi,b.start+b.len)}})});
+  const h0=Math.min(7,Math.floor(lo/60)), h1=24, H=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hour'))||46, height=(h1-h0)*H, y=m=>(m-h0*60)/60*H;
+  const dues={}; state.tasks.forEach(t=>{if(t.due&&!t.completed)(dues[t.due]=dues[t.due]||[]).push(t)});
+  let g='<div class="dh" style="border-left:0"></div>';
+  keys.forEach(k=>{const d=pkey(k),dd=plan.days[k],cls=k===plan.tKey?' today':k<plan.tKey?' past':'';
+    const ld=dd?Math.min(1,dd.focus/Math.max(1,dd.cap)):0, col=ld<.7?'var(--ok)':ld<.9?'var(--warn)':ld<1?'var(--orange)':'var(--bad)';
+    g+=`<div class="dh${cls}"><div class="d">${DAY[d.getDay()]} <span>${MON[d.getMonth()]} ${d.getDate()}</span></div>${dd&&k>=plan.tKey?`<div class="load" title="Focus ${fmtD(dd.focus)} of ${fmtD(dd.cap)}"><i style="width:${ld*100}%;background:${col}"></i></div><div class="load-l">${fmtD(dd.focus)} / ${fmtD(dd.cap)}</div>`:''}${(dues[k]||[]).map(t=>`<button class="due" data-edit="${t.id}" title="${esc(t.course+' '+t.title)}">${t.type==='exam'?'Exam':'Due'} · ${esc(t.course==='Recruiting'?t.title:t.course)}</button>`).join('')}</div>`});
+  g+=`<div class="hrs" style="height:${height}px">${Array.from({length:h1-h0},(_,i)=>i?`<div style="top:${i*H}px">${fmtT((h0+i)*60)}</div>`:'').join('')}</div>`;
+  keys.forEach(k=>{const d=plan.days[k],cls=k===plan.tKey?' today':k<plan.tKey?' past':'';
+    g+=`<div class="col${cls}" style="height:${height}px">`;
+    if(d)d.blocks.slice().sort((a,b)=>a.start-b.start).forEach(b=>{if(b.start<h0*60)return;const h=Math.max(12,b.len/60*H-2),tiny=h<34;
+      g+=`<button class="blk ${kindCls(b.kind)} ${b.fixed?'fixed':'flex'}${b.done?' done':''}${tiny?' tiny':''}" style="top:${y(b.start)+1}px;height:${h}px" data-open="${k}|${d.blocks.indexOf(b)}"><span class="t">${esc(b.title)}</span>${b.sub?`<span class="s">${esc(b.sub)}</span>`:''}<span class="tm">${fmtT(b.start)}–${fmtT(b.start+b.len)}</span></button>`});
+    if(k===plan.tKey&&plan.nowMin>=h0*60)g+=`<div class="nowline" style="top:${y(plan.nowMin)}px"></div>`;
+    g+='</div>'});
+  $('#view-week').innerHTML=`<div class="weekbar">
+      <div class="stats" style="margin:0"><div class="stat"><b>${fmtD(focus)}</b><small>Focused work</small></div><div class="stat"><b>${fmtD(rec)}</b><small>Applications</small></div><div class="stat"><b>${gym}</b><small>Gym sessions</small></div><div class="stat"><b>${fmtD(leis)}</b><small>Downtime</small></div></div>
+      <div class="weeknav"><button class="btn" data-week="-1" aria-label="Previous week" ${ui.week<=-1?'disabled':''}>‹</button><span class="lbl">${lbl}<br><span class="small muted">${MON[ws.getMonth()]} ${ws.getDate()} – ${MON[we.getMonth()]} ${we.getDate()}</span></span><button class="btn" data-week="1" aria-label="Next week" ${ui.week>=MAXWEEK?'disabled':''}>›</button></div></div>
+    ${ui.week===0?pressureHtml():''}
+    <div class="gridwrap" style="margin-top:12px"><div class="grid">${g}</div></div>
+    <div class="legend"><span><i class="k-class"></i>Class</span><span><i class="k-interview"></i>Interview</span><span><i class="k-exam"></i>Exam</span><span><i class="k-club"></i>Table tennis</span><span><i class="k-gym"></i>Gym</span><span><i class="k-study"></i>Study / work</span><span><i class="k-prep"></i>Group meeting / warm-up</span><span><i class="k-intern"></i>Recruiting</span><span><i class="k-meal"></i>Meals</span><span><i class="k-leisure"></i>Downtime</span><span style="margin-left:auto">Dashed = placed by the planner. Click any block to see why.</span></div>`;
+}
+
+function taskCard(t){
+  const j=jobFor(t.id), total=taskTotal(t), done=Math.min(total,t.doneMin||0), est=t.estMin||0;
+  const sa=stageAt({stages:taskStages(t),pos:done});
+  let c=0; const stg=taskStages(t).map((s,i)=>{const st=c;c+=s.min;return `<span class="${done>=c?'ok':sa&&sa.i===i?'on':''}">${esc(s.label)}${s.gate?' 👥':''}</span>`}).join('');
+  return `<div class="tcard"><div class="row">${j&&!t.completed?`<span class="chip pr-${j.priority}">${j.priority}</span>`:''}<span class="ttl">${esc(t.title)}</span>${t.assumed?'<span class="tag warn">Date assumed</span>':''}</div>
+    <div class="facts"><span>${TYPES[t.type]||'Other'}</span>${t.due?`<span>Due <b>${nice(t.due)}</b></span>`:'<span>No due date</span>'}<span>Importance <b>${IMP[t.importance]}</b></span>${t.weight?`<span>${t.weight}% of grade</span>`:''}</div>
+    <div class="facts"><span>Estimate <b>${fmtD(est)}</b>${CONF[t.conf]>1?' – '+fmtD(total):''} (${CONFL[t.conf]})</span><span>Done <b>${fmtD(done)}</b></span>${j?`<span>Planned <b>${fmtD(j.planned)}</b> in ${j.sessions}</span>`:''}${t.start&&t.start>plan.tKey?`<span>Starts ${nice(t.start)}</span>`:''}</div>
+    <div class="stages">${stg}</div>
+    ${j&&!t.completed?`<div><span class="pill ${j.status[0]}">${j.status[1]}</span> <span class="small muted">${esc(j.status[2])}</span></div>`:''}
+    ${(()=>{const out=[];const f=t.feeds&&state.tasks.find(x=>x.id===t.feeds);if(f)out.push(`Builds toward <button class="mini" data-edit="${f.id}">${esc(f.course+' '+f.title)}</button>`);
+      const fe=state.tasks.filter(x=>x.feeds===t.id);if(fe.length)out.push('Connected work: '+fe.map(x=>`<button class="mini" data-edit="${x.id}">${esc(x.title)}${x.completed?' ✓':''}</button>`).join(' '));
+      const p=t.pid&&state.pipeline.find(x=>x.id===t.pid);if(p){const ev=(p.events||[]).filter(e=>e.date>=plan.tKey).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));out.push('Linked to '+esc(p.company)+(ev.length?' · interview '+ev.map(e=>nice(e.date)+' '+fmtT(tm(e.start))).join(', '):''))}
+      const ev=t.eventId&&state.events.find(x=>x.id===t.eventId);if(ev)out.push('Linked to exam: '+nice(ev.date)+' '+fmtT(tm(ev.start)));
+      return out.length?`<div class="small muted" style="display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center">${out.join('<span>·</span>')}</div>`:''})()}
+    ${t.notes?`<div class="small muted">${esc(t.notes)}</div>`:''}
+    <div class="acts"><button class="btn" data-edit="${t.id}">Edit</button>${t.completed?`<button class="btn ghost" data-reopen="${t.id}">Reopen</button>`:`<button class="btn ghost" data-complete="${t.id}">Mark complete</button>`}</div></div>`;
+}
+function renderTasks(){
+  const open=state.tasks.filter(t=>!t.completed), by={};
+  open.forEach(t=>{(by[t.course||'Other']=by[t.course||'Other']||[]).push(t)});
+  const courses=Object.keys(by).sort((a,b)=>a==='Recruiting'?-1:b==='Recruiting'?1:a.localeCompare(b));
+  // estimate learning
+  const hist={}; state.history.forEach(h=>{if(!h.est||!h.actual)return;const key=h.course+'|'+h.type;(hist[key]=hist[key]||{n:0,e:0,a:0});hist[key].n++;hist[key].e+=h.est;hist[key].a+=h.actual});
+  const hk=Object.keys(hist);
+  const done=state.tasks.filter(t=>t.completed);
+  $('#view-tasks').innerHTML=`<div class="tasks-head"><p>Importance is how much a task matters, and you set it once. Priority is computed daily from importance, work left and days left, so a midterm three weeks out can be Medium today and Critical next week.</p><button class="btn primary" data-new>Add a task</button></div>
+    <div class="twocol"><div class="card"><h2>Priority ranking <small>recomputed every time the page opens</small></h2><div class="rank">${rankRows()}</div></div>
+    <div class="card"><h2>Estimate accuracy</h2>${hk.length?`<ul class="items">${hk.map(key=>{const h=hist[key],[c,ty]=key.split('|'),r=h.a/h.e;return `<li class="item" style="grid-template-columns:minmax(0,1fr) auto"><span class="what"><b>${esc(c)} · ${esc(TYPES[ty]||ty)}</b><span class="sub">${h.n} finished · estimated ${fmtD(h.e)}, took ${fmtD(h.a)}</span></span><span class="pill ${r>1.15?'lv-orange':r<.85?'lv-ok':'lv-done'}">${r.toFixed(2)}×</span></li>`}).join('')}</ul><p class="small muted">New tasks in these courses suggest an adjusted estimate.</p>`:'<p class="empty">When you mark tasks complete, Blockwise compares logged time to your estimate by course and type and uses it to adjust future estimates.</p>'}</div></div>
+    ${courses.map(c=>`<div class="coursegrp"><h3>${esc(c)} <small>${by[c].length} open · ${fmtD(by[c].reduce((a,t)=>a+Math.max(0,taskTotal(t)-(t.doneMin||0)),0))} left</small></h3><div class="tlist">${by[c].sort((a,b)=>(a.due||'9').localeCompare(b.due||'9')).map(taskCard).join('')}</div></div>`).join('')}
+    ${done.length?`<div class="coursegrp"><h3>Completed <small>${done.length}</small></h3><div class="tlist">${done.map(taskCard).join('')}</div></div>`:''}`;
+}
+
+function renderRecruit(){
+  const R=state.recruit||{};
+  const up=allEvents().filter(e=>e.kind==='interview'&&e.date>=plan.tKey).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));
+  const rjobs=plan.taskJobs.filter(j=>j.course==='Recruiting');
+  $('#view-recruit').innerHTML=`<div class="twocol">
+    <div class="card"><h2>Daily applications</h2><p class="help">Booked every day as a habit block, ranked after anything urgent and before other coursework.</p>
+      <div class="fields"><label class="f">Minutes per day<input type="number" min="0" step="15" data-rs="minutes" value="${R.minutes||0}"></label><label class="f">Window starts<input type="time" data-rs="win.0" value="${(R.win||[])[0]||'09:00'}"></label><label class="f">Window ends<input type="time" data-rs="win.1" value="${(R.win||[])[1]||'20:00'}"></label><label class="f" style="grid-column:1/-1">Label<input type="text" data-rs="label" value="${esc(R.label||'')}"></label></div></div>
+    <div class="card"><h2>Upcoming interviews</h2>${up.length?`<ul class="items">${up.map(e=>`<li class="item" style="grid-template-columns:90px minmax(0,1fr)"><span class="when">${short(e.date)} ${fmtT(tm(e.start))}</span><span class="what"><b>${esc(e.title)}</b><span class="sub">${esc(e.sub||'')} · ${state.settings.warmup}-min warm-up booked before</span></span></li>`).join('')}</ul>`:'<p class="empty">None scheduled.</p>'}
+      ${rjobs.length?`<h3 style="font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-family:var(--body);margin:14px 0 4px">Prep + video interviews</h3><div class="rank">${rjobs.map(j=>`<button class="rrow" data-edit="${j.id}" style="grid-template-columns:minmax(0,1fr) auto"><span><span class="ttl">${esc(j.label)}</span><br><span class="meta">${j.t.due?'due '+nice(j.t.due):''} · ${esc(j.status[2])}</span></span><span class="pill ${j.status[0]}">${j.status[1]}</span></button>`).join('')}</div>`:''}</div></div>
+    <div class="card" style="margin-top:16px"><h2>Pipeline <small>${state.pipeline.length} companies</small></h2><p class="help">Live interviews here are blocked on your calendar, with a warm-up before and a thank-you-note block the next day until you check it off.</p>
+    <div class="tbl"><table><thead><tr><th>Company</th><th>Role</th><th>Stage</th><th>Next step</th><th>Interviews</th><th>Prep</th><th>Thank-you sent</th><th></th></tr></thead><tbody>
+    ${state.pipeline.map((p,i)=>{const pt=state.tasks.filter(t=>t.pid===p.id&&!t.completed),pj=pt.map(t=>jobFor(t.id)).filter(Boolean);
+      const prepCell=pj.length?pj.map(j=>`<button class="mini" data-edit="${j.id}" title="${esc(j.status[2])}">${esc(j.label.length>28?j.label.slice(0,26)+'…':j.label)}</button> <span class="pill ${j.status[0]}">${fmtD(Math.min(j.total,j.pos0))}/${fmtD(j.total)}</span>`).join('<br>'):(state.tasks.some(t=>t.pid===p.id)?'<span class="small muted">Done ✓</span>':'<span class="small muted">—</span>');
+      return `<tr><td><input type="text" data-pp="${i}" data-field="company" value="${esc(p.company)}" aria-label="Company"></td><td><input type="text" data-pp="${i}" data-field="role" value="${esc(p.role)}" aria-label="Role"></td>
+      <td><select class="stage-sel" data-pp="${i}" data-field="stage" aria-label="Stage">${STAGES.map(s=>`<option ${p.stage===s?'selected':''}>${s}</option>`).join('')}</select></td>
+      <td><input type="text" data-pp="${i}" data-field="next" value="${esc(p.next||'')}" aria-label="Next step"></td>
+      <td class="small">${(p.events||[]).map((e,ei)=>`<div style="display:flex;gap:4px;align-items:center;margin-bottom:4px"><input type="date" value="${e.date}" data-pe="${i}|${ei}|date" aria-label="Date" style="width:130px"><input type="time" value="${e.start}" data-pe="${i}|${ei}|start" aria-label="Start" style="width:96px"><input type="time" value="${e.end}" data-pe="${i}|${ei}|end" aria-label="End" style="width:96px"><button class="x" data-pedel="${i}|${ei}" aria-label="Remove interview">×</button></div>`).join('')}<button class="mini" data-peadd="${i}">Add interview</button></td>
+      <td class="small">${prepCell}</td>
+      <td><input type="checkbox" data-pp="${i}" data-field="thanks" ${p.thanks?'checked':''} aria-label="Thank-you sent"></td>
+      <td><button class="x" data-ppdel="${i}" aria-label="Remove ${esc(p.company)}">×</button></td></tr>`}).join('')}
+    </tbody></table></div><button class="btn" id="addPipe" style="margin-top:10px">Add company</button></div>`;
+}
+
+function daysBtns(path,arr){return `<div class="days" data-days="${path}">${DAY1.map((l,i)=>`<button type="button" aria-pressed="${(arr||[]).includes(i)}" data-dow="${i}" title="${DAY[i]}">${l}</button>`).join('')}</div>`}
+function renderRoutine(){
+  const S=state, st=S.settings, G=S.gym, C=S.club;
+  $('#view-routine').innerHTML=`<div class="rgrid">
+  <div class="card"><h2>Your day</h2><p class="help">Work stops at the soft end so evenings stay free. Only a deadline a day or two out can use time up to the hard end.</p>
+    <div class="fields">
+      <label class="f">Wake, weekdays<input type="time" data-st="wake.wk" value="${st.wake.wk}"></label><label class="f">Wake, weekends<input type="time" data-st="wake.we" value="${st.wake.we}"></label>
+      <label class="f">Bed, weekdays<input type="time" data-st="bed.wk" value="${st.bed.wk}"></label><label class="f">Bed, Fri + Sat<input type="time" data-st="bed.we" value="${st.bed.we}"></label>
+      <label class="f">Downtime starts (soft end)<input type="time" data-st="softEnd" value="${st.softEnd}"></label><label class="f">Hard end for deadlines<input type="time" data-st="hardEnd" value="${st.hardEnd}"></label>
+      <label class="f">Max focus, weekdays (h)<input type="number" step="0.5" min="0" data-st="focusCap.wk" data-hours value="${st.focusCap.wk/60}"></label><label class="f">Max focus, weekends (h)<input type="number" step="0.5" min="0" data-st="focusCap.we" data-hours value="${st.focusCap.we/60}"></label>
+      <label class="f">Buffer around class (min)<input type="number" step="5" min="0" data-st="classBuffer" value="${st.classBuffer}"></label><label class="f">Interview warm-up (min)<input type="number" step="5" min="0" data-st="warmup" value="${st.warmup}"></label>
+    </div></div>
+  <div class="card"><h2>Gym</h2><p class="help">${esc(G.detail||'')} Placed in each day's window. If the window is full it moves elsewhere that day. The push/pull/legs label rotates Mon–Fri from the start date.</p>
+    <div class="fields" style="margin-bottom:10px"><label class="f">Session (min)<input type="number" step="15" min="0" data-gym="minutes" value="${G.minutes}"></label><label class="f">Rotation starts (a Push day)<input type="date" data-gym="pplStart" value="${G.pplStart||''}"></label></div>
+    ${[1,2,3,4,5,6,0].map(dw=>{const g=(G.days||{})[dw];return `<div class="gymrow"><b>${DAY[dw]}</b>${g?`<input type="time" value="${g.win[0]}" data-gd="${dw}|0" aria-label="${DAY[dw]} window start"><input type="time" value="${g.win[1]}" data-gd="${dw}|1" aria-label="${DAY[dw]} window end"><span style="display:flex;gap:4px"><input type="text" value="${esc(g.note||'')}" data-gd="${dw}|note" aria-label="${DAY[dw]} note"><button class="x" data-gdel="${dw}" aria-label="No gym on ${DAY[dw]}">×</button></span>`:`<span class="small muted" style="grid-column:2/4">Rest day</span><button class="mini" data-gadd="${dw}">Add</button>`}</div>`}).join('')}</div>
+  <div class="card"><h2>Table tennis</h2><p class="help">Required once a week on one of these days. Blockwise picks the first one that's free, and you can switch any week from the block itself.</p>
+    <div class="fields"><label class="f" style="grid-column:1/-1">Name<input type="text" data-club="title" value="${esc(C.title||'')}"></label><div class="f">Days ${daysBtns('club',C.days)}</div><label class="f">Start<input type="time" data-club="start" value="${C.start}"></label><label class="f">End<input type="time" data-club="end" value="${C.end}"></label></div></div>
+  <div class="card"><h2>Meals + weekly goals</h2><p class="help">Meals fit into the first open slot in each window. Weekly goals are recurring work with no due date.</p>
+    <div class="fields"><label class="f">Lunch from<input type="time" data-st="meals.lunch.win.0" value="${st.meals.lunch.win[0]}"></label><label class="f">Lunch until<input type="time" data-st="meals.lunch.win.1" value="${st.meals.lunch.win[1]}"></label><label class="f">Lunch (min)<input type="number" step="15" min="0" data-st="meals.lunch.min" value="${st.meals.lunch.min}"></label>
+      <label class="f">Dinner from<input type="time" data-st="meals.dinner.win.0" value="${st.meals.dinner.win[0]}"></label><label class="f">Dinner until<input type="time" data-st="meals.dinner.win.1" value="${st.meals.dinner.win[1]}"></label><label class="f">Dinner (min)<input type="number" step="15" min="0" data-st="meals.dinner.min" value="${st.meals.dinner.min}"></label></div>
+    <div style="margin-top:12px;display:flex;flex-direction:column;gap:8px">${S.weekly.map((w,i)=>`<div class="fields" style="grid-template-columns:minmax(0,2fr) 1fr 1fr 34px;align-items:end"><label class="f">Goal${w.assumed?' <span class="tag warn">assumed</span>':''}<input type="text" data-wk="${i}|title" value="${esc(w.title)}"></label><label class="f">Min / week<input type="number" step="15" min="0" data-wk="${i}|minutes" value="${w.minutes}"></label><label class="f">Session<input type="number" step="15" min="15" data-wk="${i}|block" value="${w.block}"></label><button class="x" data-wkdel="${i}" aria-label="Remove goal">×</button></div>`).join('')}<button class="btn" id="addWk" style="align-self:flex-start">Add weekly goal</button></div></div>
+  <div class="card wide"><h2>Classes</h2><p class="help">No-class dates come from your syllabi (well-being days, fall break, Thanksgiving). Add more as dates separated by commas.</p>
+    <div class="tbl"><table><thead><tr><th>Code</th><th>Name / room</th><th>Days</th><th>Start</th><th>End</th><th>From</th><th>Until</th><th>No class on</th><th></th></tr></thead><tbody>
+    ${S.classes.map((c,i)=>`<tr><td><input type="text" data-cl="${i}|code" value="${esc(c.code)}" style="width:100px" aria-label="Code"></td><td><input type="text" data-cl="${i}|title" value="${esc(c.title)}" aria-label="Name"><input type="text" data-cl="${i}|room" value="${esc(c.room||'')}" placeholder="Room" style="margin-top:4px" aria-label="Room"></td><td>${daysBtns('cl:'+i,c.days)}</td>
+      <td><input type="time" data-cl="${i}|start" value="${c.start}" aria-label="Start"></td><td><input type="time" data-cl="${i}|end" value="${c.end}" aria-label="End"></td><td><input type="date" data-cl="${i}|from" value="${c.from||''}" aria-label="From"></td><td><input type="date" data-cl="${i}|until" value="${c.until||''}" aria-label="Until"></td>
+      <td><input type="text" data-cl="${i}|skip" value="${esc((c.skip||[]).join(', '))}" placeholder="2026-10-15, …" aria-label="No-class dates"></td><td><button class="x" data-cldel="${i}" aria-label="Remove ${esc(c.code)}">×</button></td></tr>`).join('')}
+    </tbody></table></div><button class="btn" id="addCl" style="margin-top:10px">Add class</button></div>
+  <div class="card wide"><h2>Exams + one-off events</h2><p class="help">Exams get the class buffer before and after. "Busy" blocks are times you marked unavailable from the calendar.</p>
+    <div class="tbl"><table><thead><tr><th>What</th><th>Kind</th><th>Date</th><th>Start</th><th>End</th><th></th></tr></thead><tbody>
+    ${S.events.slice().map((e,i)=>({e,i})).sort((a,b)=>(a.e.date||'').localeCompare(b.e.date||'')).map(({e,i})=>`<tr><td><input type="text" data-ev="${i}|title" value="${esc(e.title)}" aria-label="Title"></td><td><select data-ev="${i}|kind" aria-label="Kind">${['exam','event','busy'].map(x=>`<option value="${x}" ${e.kind===x?'selected':''}>${x==='exam'?'Exam':x==='busy'?'Busy':'Event'}</option>`).join('')}</select></td>
+      <td><input type="date" data-ev="${i}|date" value="${e.date}" aria-label="Date"></td><td><input type="time" data-ev="${i}|start" value="${e.start}" aria-label="Start"></td><td><input type="time" data-ev="${i}|end" value="${e.end}" aria-label="End"></td><td><button class="x" data-evdel="${i}" aria-label="Remove event">×</button></td></tr>`).join('')}
+    </tbody></table></div><button class="btn" id="addEv" style="margin-top:10px">Add event</button></div>
+  </div>`;
+}
+
+function renderRules(){
+  const st=state.settings;
+  $('#view-rules').innerHTML=`<div class="rules">
+  <div class="card"><h2>1. Constraints come first</h2><p class="help">These go on the calendar before any work is considered.</p><ol>
+    <li><b>Locked:</b> classes, exams and interviews, plus a ${st.classBuffer}-min buffer around each class and a ${st.warmup}-min warm-up before each interview.</li>
+    <li><b>Protected:</b> gym in your usual window (Friday floats), table tennis once a week on Mon or Thu, lunch and dinner.</li>
+    <li><b>Downtime:</b> everything after ${fmtT(tm(st.softEnd))}. Work only goes there when a deadline is one or two days out, and never past ${fmtT(tm(st.hardEnd))}.</li>
+    <li><b>Cap:</b> no more than ${fmtD(st.focusCap.wk)} of focused work on weekdays and ${fmtD(st.focusCap.we)} on weekends, even if more time is free. The rest is slack for things that run long.</li></ol></div>
+  <div class="card"><h2>2. Every task is a work object</h2><ol>
+    <li>Each task has a type, an importance, an hour estimate, a confidence level and stages.</li>
+    <li>Low confidence reserves extra time: +15% for "roughly", +30% for "guessing".</li>
+    <li>Stages run in order. Group steps (👥) are booked as meetings between 10am and 9pm, and the stages after them wait until the next day.</li>
+    <li>The target is the due date minus your finish-early days (1–2 by default). The planner aims for the target, not the due date.</li></ol></div>
+  <div class="card"><h2>3. Priority is computed, not set</h2><div class="formula">priority score = importance weight × hours left ÷ days until target<br>importance weight: Low 1 · Medium 1.5 · High 2.2 · Very high 3</div><ul>
+    <li>Critical: due within a day, or score ≥ 2. High: ≥ 1. Medium: ≥ 0.4. Low otherwise. Later: can't start for 3+ days.</li>
+    <li>As you log time, hours left shrink and the priority drops. As days pass, days left shrink and it rises.</li></ul></div>
+  <div class="card"><h2>4. How blocks get placed</h2><ol>
+    <li>Each day, every active task gets a share: hours left ÷ days left, and at least one minimum session.</li>
+    <li>Tasks within two days of their target go first and may use the evening.</li>
+    <li>The daily applications block goes next.</li>
+    <li>Everything else follows by urgency, in the earliest open slot, between the shortest and longest session lengths.</li>
+    <li>You like moving between tasks, so sessions are capped per task and days mix subjects.</li></ol></div>
+  <div class="card"><h2>5. Schedule pressure</h2><div class="formula">pressure = work needed in the next 7 days ÷ realistic focus time in the next 7 days</div><ul>
+    <li>Below 70%: comfortable. 70–85%: attention needed. 85–100%: getting constrained. Over 100%: over capacity.</li>
+    <li>Any task that can't fit before its due date forces at least "getting constrained".</li></ul></div>
+  <div class="card"><h2>6. Falling behind is expected</h2><ul>
+    <li>The plan is rebuilt from now every time you open it. A missed block isn't lost. Its time moves to the next open slot.</li>
+    <li>Check in with Done, Different time (log what you actually spent) or Skipped. Partial work counts, and the remainder is re-planned.</li>
+    <li>"I'm busy then" on any block marks that time unavailable and re-plans around it.</li>
+    <li>When you complete a task, the time you logged is compared to your estimate by course and type, and later estimates for that course are adjusted.</li></ul></div>
+  <div class="card"><h2>7. Everything connects</h2><ul>
+    <li><b>Interviews create their own prep.</b> Add an interview date to a company in Recruiting and a prep task appears with stages for that company: research, values + culture, why this firm, résumé walk-through, STAR stories, technical review, interviewer lookup, questions, and a mock run. It aims to finish the day before, and a warm-up is booked just before the interview.</li>
+    <li><b>Exams create their own study plan.</b> Add an exam in Routine and a study task appears, starting 10 days out. Stages go topic by topic, then practice problems, a timed practice exam and weak-area review, in that order, so learning builds toward the exam.</li>
+    <li><b>Move the date and the prep follows.</b> If an interview or exam moves, its prep task's due date moves with it.</li>
+    <li><b>Assignments feed exams.</b> Problem sets, readings and video classes that cover exam material are linked to it ("Builds toward"), and the exam's review stages point back to them.</li>
+    <li>Delete an auto-created prep task and it stays gone for that interview or exam.</li></ul></div>
+  </div>`;
+}
+
+/* ---------- popover ---------- */
+const pop=$('#pop');
+function openPop(el,k,i){
+  const b=plan.days[k].blocks[i]; if(!b)return;
+  const what={class:'Class',club:'Table tennis',meal:'Meal',event:'Event',busy:'Busy',gym:'Gym',leisure:'Downtime',study:'Work session',prep:'Warm-up / first step',meet:'Group meeting',intern:'Recruiting',interview:'Interview',exam:'Exam',buffer:'Buffer'}[b.kind]||'';
+  let acts='';
+  if(b.done)acts+=`<button class="btn" data-undo="${b.logId}">Undo</button>`;
+  else if(isWork(b.kind)&&b.taskId&&k<=plan.tKey)acts+=`<button class="btn primary" data-logit>Done</button><button class="btn" data-partial>Different time</button>`;
+  if(!b.fixed&&!b.done&&k>=plan.tKey&&b.kind!=='leisure')acts+=`<button class="btn" data-busy>I’m busy then</button>`;
+  if(b.kind==='gym'&&!b.done)acts+=`<button class="btn" data-gymskip>Skip gym this day</button>`;
+  if(b.club&&state.club.days.length>1){const cur=pkey(k).getDay();state.club.days.filter(d=>d!==cur).forEach(d=>{acts+=`<button class="btn" data-clubmove="${b.club}|${d}">Move to ${DAY[d]}</button>`})}
+  if(b.taskId&&state.tasks.some(t=>t.id===b.taskId))acts+=`<button class="btn" data-edit="${b.taskId}">Edit task</button>`;
+  if(b.fixed&&['class','event','exam','busy'].includes(b.kind))acts+=`<button class="btn" data-tab="routine">Edit routine</button>`;
+  pop.innerHTML=`<div class="small muted">${what}${b.done?' · logged':''}</div><h3>${esc(b.title)}</h3><div class="meta">${nice(k)} · ${fmtT(b.start)}–${fmtT(b.start+b.len)} (${fmtD(b.len)})</div>${b.sub?`<div class="meta">${esc(b.sub)}</div>`:''}${b.why?`<div class="meta" style="color:var(--ink)"><b>Why here:</b> ${esc(b.why)}</div>`:''}
+    <div class="partial" id="popPartial" hidden><input type="number" min="5" step="5" id="popMin" value="${b.len}" aria-label="Minutes spent"><span class="small muted">min</span><button class="mini primary" data-psave>Save</button></div><div class="acts">${acts}</div>`;
+  pop._b=b;pop._k=k;pop.hidden=false;
+  const r=el.getBoundingClientRect(),pw=pop.offsetWidth,ph=pop.offsetHeight;
+  let x=r.right+8; if(x+pw>innerWidth-8)x=r.left-pw-8; if(x<8)x=Math.max(8,Math.min(innerWidth-pw-8,r.left));
+  let y=Math.min(r.top,innerHeight-ph-8); if(x<r.right&&x+pw>r.left)y=Math.min(r.bottom+6,innerHeight-ph-8);
+  pop.style.left=x+'px';pop.style.top=Math.max(8,y)+'px';
+}
+function closePop(){pop.hidden=true}
+pop.addEventListener('click',e=>{
+  const b=pop._b,k=pop._k;
+  if(e.target.closest('[data-logit]')){closePop();logWork(b,k,b.len);return}
+  if(e.target.closest('[data-partial]')){$('#popPartial').hidden=false;$('#popMin').focus();return}
+  if(e.target.closest('[data-psave]')){const m=+$('#popMin').value||0;closePop();if(m>0)logWork(b,k,m);return}
+  const u=e.target.closest('[data-undo]'); if(u){closePop();undoLog(u.dataset.undo);return}
+  if(e.target.closest('[data-busy]')){state.events.push({id:uid(),kind:'busy',title:'Busy',date:k,start:hm(b.start),end:hm(b.start+b.len)});closePop();commit();renderAll();return}
+  if(e.target.closest('[data-gymskip]')){state.gym.skips.push(k);closePop();commit();renderAll();return}
+  const cm=e.target.closest('[data-clubmove]'); if(cm){const [wk,d]=cm.dataset.clubmove.split('|');state.club.overrides[wk]=+d;closePop();commit();renderAll();return}
+});
+addEventListener('scroll',closePop,true);
+
+/* ---------- global clicks ---------- */
+document.addEventListener('click',e=>{
+  const tab=e.target.closest('[data-tab]'); if(tab){ui.tab=tab.dataset.tab;saveUi();closePop();renderAll();scrollTo(0,0);return}
+  const wk=e.target.closest('[data-week]'); if(wk){ui.week=Math.max(-1,Math.min(MAXWEEK,ui.week+ +wk.dataset.week));renderAll();return}
+  if(e.target.closest('[data-new]')){openEditor(null);return}
+  const ed=e.target.closest('[data-edit]'); if(ed){closePop();openEditor(ed.dataset.edit);return}
+  const cm=e.target.closest('[data-complete]'); if(cm){const t=state.tasks.find(x=>x.id===cm.dataset.complete);if(t)completeTask(t);return}
+  const ro=e.target.closest('[data-reopen]'); if(ro){const t=state.tasks.find(x=>x.id===ro.dataset.reopen);if(t){t.completed=false;commit();renderAll()}return}
+  const lq=e.target.closest('[data-logq]'); if(lq){const [k,i]=lq.dataset.logq.split('|');logWork(plan.days[k].blocks[+i],k,plan.days[k].blocks[+i].len);return}
+  const op=e.target.closest('[data-open]'); if(op){const [k,i]=op.dataset.open.split('|');openPop(op,k,+i);return}
+  const ck=e.target.closest('[data-ck]'); if(ck){const [i,a]=ck.dataset.ck.split('|');const b=$('#view-today')._checks[+i];if(!b)return;
+    if(a==='done')logWork(b,b.date,b.len);
+    else if(a==='skip'){state.skips.push({date:b.date,taskId:b.taskId,start:b.start});commit();renderAll()}
+    else{const p=document.getElementById('pt-'+i);p.hidden=false;document.getElementById('ptv-'+i).focus()}
+    return}
+  const ps=e.target.closest('[data-ptsave]'); if(ps){const i=+ps.dataset.ptsave,b=$('#view-today')._checks[i],m=+document.getElementById('ptv-'+i).value||0;if(b&&m>0)logWork(b,b.date,m);return}
+  if(!e.target.closest('#pop'))closePop();
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePop();if(!$('#editor').hidden)closeEditor()}});
+
+/* ---------- recruiting + routine editing ---------- */
+function setPath(obj,path,v){const ps=path.split('.');let o=obj;for(let i=0;i<ps.length-1;i++)o=o[ps[i]];o[ps[ps.length-1]]=v}
+document.addEventListener('change',e=>{
+  const el=e.target, S=state; let d;
+  if((d=el.dataset.rs)!=null){setPath(S.recruit,d,el.type==='number'?Math.max(0,+el.value||0):el.value);commit();return}
+  if((d=el.dataset.pp)!=null){const p=S.pipeline[+d];p[el.dataset.field]=el.type==='checkbox'?el.checked:el.value;commit();return}
+  if((d=el.dataset.pe)!=null){const [i,ei,f]=d.split('|');S.pipeline[+i].events[+ei][f]=el.value;commit();return}
+  if((d=el.dataset.st)!=null){let v=el.type==='number'?Math.max(0,parseFloat(el.value)||0):el.value;if(el.hasAttribute('data-hours'))v=Math.round(v*60);setPath(S.settings,d,v);commit();return}
+  if((d=el.dataset.gym)!=null){S.gym[d]=el.type==='number'?Math.max(0,+el.value||0):el.value;commit();return}
+  if((d=el.dataset.gd)!=null){const [dw,f]=d.split('|');const g=S.gym.days[dw];if(f==='note')g.note=el.value;else g.win[+f]=el.value;commit();return}
+  if((d=el.dataset.club)!=null){S.club[d]=el.value;commit();return}
+  if((d=el.dataset.wk)!=null){const [i,f]=d.split('|');S.weekly[+i][f]=el.type==='number'?Math.max(0,+el.value||0):el.value;commit();return}
+  if((d=el.dataset.cl)!=null){const [i,f]=d.split('|');S.classes[+i][f]=f==='skip'?el.value.split(/[,\s]+/).filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x)):el.value;commit();return}
+  if((d=el.dataset.ev)!=null){const [i,f]=d.split('|');S.events[+i][f]=el.value;commit();return}
+});
+document.addEventListener('click',e=>{
+  const S=state, t=e.target; let d;
+  const dow=t.closest('[data-dow]'); if(dow){const host=dow.parentElement.dataset.days,i=+dow.dataset.dow;
+    const arr=host==='club'?S.club.days:S.classes[+host.split(':')[1]].days;const at=arr.indexOf(i);if(at>=0)arr.splice(at,1);else arr.push(i);dow.setAttribute('aria-pressed',at<0);commit();return}
+  if((d=t.closest('[data-gdel]'))){delete S.gym.days[d.dataset.gdel];commit();renderRoutine();return}
+  if((d=t.closest('[data-gadd]'))){S.gym.days[d.dataset.gadd]={win:['16:00','19:00'],note:''};commit();renderRoutine();return}
+  if((d=t.closest('[data-wkdel]'))){S.weekly.splice(+d.dataset.wkdel,1);commit();renderRoutine();return}
+  if(t.id==='addWk'){S.weekly.push({id:uid(),title:'New weekly goal',course:'',minutes:60,block:30});commit();renderRoutine();return}
+  if((d=t.closest('[data-cldel]'))){S.classes.splice(+d.dataset.cldel,1);commit();renderRoutine();return}
+  if(t.id==='addCl'){S.classes.push({id:uid(),code:'NEW 101',title:'',days:[1],start:'09:00',end:'10:15',from:plan.tKey,until:'',skip:[]});commit();renderRoutine();return}
+  if((d=t.closest('[data-evdel]'))){S.events.splice(+d.dataset.evdel,1);commit();renderRoutine();return}
+  if(t.id==='addEv'){S.events.push({id:uid(),kind:'event',title:'New event',date:plan.tKey,start:'12:00',end:'13:00'});commit();renderRoutine();return}
+  if((d=t.closest('[data-ppdel]'))){S.pipeline.splice(+d.dataset.ppdel,1);commit();renderRecruit();return}
+  if(t.id==='addPipe'){S.pipeline.push({id:uid(),company:'',role:'',stage:'Applied',next:'',events:[],thanks:true});commit();renderRecruit();return}
+  if((d=t.closest('[data-peadd]'))){const p=S.pipeline[+d.dataset.peadd];p.events=p.events||[];p.events.push({date:plan.tKey,start:'10:00',end:'10:30',label:'Interview'});p.thanks=false;commit();renderRecruit();return}
+  if((d=t.closest('[data-pedel]'))){const [i,ei]=d.dataset.pedel.split('|');S.pipeline[+i].events.splice(+ei,1);commit();renderRecruit();return}
+});
+
+/* ---------- task editor ---------- */
+let editingId=null, delArmed=false, stagesTouched=false, edStages=[];
+const F=id=>document.getElementById('f-'+id);
+F('type').innerHTML=Object.entries(TYPES).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+function renderStageList(){
+  $('#stageList').innerHTML=edStages.map((s,i)=>`<div class="stagerow"><input type="text" value="${esc(s.label)}" data-sg="${i}|label" aria-label="Stage ${i+1} name"><input type="number" min="15" step="15" value="${s.min}" data-sg="${i}|min" aria-label="Minutes"><label class="f row small" style="font-size:12.5px"><input type="checkbox" data-sg="${i}|gate" ${s.gate?'checked':''}> group</label><button type="button" class="x" data-sgdel="${i}" aria-label="Remove stage">×</button></div>`).join('');
+  const sum=edStages.reduce((a,s)=>a+(+s.min||0),0); if(sum&&!stagesTouched)return; if(sum)F('est').value=+(sum/60).toFixed(2);
+}
+$('#stageList').addEventListener('input',e=>{const d=e.target.dataset.sg;if(!d)return;const [i,f]=d.split('|');edStages[+i][f]=f==='gate'?e.target.checked:f==='min'?Math.max(15,+e.target.value||15):e.target.value;stagesTouched=true;if(f==='min')F('est').value=+(edStages.reduce((a,s)=>a+(+s.min||0),0)/60).toFixed(2)});
+$('#stageList').addEventListener('change',e=>{if(e.target.dataset.sg&&e.target.type==='checkbox'){const [i]=e.target.dataset.sg.split('|');edStages[+i].gate=e.target.checked;stagesTouched=true}});
+$('#stageList').addEventListener('click',e=>{const d=e.target.closest('[data-sgdel]');if(d){edStages.splice(+d.dataset.sgdel,1);stagesTouched=true;renderStageList();F('est').value=+(edStages.reduce((a,s)=>a+(+s.min||0),0)/60).toFixed(2)}});
+$('#addStage').addEventListener('click',()=>{edStages.push({label:'New stage',min:30});stagesTouched=true;renderStageList()});
+$('#resetStages').addEventListener('click',()=>{edStages=buildStages(F('type').value,Math.round((+F('est').value||1)*60));stagesTouched=false;renderStageList()});
+function rebuildIfUntouched(){if(!stagesTouched){edStages=buildStages(F('type').value,Math.round((+F('est').value||1)*60));renderStageList()}}
+F('type').addEventListener('change',rebuildIfUntouched);
+F('est').addEventListener('change',()=>{if(!stagesTouched)rebuildIfUntouched();else{const sum=edStages.reduce((a,s)=>a+(+s.min||0),0),target=Math.round((+F('est').value||0)*60);if(sum&&target){const f=target/sum;edStages.forEach(s=>{if(!s.gate)s.min=r15(s.min*f)});renderStageList()}}learnNote()});
+F('course').addEventListener('change',learnNote);
+document.querySelectorAll('input[name=conf]').forEach(r=>r.addEventListener('change',confNote));
+function confNote(){const c=(document.querySelector('input[name=conf]:checked')||{}).value||'med',est=(+F('est').value||0)*60;$('#confNote').textContent=c==='high'?'Planned exactly as estimated.':'Reserves '+(c==='med'?'15':'30')+'% extra: '+fmtD(est)+' to '+fmtD(est*CONF[c])+'.'}
+function learnNote(){
+  const c=F('course').value.trim(),ty=F('type').value,h=state.history.filter(x=>x.course===c&&x.type===ty&&x.est&&x.actual),n=$('#learnNote');
+  if(h.length<1){n.hidden=true;return}
+  const r=h.reduce((a,x)=>a+x.actual,0)/h.reduce((a,x)=>a+x.est,0),est=(+F('est').value||0)*60;
+  n.hidden=false;n.textContent=`Your past ${c} ${TYPES[ty].toLowerCase()} tasks took ${r.toFixed(2)}× the estimate (${h.length} finished).`+(est?` Suggested: ${fmtD(r15(est*r))}.`:'');
+}
+function openEditor(id){
+  const t=id?state.tasks.find(x=>x.id===id):null; editingId=t?t.id:null;
+  const src=t||{title:'',course:'',type:'assignment',importance:2,due:'',start:'',finishEarly:1,estMin:120,doneMin:0,conf:'med',minBlock:45,maxBlock:120,notes:''};
+  $('#edTitle').textContent=t?'Edit task':'New task';
+  F('title').value=src.title;F('course').value=src.course||'';F('type').value=src.type||'other';
+  (document.getElementById('f-i'+(src.importance||2))||{}).checked=true;
+  F('due').value=src.due||'';F('start').value=src.start||'';F('early').value=src.finishEarly??1;F('weight').value=src.weight??'';
+  F('est').value=src.estMin?+(src.estMin/60).toFixed(2):'';F('done').value=src.doneMin?+(src.doneMin/60).toFixed(2):'';
+  (document.getElementById('f-c'+(src.conf||'med'))||{}).checked=true;
+  F('minb').value=src.minBlock||45;F('maxb').value=src.maxBlock||(src.type==='exam'?90:120);F('notes').value=src.notes||'';
+  F('feeds').innerHTML='<option value="">Nothing</option>'+state.tasks.filter(x=>!x.completed&&x.id!==src.id&&(x.type==='exam'||x.type==='project'||x.type==='case'||x.type==='interview'||x.id===src.feeds)).sort((a,b)=>(a.due||'9').localeCompare(b.due||'9')).map(x=>`<option value="${x.id}" ${src.feeds===x.id?'selected':''}>${esc((x.course?x.course+' ':'')+x.title)}${x.due?' ('+short(x.due)+')':''}</option>`).join('');
+  edStages=t&&t.stages?clone(t.stages):buildStages(src.type,src.estMin||120);stagesTouched=!!t;renderStageList();
+  F('instr').value='';$('#estOut').hidden=true;
+  $('#delTask').hidden=!t;$('#completeTask').hidden=!t||t.completed;$('#delTask').textContent='Delete';delArmed=false;
+  $('#formErr').hidden=true;confNote();learnNote();
+  $('#editor').hidden=false;setTimeout(()=>F('title').focus(),30);
+}
+function closeEditor(){$('#editor').hidden=true}
+$('#editor').addEventListener('click',e=>{if(e.target.id==='editor'||e.target.closest('[data-close]'))closeEditor()});
+$('#delTask').addEventListener('click',()=>{
+  if(!delArmed){delArmed=true;$('#delTask').textContent='Click again to delete';return}
+  const gone=state.tasks.find(t=>t.id===editingId); state.dismissed=state.dismissed||[];
+  if(gone&&gone.pid&&gone.type==='interview')state.dismissed.push('p:'+gone.pid);
+  if(gone&&gone.eventId)state.dismissed.push('e:'+gone.eventId);
+  state.tasks=state.tasks.filter(t=>t.id!==editingId);state.logs=state.logs.filter(l=>l.taskId!==editingId);commit();closeEditor();renderAll();
+});
+$('#completeTask').addEventListener('click',()=>{const t=state.tasks.find(x=>x.id===editingId);closeEditor();if(t)completeTask(t)});
+$('#taskForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const title=F('title').value.trim(),err=$('#formErr');
+  if(!title){err.textContent='Give the task a name.';err.hidden=false;F('title').focus();return}
+  const stages=edStages.filter(s=>s.label&&+s.min>0).map(s=>({label:s.label.trim(),min:r15(+s.min),gate:!!s.gate||undefined}));
+  if(!stages.length){err.textContent='Add at least one stage with minutes so the planner can make room for it.';err.hidden=false;return}
+  const est=stages.reduce((a,s)=>a+s.min,0);
+  let minB=Math.max(15,r15(+F('minb').value||45)),maxB=Math.max(minB,r15(+F('maxb').value||120));
+  const t=editingId?state.tasks.find(x=>x.id===editingId):{id:uid(),completed:false};
+  const newDue=F('due').value||'';
+  Object.assign(t,{title,course:F('course').value.trim(),type:F('type').value,importance:+(document.querySelector('input[name=imp]:checked')||{value:2}).value,
+    due:newDue,start:F('start').value||'',finishEarly:Math.max(0,Math.min(10,parseInt(F('early').value)||0)),weight:F('weight').value?+F('weight').value:undefined,
+    estMin:est,doneMin:Math.round((parseFloat(F('done').value)||0)*60),conf:(document.querySelector('input[name=conf]:checked')||{value:'med'}).value,
+    stages,minBlock:minB,maxBlock:maxB,notes:F('notes').value.trim(),feeds:F('feeds').value||undefined});
+  if(t.assumed&&editingId)t.assumed=false;
+  if(!editingId)state.tasks.push(t);
+  commit();closeEditor();renderAll();
+});
+
+/* ---------- Claude estimate ---------- */
+$('#askClaude').addEventListener('click',async()=>{
+  const out=$('#estOut'),btn=$('#askClaude'),instr=F('instr').value.trim();
+  if(!sample)return;
+  if(instr.length<20){out.hidden=false;out.textContent='Paste the instructions first (at least a sentence or two).';return}
+  btn.disabled=true;out.hidden=false;out.textContent='Reading the instructions…';
+  const prompt=`You help a business-school undergraduate plan study time. Estimate how long this task will realistically take, including reading instructions, doing the work, and checking it. Return JSON only, in this shape:
+{"totalMinutes": number, "stages": [{"label": string, "minutes": number, "group": boolean}], "sessionMinutes": number, "note": string}
+"stages" are ordered steps that sum to about totalMinutes; set "group" true only for steps that require meeting teammates. "sessionMinutes" is a good length for one sitting (30-120). "note" is one short sentence of advice.
+Task: ${F('title').value||'(untitled)'} | Course: ${F('course').value||'n/a'} | Type: ${TYPES[F('type').value]}
+Instructions:
+"""${instr.slice(0,12000)}"""`;
+  try{
+    const r=await sample.json(prompt,{modelTier:'default'});
+    const st=(Array.isArray(r.stages)?r.stages:[]).filter(s=>s&&s.label).map(s=>({label:String(s.label).slice(0,80),min:r15(+s.minutes||30),gate:!!s.group}));
+    const total=st.reduce((a,s)=>a+s.min,0)||r15(+r.totalMinutes||60);
+    out.innerHTML=`<b>About ${fmtD(total)}</b>${r.note?' · '+esc(r.note):''}<ol>${st.map(s=>`<li>${esc(s.label)} <span class="small muted">${fmtD(s.min)}${s.gate?' · group':''}</span></li>`).join('')}</ol><button type="button" class="btn" id="applyEst">Use these stages</button>`;
+    $('#applyEst').onclick=()=>{if(st.length){edStages=st;stagesTouched=true;renderStageList()}F('est').value=+(total/60).toFixed(2);
+      if(r.sessionMinutes){const sm=Math.max(30,Math.min(150,r15(r.sessionMinutes)));F('maxb').value=sm;if(+F('minb').value>sm)F('minb').value=Math.min(45,sm)}
+      confNote();$('#applyEst').textContent='Applied ✓'};
+  }catch(e){
+    if(e&&e.code==='not_granted')$('#claudeBox').hidden=true;
+    else out.textContent=e&&e.code==='rate_limited'?'Too many requests right now. Try again in a minute.':'Couldn’t get an estimate. Try again, or set the stages yourself.';
+  }finally{btn.disabled=false}
+});
+
+/* ---------- boot ---------- */
+renderAll();
+setInterval(()=>{if($('#editor').hidden&&pop.hidden&&(ui.tab==='today'||ui.tab==='week')&&!document.activeElement.matches('input,select,textarea'))renderAll()},5*60*1000);
+(async()=>{
+  const c=window.claude;
+  if(!c||!c.use){loaded=true;setSaved('Saved in this browser');renderAll();return}
+  c.use('sample').then(s=>{sample=s;$('#claudeBox').hidden=!s}).catch(()=>{});
+  try{db=await c.use('db')}catch(e){db=null}
+  if(!db){loaded=true;setSaved('Saved in this browser');renderAll();return}
+  try{
+    const snap=await db.doc(DOC).get();
+    const d=snap.exists?snap.data():null;
+    if(hasData(d)&&(d.seedRev||0)<(state.seedRev||0)){state=migrate(mergeSeed(d,state));pushDb();}
+    else if(hasData(d)&&(d.updated||0)>=(state.updated||0)){state=migrate(clone(d));try{localStorage.setItem(LS,JSON.stringify(state))}catch(e){}}
+    else if(hasData(state))pushDb();
+    setSaved('Saved');
+  }catch(e){setSaved('Couldn’t reach saved data. Working in this browser')}
+  loaded=true; renderAll();
+})();
+})();
+</script>
+</html>

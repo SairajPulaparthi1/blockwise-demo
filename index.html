@@ -10,19 +10,19 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
 :root{
-  --bg:#F2F4F7; --surface:#FFFFFF; --surface-2:#E9EDF2; --ink:#161E2A; --muted:#5A6576; --faint:#8A94A3; --line:#D6DCE5;
-  --accent:#1E6A86; --accent-ink:#FFFFFF; --focus:#1E6A86;
+  --bg:#F3F5FB; --surface:#FFFFFF; --surface-2:#E8ECF6; --ink:#0B1A3C; --muted:#4F5B78; --faint:#8790AA; --line:#D5DBEA;
+  --accent:#0021A5; --accent-ink:#FFFFFF; --focus:#FA4616; --gator-orange:#FA4616; --gator-blue:#0021A5;
   --ok:#1F7A45; --ok-bg:#DDF2E4; --warn:#8A5A00; --warn-bg:#FBEDC7; --orange:#A84A0C; --orange-bg:#FBE0CC; --bad:#A3261E; --bad-bg:#F9DCD8;
-  --k-class-bg:#DCE2EB; --k-class:#27344A;
-  --k-club-bg:#FAD6C4; --k-club:#8A2E0B;
+  --k-class-bg:#DCE3F7; --k-class:#0021A5;
+  --k-club-bg:#D3EDF5; --k-club:#0B5469;
   --k-gym-bg:#CBEAD4; --k-gym:#1B5B31;
   --k-leisure-bg:#E3DBF6; --k-leisure:#48318C;
   --k-intern-bg:#FAE8B8; --k-intern:#735000;
-  --k-study-bg:#D0E4F6; --k-study:#15477A;
+  --k-study-bg:#FFE2D3; --k-study:#A32E00;
   --k-prep-bg:#F6D3E3; --k-prep:#81204C;
   --k-meal-bg:#ECEFF3; --k-meal:#687384;
-  --k-int-bg:#1E6A86; --k-int:#FFFFFF;
-  --k-exam-bg:#A3261E; --k-exam:#FFFFFF;
+  --k-int-bg:#0021A5; --k-int:#FFFFFF;
+  --k-exam-bg:#FA4616; --k-exam:#FFFFFF;
   --k-event-bg:#E4E7EA; --k-event:#3C4550;
   --hour:46px;
   --display:"Bricolage Grotesque", "Avenir Next", "Segoe UI", sans-serif;
@@ -32,24 +32,24 @@
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --bg:#0F141B; --surface:#171E28; --surface-2:#1F2833; --ink:#E6EBF2; --muted:#9AA5B5; --faint:#6D7888; --line:#2A3441;
-    --accent:#5DB3D3; --accent-ink:#0B1218; --focus:#5DB3D3;
+    --bg:#0A1024; --surface:#111A33; --surface-2:#18233F; --ink:#E8ECF8; --muted:#9AA6C4; --faint:#6C7799; --line:#26304D;
+    --accent:#7B93FF; --accent-ink:#08102A; --focus:#FF7A4D; --gator-orange:#FF7A4D; --gator-blue:#7B93FF;
     --ok:#6FD39A; --ok-bg:#15301F; --warn:#F0C65E; --warn-bg:#352A0E; --orange:#FFA66B; --orange-bg:#3B2213; --bad:#FF8F85; --bad-bg:#3A1714;
-    --k-class-bg:#27313F; --k-class:#C9D4E4; --k-club-bg:#43251A; --k-club:#FFB894; --k-gym-bg:#183626; --k-gym:#94E0AE;
-    --k-leisure-bg:#2C2446; --k-leisure:#C8B8FA; --k-intern-bg:#3A2F10; --k-intern:#F5D27A; --k-study-bg:#15314B; --k-study:#9CCAF4;
-    --k-prep-bg:#40192C; --k-prep:#F7A8CB; --k-meal-bg:#1C232D; --k-meal:#8792A2; --k-int-bg:#5DB3D3; --k-int:#0B1218;
-    --k-exam-bg:#FF8F85; --k-exam:#1A0B09; --k-event-bg:#252C35; --k-event:#C3CAD3;
+    --k-class-bg:#1A2756; --k-class:#B9C7FF; --k-club-bg:#10303A; --k-club:#8FD6EA; --k-gym-bg:#183626; --k-gym:#94E0AE;
+    --k-leisure-bg:#2C2446; --k-leisure:#C8B8FA; --k-intern-bg:#3A2F10; --k-intern:#F5D27A; --k-study-bg:#3D1A0C; --k-study:#FFB08F;
+    --k-prep-bg:#40192C; --k-prep:#F7A8CB; --k-meal-bg:#1C232D; --k-meal:#8792A2; --k-int-bg:#7B93FF; --k-int:#08102A;
+    --k-exam-bg:#FF6A3D; --k-exam:#1A0700; --k-event-bg:#252C35; --k-event:#C3CAD3;
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --bg:#0F141B; --surface:#171E28; --surface-2:#1F2833; --ink:#E6EBF2; --muted:#9AA5B5; --faint:#6D7888; --line:#2A3441;
-  --accent:#5DB3D3; --accent-ink:#0B1218; --focus:#5DB3D3;
+  --bg:#0A1024; --surface:#111A33; --surface-2:#18233F; --ink:#E8ECF8; --muted:#9AA6C4; --faint:#6C7799; --line:#26304D;
+  --accent:#7B93FF; --accent-ink:#08102A; --focus:#FF7A4D; --gator-orange:#FF7A4D; --gator-blue:#7B93FF;
   --ok:#6FD39A; --ok-bg:#15301F; --warn:#F0C65E; --warn-bg:#352A0E; --orange:#FFA66B; --orange-bg:#3B2213; --bad:#FF8F85; --bad-bg:#3A1714;
-  --k-class-bg:#27313F; --k-class:#C9D4E4; --k-club-bg:#43251A; --k-club:#FFB894; --k-gym-bg:#183626; --k-gym:#94E0AE;
-  --k-leisure-bg:#2C2446; --k-leisure:#C8B8FA; --k-intern-bg:#3A2F10; --k-intern:#F5D27A; --k-study-bg:#15314B; --k-study:#9CCAF4;
-  --k-prep-bg:#40192C; --k-prep:#F7A8CB; --k-meal-bg:#1C232D; --k-meal:#8792A2; --k-int-bg:#5DB3D3; --k-int:#0B1218;
-  --k-exam-bg:#FF8F85; --k-exam:#1A0B09; --k-event-bg:#252C35; --k-event:#C3CAD3;
+  --k-class-bg:#1A2756; --k-class:#B9C7FF; --k-club-bg:#10303A; --k-club:#8FD6EA; --k-gym-bg:#183626; --k-gym:#94E0AE;
+  --k-leisure-bg:#2C2446; --k-leisure:#C8B8FA; --k-intern-bg:#3A2F10; --k-intern:#F5D27A; --k-study-bg:#3D1A0C; --k-study:#FFB08F;
+  --k-prep-bg:#40192C; --k-prep:#F7A8CB; --k-meal-bg:#1C232D; --k-meal:#8792A2; --k-int-bg:#7B93FF; --k-int:#08102A;
+  --k-exam-bg:#FF6A3D; --k-exam:#1A0700; --k-event-bg:#252C35; --k-event:#C3CAD3;
 }
 [hidden]{display:none!important}
 *{box-sizing:border-box}
@@ -63,7 +63,9 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.
 .muted{color:var(--muted)} .small{font-size:12.5px}
 .top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding-block:18px 14px}
 .brand{display:flex;align-items:baseline;gap:10px;margin-right:auto}
-.brand h1{font-size:26px;font-weight:700}
+.brand h1{font-size:26px;font-weight:700;color:var(--gator-blue)}
+.brand h1::after{content:'';display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--gator-orange);margin-left:4px;vertical-align:baseline}
+body::before{content:'';display:block;height:5px;margin-inline:-16px;background:linear-gradient(90deg,var(--gator-blue) 0 62%,var(--gator-orange) 62% 100%)}
 .brand span{color:var(--muted);font-size:13px}
 .tabs{display:flex;flex-wrap:wrap;background:var(--surface-2);border-radius:10px;padding:3px;gap:2px}
 .tabs button{border:0;background:transparent;padding:7px 12px;border-radius:8px;font-weight:600;color:var(--muted);font-size:14px}
@@ -261,7 +263,7 @@ fieldset p{margin:0;font-size:13px;color:var(--muted)}
       <button role="tab" id="tab-today" data-tab="today">Today</button>
       <button role="tab" id="tab-week" data-tab="week">Week</button>
       <button role="tab" id="tab-tasks" data-tab="tasks">Tasks</button>
-      <button role="tab" id="tab-recruit" data-tab="recruit">Recruiting</button>
+      <button role="tab" id="tab-recruit" data-tab="recruit" hidden>Recruiting</button>
       <button role="tab" id="tab-routine" data-tab="routine">Routine</button>
       <button role="tab" id="tab-rules" data-tab="rules">How it decides</button>
     </div>
@@ -345,12 +347,12 @@ fieldset p{margin:0;font-size:13px;color:var(--muted)}
 <datalist id="courseList"></datalist>
 <div class="pop" id="pop" hidden></div>
 
-<div id="demoRibbon" style="position:fixed;left:12px;bottom:12px;z-index:9999;display:flex;gap:8px;align-items:center;padding:7px 12px;border-radius:999px;background:#161E2A;color:#fff;font:500 12px/1.2 system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.25)">
+<div id="demoRibbon" style="position:fixed;left:12px;bottom:12px;z-index:9999;display:flex;gap:8px;align-items:center;padding:7px 12px;border-radius:999px;background:#0021A5;color:#fff;font:500 12px/1.2 system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.25)">
   <b>Demo</b><span>A sample student. Changes stay in your browser.</span>
-  <button onclick="try{['blockwise-demo.v1','blockwise-demo.ui1','blockwise-demo.frozen1'].forEach(k=>localStorage.removeItem(k))}catch(e){};location.reload()" style="font:inherit;color:#161E2A;background:#fff;border:0;border-radius:999px;padding:3px 9px;cursor:pointer">Reset</button>
+  <button onclick="try{['blockwise-demo.v1','blockwise-demo.ui1','blockwise-demo.frozen1'].forEach(k=>localStorage.removeItem(k))}catch(e){};location.reload()" style="font:inherit;color:#fff;background:#FA4616;border:0;border-radius:999px;padding:3px 9px;cursor:pointer">Reset</button>
   <button onclick="this.parentNode.remove()" aria-label="Hide" style="font:inherit;color:#fff;background:transparent;border:0;cursor:pointer">✕</button>
 </div>
-<script id="seedData" type="application/json">{"v": 2, "updated": 1790000000000, "seedRev": 1, "demoBase": "2026-10-19", "settings": {"wake": {"wk": "07:30", "we": "09:00"}, "bed": {"wk": "00:00", "we": "01:00"}, "softEnd": "20:00", "hardEnd": "22:30", "classBuffer": 30, "warmup": 20, "focusCap": {"wk": 360, "we": 480}, "meals": {"lunch": {"win": ["11:00", "14:30"], "min": 30}, "dinner": {"win": ["17:30", "20:30"], "min": 45}}}, "gym": {"minutes": 75, "detail": "55 min weights + 20 min run", "pplStart": "2026-10-19", "days": {"1": {"win": ["15:30", "19:00"], "note": "After class"}, "2": {"win": ["07:30", "10:30"], "note": "Before class"}, "3": {"win": ["15:30", "19:00"], "note": "After class"}, "4": {"win": ["07:30", "10:30"], "note": "Before class"}, "5": {"win": ["07:30", "15:00"], "note": "Any time before 3pm", "flex": true}}, "skips": []}, "club": {"title": "Table tennis practice", "days": [1, 4], "start": "18:30", "end": "19:30", "overrides": {}}, "recruit": {"minutes": 45, "win": ["09:00", "20:00"], "label": "Internship applications"}, "weekly": [{"id": "wfin", "title": "Practice problems", "course": "FIN 301", "minutes": 90, "block": 45, "from": "2026-08-24", "until": "2026-12-04"}, {"id": "wstat", "title": "R practice exercises", "course": "STAT 220", "minutes": 60, "block": 30, "from": "2026-08-24", "until": "2026-12-04"}], "classes": [{"id": "cfin", "code": "FIN 301", "title": "Corporate Finance", "room": "Business Hall 210", "days": [1, 3], "start": "09:30", "end": "10:45", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-25"]}, {"id": "cacc", "code": "ACCT 310", "title": "Intermediate Accounting", "room": "Business Hall 118", "days": [1, 3], "start": "13:00", "end": "14:15", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-25"]}, {"id": "cmkt", "code": "MKT 340", "title": "Consumer Behavior", "room": "Commons 104", "days": [2, 4], "start": "11:00", "end": "12:15", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-26"]}, {"id": "cstat", "code": "STAT 220", "title": "Business Statistics", "room": "Science Center 2B", "days": [2, 4], "start": "14:00", "end": "15:15", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-26"]}, {"id": "cmgt", "code": "MGMT 350", "title": "Organizational Behavior", "room": "Business Hall 330", "days": [5], "start": "10:00", "end": "12:30", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-27"]}], "events": [{"id": "estatrev", "kind": "event", "title": "STAT 220 quiz review (optional)", "date": "2026-10-22", "start": "16:00", "end": "17:00"}, {"id": "efinmid", "kind": "exam", "title": "FIN 301 Midterm", "date": "2026-10-28", "start": "09:30", "end": "10:45"}, {"id": "eacc2", "kind": "exam", "title": "ACCT 310 Exam 2", "date": "2026-11-11", "start": "13:00", "end": "14:15"}, {"id": "efinfin", "kind": "exam", "title": "FIN 301 Final exam", "date": "2026-12-09", "start": "09:00", "end": "11:00"}], "pipeline": [{"id": "pnorth", "company": "Northwind Capital", "role": "Investment Banking Summer Analyst", "stage": "1st round", "next": "Interview Friday morning", "events": [{"date": "2026-10-23", "start": "10:00", "end": "10:45", "label": "Interview (A. Rivera)"}], "thanks": false}, {"id": "pharbor", "company": "Harbor & Pine Advisors", "role": "Corporate Finance Intern", "stage": "Video interview", "next": "Record the on-demand interview by Friday", "events": [], "thanks": false}, {"id": "psummit", "company": "Summit Ridge Bank", "role": "Commercial Banking Intern", "stage": "Final round", "next": "Superday in two weeks", "events": [{"date": "2026-11-06", "start": "13:00", "end": "16:00", "label": "Superday (M. Chen, J. Okafor)"}], "thanks": false}, {"id": "pblue", "company": "Bluefield Partners", "role": "Private Equity Intern", "stage": "Applied", "next": "Waiting to hear back", "events": [], "thanks": false}, {"id": "pcres", "company": "Crescent Analytics", "role": "FP&A Intern", "stage": "Networking", "next": "Send a thank-you after the alum coffee chat", "events": [], "thanks": false}, {"id": "plark", "company": "Larkspur Group", "role": "Wealth Management Intern", "stage": "Applied", "next": "Follow up in a week", "events": [], "thanks": false}], "tasks": [{"id": "tharbor", "title": "Harbor & Pine on-demand video interview", "course": "Recruiting", "type": "video", "importance": 4, "due": "2026-10-23", "start": "2026-10-19", "finishEarly": 0, "estMin": 75, "conf": "high", "pid": "pharbor", "notes": "Three recorded answers, 2 minutes each. Laptop with a webcam.", "stages": [{"label": "Research Harbor & Pine: clients, deal types, recent news", "min": 15}, {"label": "Why this firm, why corporate finance (pitch)", "min": 15}, {"label": "Practice 3 answers on camera with a timer", "min": 20}, {"label": "Set up camera, lighting, outfit", "min": 10}, {"label": "Record the interview", "min": 15}]}, {"id": "tfinmid", "title": "Midterm study", "course": "FIN 301", "type": "exam", "importance": 4, "due": "2026-10-28", "start": "2026-10-19", "finishEarly": 1, "estMin": 360, "conf": "high", "eventId": "efinmid", "notes": "Chapters 1–8. Formula sheet allowed.", "stages": [{"label": "List topics + weak spots", "min": 30}, {"label": "Time value of money + bond pricing review", "min": 90}, {"label": "NPV, IRR and capital budgeting problems", "min": 90}, {"label": "Timed practice midterm", "min": 90}, {"label": "Fix weak areas + formula sheet", "min": 60}]}, {"id": "tfinps4", "title": "Problem Set 4 (NPV and IRR)", "course": "FIN 301", "type": "assignment", "importance": 3, "due": "2026-10-22", "start": "2026-10-19", "finishEarly": 1, "estMin": 120, "conf": "med", "feeds": "tfinmid", "notes": "Due 11:59pm. Builds directly toward the midterm."}, {"id": "taccthw", "title": "Homework 6 (leases)", "course": "ACCT 310", "type": "assignment", "importance": 2, "due": "2026-10-21", "start": "2026-10-19", "finishEarly": 0, "estMin": 120, "conf": "high"}, {"id": "tacc2", "title": "Exam 2 study", "course": "ACCT 310", "type": "exam", "importance": 4, "due": "2026-11-11", "start": "2026-11-01", "finishEarly": 1, "estMin": 420, "conf": "med", "eventId": "eacc2"}, {"id": "tmktproj", "title": "Consumer journey project", "course": "MKT 340", "type": "group", "importance": 3, "due": "2026-11-06", "start": "2026-10-22", "finishEarly": 1, "estMin": 285, "conf": "med", "notes": "Team of four. Each person owns one stage of the journey.", "stages": [{"label": "Group: split up the research", "min": 60, "gate": true}, {"label": "Draft your section", "min": 120}, {"label": "Group: review the deck", "min": 60, "gate": true}, {"label": "Polish your slides", "min": 45}]}, {"id": "tstatquiz", "title": "Quiz 5: regression", "course": "STAT 220", "type": "quiz", "importance": 2, "due": "2026-10-23", "start": "2026-10-20", "finishEarly": 0, "estMin": 60, "conf": "med"}, {"id": "tstatproj", "title": "Data project: pick a dataset and question", "course": "STAT 220", "type": "project", "importance": 3, "due": "2026-11-06", "start": "2026-10-26", "finishEarly": 1, "estMin": 300, "conf": "low"}, {"id": "tmgmtread", "title": "Read chapters 9–10", "course": "MGMT 350", "type": "reading", "importance": 1, "due": "2026-10-24", "start": "2026-10-19", "finishEarly": 0, "estMin": 80, "conf": "high"}, {"id": "tmgmtcase", "title": "Case write-up: team conflict at a startup", "course": "MGMT 350", "type": "case", "importance": 2, "due": "2026-11-02", "start": "2026-10-26", "finishEarly": 1, "estMin": 180, "conf": "med"}, {"id": "texcel", "title": "Excel financial modeling certificate", "course": "Recruiting", "type": "cert", "importance": 2, "due": "2026-11-13", "start": "2026-10-26", "finishEarly": 1, "estMin": 240, "conf": "low", "notes": "Self-paced. Recruiters keep asking about modeling skills."}, {"id": "tresume", "title": "Update résumé with this semester's projects", "course": "Recruiting", "type": "other", "importance": 3, "due": "2026-10-25", "start": "2026-10-19", "finishEarly": 1, "estMin": 60, "conf": "high"}, {"id": "tthanks", "title": "Thank-you note to the Crescent alum", "course": "Recruiting", "type": "other", "importance": 2, "due": "2026-10-21", "start": "2026-10-20", "finishEarly": 0, "estMin": 15, "conf": "high", "pid": "pcres"}], "logs": [], "skips": [], "history": []}</script>
+<script id="seedData" type="application/json">{"v": 2, "updated": 1790000000000, "seedRev": 1, "demoBase": "2026-10-19", "settings": {"wake": {"wk": "07:30", "we": "09:00"}, "bed": {"wk": "00:00", "we": "01:00"}, "softEnd": "20:00", "hardEnd": "22:30", "classBuffer": 30, "warmup": 20, "focusCap": {"wk": 360, "we": 480}, "meals": {"lunch": {"win": ["11:00", "14:30"], "min": 30}, "dinner": {"win": ["17:30", "20:30"], "min": 45}}}, "gym": {"minutes": 75, "detail": "55 min weights + 20 min run", "pplStart": "2026-10-19", "days": {"1": {"win": ["15:30", "19:00"], "note": "After class"}, "2": {"win": ["07:30", "10:30"], "note": "Before class"}, "3": {"win": ["15:30", "19:00"], "note": "After class"}, "4": {"win": ["07:30", "10:30"], "note": "Before class"}, "5": {"win": ["07:30", "15:00"], "note": "Any time before 3pm", "flex": true}}, "skips": []}, "club": {"title": "Table tennis practice", "days": [1, 4], "start": "18:30", "end": "19:30", "overrides": {}}, "recruit": {"minutes": 0, "win": ["09:00", "20:00"], "label": ""}, "weekly": [{"id": "wfin", "title": "Practice problems", "course": "FIN 301", "minutes": 90, "block": 45, "from": "2026-08-24", "until": "2026-12-04"}, {"id": "wstat", "title": "R practice exercises", "course": "STAT 220", "minutes": 60, "block": 30, "from": "2026-08-24", "until": "2026-12-04"}], "classes": [{"id": "cfin", "code": "FIN 301", "title": "Corporate Finance", "room": "Business Hall 210", "days": [1, 3], "start": "09:30", "end": "10:45", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-25"]}, {"id": "cacc", "code": "ACCT 310", "title": "Intermediate Accounting", "room": "Business Hall 118", "days": [1, 3], "start": "13:00", "end": "14:15", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-25"]}, {"id": "cmkt", "code": "MKT 340", "title": "Consumer Behavior", "room": "Commons 104", "days": [2, 4], "start": "11:00", "end": "12:15", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-26"]}, {"id": "cstat", "code": "STAT 220", "title": "Business Statistics", "room": "Science Center 2B", "days": [2, 4], "start": "14:00", "end": "15:15", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-26"]}, {"id": "cmgt", "code": "MGMT 350", "title": "Organizational Behavior", "room": "Business Hall 330", "days": [5], "start": "10:00", "end": "12:30", "from": "2026-08-24", "until": "2026-12-04", "skip": ["2026-11-27"]}], "events": [{"id": "estatrev", "kind": "event", "title": "STAT 220 quiz review (optional)", "date": "2026-10-22", "start": "16:00", "end": "17:00"}, {"id": "efinmid", "kind": "exam", "title": "FIN 301 Midterm", "date": "2026-10-28", "start": "09:30", "end": "10:45"}, {"id": "eacc2", "kind": "exam", "title": "ACCT 310 Exam 2", "date": "2026-11-11", "start": "13:00", "end": "14:15"}, {"id": "efinfin", "kind": "exam", "title": "FIN 301 Final exam", "date": "2026-12-09", "start": "09:00", "end": "11:00"}], "pipeline": [], "tasks": [{"id": "tfinmid", "title": "Midterm study", "course": "FIN 301", "type": "exam", "importance": 4, "due": "2026-10-28", "start": "2026-10-19", "finishEarly": 1, "estMin": 360, "conf": "high", "eventId": "efinmid", "notes": "Chapters 1–8. Formula sheet allowed.", "stages": [{"label": "List topics + weak spots", "min": 30}, {"label": "Time value of money + bond pricing review", "min": 90}, {"label": "NPV, IRR and capital budgeting problems", "min": 90}, {"label": "Timed practice midterm", "min": 90}, {"label": "Fix weak areas + formula sheet", "min": 60}]}, {"id": "tfinps4", "title": "Problem Set 4 (NPV and IRR)", "course": "FIN 301", "type": "assignment", "importance": 3, "due": "2026-10-22", "start": "2026-10-19", "finishEarly": 1, "estMin": 120, "conf": "med", "feeds": "tfinmid", "notes": "Due 11:59pm. Builds directly toward the midterm."}, {"id": "taccthw", "title": "Homework 6 (leases)", "course": "ACCT 310", "type": "assignment", "importance": 2, "due": "2026-10-21", "start": "2026-10-19", "finishEarly": 0, "estMin": 120, "conf": "high"}, {"id": "tacc2", "title": "Exam 2 study", "course": "ACCT 310", "type": "exam", "importance": 4, "due": "2026-11-11", "start": "2026-11-01", "finishEarly": 1, "estMin": 420, "conf": "med", "eventId": "eacc2"}, {"id": "tmktproj", "title": "Consumer journey project", "course": "MKT 340", "type": "group", "importance": 3, "due": "2026-11-06", "start": "2026-10-22", "finishEarly": 1, "estMin": 285, "conf": "med", "notes": "Team of four. Each person owns one stage of the journey.", "stages": [{"label": "Group: split up the research", "min": 60, "gate": true}, {"label": "Draft your section", "min": 120}, {"label": "Group: review the deck", "min": 60, "gate": true}, {"label": "Polish your slides", "min": 45}]}, {"id": "tstatquiz", "title": "Quiz 5: regression", "course": "STAT 220", "type": "quiz", "importance": 2, "due": "2026-10-23", "start": "2026-10-20", "finishEarly": 0, "estMin": 60, "conf": "med"}, {"id": "tstatproj", "title": "Data project: pick a dataset and question", "course": "STAT 220", "type": "project", "importance": 3, "due": "2026-11-06", "start": "2026-10-26", "finishEarly": 1, "estMin": 300, "conf": "low"}, {"id": "tmgmtread", "title": "Read chapters 9–10", "course": "MGMT 350", "type": "reading", "importance": 1, "due": "2026-10-24", "start": "2026-10-19", "finishEarly": 0, "estMin": 80, "conf": "high"}, {"id": "tmgmtcase", "title": "Case write-up: team conflict at a startup", "course": "MGMT 350", "type": "case", "importance": 2, "due": "2026-11-02", "start": "2026-10-26", "finishEarly": 1, "estMin": 180, "conf": "med"}], "logs": [], "skips": [], "history": []}</script>
 <script>
 (function(){
 const LS='blockwise-demo.v1', LSUI='blockwise-demo.ui1', LSF='blockwise-demo.frozen1', DOC='planner/state', CELL=15, MAXWEEK=5;
@@ -479,7 +481,7 @@ SEED=demoShift(SEED);
 try{const raw=localStorage.getItem('blockwise-demo.v1');if(raw){const p=JSON.parse(raw);if(p&&p.demoBase&&p.demoBase!==DEMO_MON){localStorage.setItem('blockwise-demo.v1',JSON.stringify(demoShift(p)));localStorage.removeItem('blockwise-demo.frozen1')}}}catch(e){}
 try{const raw=localStorage.getItem(LS);if(raw){let p=JSON.parse(raw);if(hasData(p)){if(hasData(SEED)&&(p.seedRev||0)<(SEED.seedRev||0))p=mergeSeed(p,SEED);state=migrate(p)}}}catch(e){}
 if(!state)state=migrate(hasData(SEED)?clone(SEED):emptyState());
-try{Object.assign(ui,JSON.parse(localStorage.getItem(LSUI)||'{}'))}catch(e){}
+try{Object.assign(ui,JSON.parse(localStorage.getItem(LSUI)||'{}'))}catch(e){} if(ui.tab==='recruit')ui.tab='today';
 ui.week=0;
 
 /* ---------- persistence ---------- */
@@ -804,7 +806,7 @@ function renderToday(){
   $('#view-today').innerHTML=`<div class="today"><div class="tcol">
     <div class="card brief">
       <h2>${DAYL[now.getDay()]} plan</h2>
-      <p>You have <b>${fmtD(freeLeft)}</b> of open time left before ${fmtT(plan.soft)}, after classes, interviews, gym and meals. Recommended focus for the rest of today: <b>${fmtD(plannedLeft)}</b>${tj?`. Top priority: <b>${esc(tj.label)}</b> (${esc(tj.course)})`:''}. ${gym?`Gym is protected at ${fmtT(gym.start)}.`:d.gymMissed?'Gym didn’t fit today.':''} ${fmtD(Math.max(0,freeLeft-workBeforeSoft))} stays open as buffer.</p>
+      <p>You have <b>${fmtD(freeLeft)}</b> of open time left before ${fmtT(plan.soft)}, after classes, gym and meals. Recommended focus for the rest of today: <b>${fmtD(plannedLeft)}</b>${tj?`. Top priority: <b>${esc(tj.label)}</b> (${esc(tj.course)})`:''}. ${gym?`Gym is protected at ${fmtT(gym.start)}.`:d.gymMissed?'Gym didn’t fit today.':''} ${fmtD(Math.max(0,freeLeft-workBeforeSoft))} stays open as buffer.</p>
       ${impact?`<div class="impact">${impact}</div>`:''}
       ${risk.length?`<div class="impact" style="background:var(--bad-bg);color:var(--bad)"><b>At risk:</b> ${risk.map(j=>esc(j.label)+' ('+esc(j.status[2])+')').join(' · ')}</div>`:''}
       ${pressureHtml()}
@@ -858,11 +860,11 @@ function renderWeek(){
     if(k===plan.tKey&&plan.nowMin>=h0*60)g+=`<div class="nowline" style="top:${y(plan.nowMin)}px"></div>`;
     g+='</div>'});
   $('#view-week').innerHTML=`<div class="weekbar">
-      <div class="stats" style="margin:0"><div class="stat"><b>${fmtD(focus)}</b><small>Focused work</small></div><div class="stat"><b>${fmtD(rec)}</b><small>Applications</small></div><div class="stat"><b>${gym}</b><small>Gym sessions</small></div><div class="stat"><b>${fmtD(leis)}</b><small>Downtime</small></div></div>
+      <div class="stats" style="margin:0"><div class="stat"><b>${fmtD(focus)}</b><small>Focused work</small></div><div class="stat"><b>${gym}</b><small>Gym sessions</small></div><div class="stat"><b>${fmtD(leis)}</b><small>Downtime</small></div></div>
       <div class="weeknav"><button class="btn" data-week="-1" aria-label="Previous week" ${ui.week<=-1?'disabled':''}>‹</button><span class="lbl">${lbl}<br><span class="small muted">${MON[ws.getMonth()]} ${ws.getDate()} – ${MON[we.getMonth()]} ${we.getDate()}</span></span><button class="btn" data-week="1" aria-label="Next week" ${ui.week>=MAXWEEK?'disabled':''}>›</button></div></div>
     ${ui.week===0?pressureHtml():''}
     <div class="gridwrap" style="margin-top:12px"><div class="grid">${g}</div></div>
-    <div class="legend"><span><i class="k-class"></i>Class</span><span><i class="k-interview"></i>Interview</span><span><i class="k-exam"></i>Exam</span><span><i class="k-club"></i>Table tennis</span><span><i class="k-gym"></i>Gym</span><span><i class="k-study"></i>Study / work</span><span><i class="k-prep"></i>Group meeting / warm-up</span><span><i class="k-intern"></i>Recruiting</span><span><i class="k-meal"></i>Meals</span><span><i class="k-leisure"></i>Downtime</span><span style="margin-left:auto">Dashed = placed by the planner. Click any block to see why.</span></div>`;
+    <div class="legend"><span><i class="k-class"></i>Class</span><span><i class="k-exam"></i>Exam</span><span><i class="k-club"></i>Table tennis</span><span><i class="k-gym"></i>Gym</span><span><i class="k-study"></i>Study / work</span><span><i class="k-prep"></i>Group meeting / warm-up</span><span><i class="k-meal"></i>Meals</span><span><i class="k-leisure"></i>Downtime</span><span style="margin-left:auto">Dashed = placed by the planner. Click any block to see why.</span></div>`;
 }
 
 function taskCard(t){
@@ -930,7 +932,7 @@ function renderRoutine(){
       <label class="f">Bed, weekdays<input type="time" data-st="bed.wk" value="${st.bed.wk}"></label><label class="f">Bed, Fri + Sat<input type="time" data-st="bed.we" value="${st.bed.we}"></label>
       <label class="f">Downtime starts (soft end)<input type="time" data-st="softEnd" value="${st.softEnd}"></label><label class="f">Hard end for deadlines<input type="time" data-st="hardEnd" value="${st.hardEnd}"></label>
       <label class="f">Max focus, weekdays (h)<input type="number" step="0.5" min="0" data-st="focusCap.wk" data-hours value="${st.focusCap.wk/60}"></label><label class="f">Max focus, weekends (h)<input type="number" step="0.5" min="0" data-st="focusCap.we" data-hours value="${st.focusCap.we/60}"></label>
-      <label class="f">Buffer around class (min)<input type="number" step="5" min="0" data-st="classBuffer" value="${st.classBuffer}"></label><label class="f">Interview warm-up (min)<input type="number" step="5" min="0" data-st="warmup" value="${st.warmup}"></label>
+      <label class="f">Buffer around class (min)<input type="number" step="5" min="0" data-st="classBuffer" value="${st.classBuffer}"></label>
     </div></div>
   <div class="card"><h2>Gym</h2><p class="help">${esc(G.detail||'')} Placed in each day's window. If the window is full it moves elsewhere that day. The push/pull/legs label rotates Mon–Fri from the start date.</p>
     <div class="fields" style="margin-bottom:10px"><label class="f">Session (min)<input type="number" step="15" min="0" data-gym="minutes" value="${G.minutes}"></label><label class="f">Rotation starts (a Push day)<input type="date" data-gym="pplStart" value="${G.pplStart||''}"></label></div>
@@ -959,7 +961,7 @@ function renderRules(){
   const st=state.settings;
   $('#view-rules').innerHTML=`<div class="rules">
   <div class="card"><h2>1. Constraints come first</h2><p class="help">These go on the calendar before any work is considered.</p><ol>
-    <li><b>Locked:</b> classes, exams and interviews, plus a ${st.classBuffer}-min buffer around each class and a ${st.warmup}-min warm-up before each interview.</li>
+    <li><b>Locked:</b> classes and exams, plus a ${st.classBuffer}-min buffer around each class.</li>
     <li><b>Protected:</b> gym in your usual window (Friday floats), table tennis once a week on Mon or Thu, lunch and dinner.</li>
     <li><b>Downtime:</b> everything after ${fmtT(tm(st.softEnd))}. Work only goes there when a deadline is one or two days out, and never past ${fmtT(tm(st.hardEnd))}.</li>
     <li><b>Cap:</b> no more than ${fmtD(st.focusCap.wk)} of focused work on weekdays and ${fmtD(st.focusCap.we)} on weekends, even if more time is free. The rest is slack for things that run long.</li></ol></div>
@@ -974,7 +976,6 @@ function renderRules(){
   <div class="card"><h2>4. How blocks get placed</h2><ol>
     <li>Each day, every active task gets a share: hours left ÷ days left, and at least one minimum session.</li>
     <li>Tasks within two days of their target go first and may use the evening.</li>
-    <li>The daily applications block goes next.</li>
     <li>Everything else follows by urgency, in the earliest open slot, between the shortest and longest session lengths.</li>
     <li>You like moving between tasks, so sessions are capped per task and days mix subjects.</li></ol></div>
   <div class="card"><h2>5. Schedule pressure</h2><div class="formula">pressure = work needed in the next 7 days ÷ realistic focus time in the next 7 days</div><ul>
@@ -986,11 +987,10 @@ function renderRules(){
     <li>"I'm busy then" on any block marks that time unavailable and re-plans around it.</li>
     <li>When you complete a task, the time you logged is compared to your estimate by course and type, and later estimates for that course are adjusted.</li></ul></div>
   <div class="card"><h2>7. Everything connects</h2><ul>
-    <li><b>Interviews create their own prep.</b> Add an interview date to a company in Recruiting and a prep task appears with stages for that company: research, values + culture, why this firm, résumé walk-through, STAR stories, technical review, interviewer lookup, questions, and a mock run. It aims to finish the day before, and a warm-up is booked just before the interview.</li>
     <li><b>Exams create their own study plan.</b> Add an exam in Routine and a study task appears, starting 10 days out. Stages go topic by topic, then practice problems, a timed practice exam and weak-area review, in that order, so learning builds toward the exam.</li>
-    <li><b>Move the date and the prep follows.</b> If an interview or exam moves, its prep task's due date moves with it.</li>
+    <li><b>Move the date and the prep follows.</b> If an exam moves, its study task's due date moves with it.</li>
     <li><b>Assignments feed exams.</b> Problem sets, readings and video classes that cover exam material are linked to it ("Builds toward"), and the exam's review stages point back to them.</li>
-    <li>Delete an auto-created prep task and it stays gone for that interview or exam.</li></ul></div>
+    <li>Delete an auto-created prep task and it stays gone for that exam.</li></ul></div>
   </div>`;
 }
 
@@ -1084,7 +1084,7 @@ document.addEventListener('click',e=>{
 /* ---------- task editor ---------- */
 let editingId=null, delArmed=false, stagesTouched=false, edStages=[];
 const F=id=>document.getElementById('f-'+id);
-F('type').innerHTML=Object.entries(TYPES).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+F('type').innerHTML=Object.entries(TYPES).filter(([k])=>k!=='interview'&&k!=='video').map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
 function renderStageList(){
   $('#stageList').innerHTML=edStages.map((s,i)=>`<div class="stagerow"><input type="text" value="${esc(s.label)}" data-sg="${i}|label" aria-label="Stage ${i+1} name"><input type="number" min="15" step="15" value="${s.min}" data-sg="${i}|min" aria-label="Minutes"><label class="f row small" style="font-size:12.5px"><input type="checkbox" data-sg="${i}|gate" ${s.gate?'checked':''}> group</label><button type="button" class="x" data-sgdel="${i}" aria-label="Remove stage">×</button></div>`).join('');
   const sum=edStages.reduce((a,s)=>a+(+s.min||0),0); if(sum&&!stagesTouched)return; if(sum)F('est').value=+(sum/60).toFixed(2);

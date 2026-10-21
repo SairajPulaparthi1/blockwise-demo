@@ -23,7 +23,7 @@ Calendars show when things are due, not when to do them. Blockwise takes a stude
 - **Quick check-ins:** past blocks ask Done / Other time / Skipped, and anything unfinished moves to a later slot on its own.
 - **Me:** your name, classes, gym, weekly activities (basketball, pickleball), meals, sleep, a backup download and restore, and the full "how it decides" rules.
 
-Four screens: **Today · Week · Tasks · Me**, in University of Florida blue and orange.
+Four screens: **Today · Week · Tasks · Me**, in a dark, futuristic theme with University of Florida blue and orange as neon accents.
 
 ## About this demo
 

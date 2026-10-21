@@ -470,6 +470,64 @@ input,select,textarea{background:#0B1430;color:var(--ink);border-color:var(--lin
 ::selection{background:rgba(255,90,31,.45);color:#fff}
 .side .tag{border:0;background:none;padding:0;font-size:12px;font-weight:500;text-transform:none}
 .row2 .dot,.item .dot{background:currentColor!important;box-shadow:0 0 10px currentColor}
+/* ===== v5: clean Week calendar ===== */
+.wtop{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin-bottom:14px}
+.wnav{display:flex;align-items:center;gap:8px}
+.wlbl{display:flex;flex-direction:column;min-width:150px;text-align:center}
+.wlbl b{font:700 18px var(--display);color:#fff}
+.wlbl span{font:12px var(--mono);color:var(--muted)}
+.wstats{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.wstats b{font:600 15px var(--mono);color:#fff;margin-right:3px}
+.wtoggle{margin-left:auto}
+.wtoggle[aria-pressed="true"]{border-color:var(--gator-orange);color:#FFB28E}
+.wgridwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:#070C1C;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.wgrid{display:grid;grid-template-columns:56px repeat(7,minmax(118px,1fr));min-width:880px}
+.wh{position:sticky;top:0;z-index:6;background:#0A1228;border-bottom:1px solid var(--line);border-left:1px solid rgba(98,132,255,.10);padding:10px 8px 8px;display:flex;flex-direction:column;gap:5px;min-height:92px}
+.wh.corner{border-left:0}
+.whd{display:flex;align-items:baseline;gap:6px}
+.wdn{font:600 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.wdd{font:700 22px/1 var(--display);color:#fff}
+.wh.today .wdn{color:var(--gator-orange)}
+.wh.today .wdd{color:#fff;background:var(--gator-orange);border-radius:8px;padding:2px 7px;box-shadow:var(--glow-o)}
+.wh.past{opacity:.5}
+.wload{height:4px;border-radius:2px;background:rgba(169,191,255,.10);overflow:hidden}
+.wload i{display:block;height:100%;border-radius:2px}
+.wll{font:10.5px var(--mono);color:var(--muted)}
+.wdues{display:flex;flex-direction:column;gap:3px}
+.wduechip{border:0;text-align:left;font:600 11px var(--body);padding:2px 6px;border-radius:5px;background:rgba(255,90,31,.14);color:#FFB28E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wduechip.exam{background:var(--gator-orange);color:#0A0F1E}
+.wmore{font-size:10.5px;color:var(--muted)}
+.whrs{position:relative;border-right:1px solid rgba(98,132,255,.10)}
+.whrs div{position:absolute;right:8px;transform:translateY(-50%);font:10.5px var(--mono);color:var(--faint)}
+.whrs div:first-child{transform:none;top:4px!important}
+.wcol{position:relative;border-left:1px solid rgba(98,132,255,.10);background-image:repeating-linear-gradient(to bottom,rgba(98,132,255,.10) 0 1px,transparent 1px var(--H))}
+.wcol.today{background-color:rgba(255,90,31,.045)}
+.wcol.past{background-color:rgba(0,0,0,.25)}
+.wband{position:absolute;left:0;right:0;background:linear-gradient(180deg,rgba(160,132,255,.10),rgba(160,132,255,.04));border-top:1px dashed rgba(160,132,255,.35);pointer-events:none;z-index:0}
+.wband span{position:absolute;left:8px;top:6px;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase;color:rgba(199,184,255,.55)}
+.wnow{position:absolute;left:0;right:0;height:2px;background:var(--gator-orange);box-shadow:0 0 10px var(--gator-orange);z-index:5;pointer-events:none}
+.wnow::before{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:var(--gator-orange);box-shadow:0 0 10px var(--gator-orange)}
+.wb{position:absolute;left:4px;right:4px;z-index:2;border:0;border-radius:8px;padding:5px 8px 5px 10px;text-align:left;display:flex;flex-direction:column;gap:1px;overflow:hidden;cursor:pointer;background:#121B36;color:#C9D3F2;border-left:3px solid #5C6A93;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.wb:hover{filter:brightness(1.15);z-index:4}
+.wbt{font:600 12.5px/1.25 var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wbm{font:10.5px/1.3 var(--mono);opacity:.75;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wb.xs{flex-direction:row;align-items:center;gap:6px;padding-top:0;padding-bottom:0}
+.wb.xs .wbm{display:none}
+.wb.pl{border-left-style:dashed}
+.wb.done{opacity:.45}
+.wb.done .wbt{text-decoration:line-through}
+.wb.k-class{background:#152660;color:#C3D1FF;border-left-color:#3D6BFF}
+.wb.k-study{background:#3B1B10;color:#FFC4A6;border-left-color:#FF5A1F}
+.wb.k-exam{background:linear-gradient(135deg,#FF5A1F,#FF7A3D);color:#0A0F1E;border-left-color:#fff;box-shadow:var(--glow-o)}
+.wb.k-club{background:#0A3442;color:#93ECFF;border-left-color:#00D6FF}
+.wb.k-gym{background:#0E3528;color:#93F5CB;border-left-color:#3DF2A6}
+.wb.k-prep,.wb.k-meet{background:#3A1631;color:#FFBEDF;border-left-color:#FF69B4}
+.wb.k-meal{background:#111A31;color:#8E9CC6;border-left-color:#5C6A93}
+.wb.k-event,.wb.k-busy{background:#1A2442;color:#C9D3F2;border-left-color:#8E9CC6}
+.wlegend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:12px;color:var(--muted);padding:12px 4px}
+.wlegend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:6px}
+.wlegend i.k-class{background:#3D6BFF}.wlegend i.k-study{background:#FF5A1F}.wlegend i.k-exam{background:#FF7A3D}.wlegend i.k-club{background:#00D6FF}.wlegend i.k-gym{background:#3DF2A6}.wlegend i.k-prep{background:#FF69B4}.wlegend i.k-leisure{background:#A084FF}
+.wnote{margin-left:auto;color:var(--faint)}
 </style>
 
 <div class="shell">
@@ -1086,30 +1144,43 @@ function rankRows(n){
 function weekKeys(){const ws=addDays(mondayOf(new Date()),7*ui.week);return Array.from({length:7},(_,i)=>dkey(addDays(ws,i)))}
 function renderWeek(){
   const keys=weekKeys(), st=state.settings;
-  let focus=0,leis=0,gym=0,rec=0;
-  keys.forEach(k=>{const d=plan.days[k];if(!d)return;d.blocks.forEach(b=>{if(isWork(b.kind))focus+=b.len;if(b.kind==='leisure')leis+=b.len;if(b.kind==='gym')gym++;if(b.taskId==='recruit')rec+=b.len})});
+  let focus=0,leis=0,gym=0,acts=0;
+  keys.forEach(k=>{const d=plan.days[k];if(!d)return;d.blocks.forEach(b=>{if(isWork(b.kind))focus+=b.len;if(b.kind==='leisure')leis+=b.len;if(b.kind==='gym')gym++;if(b.kind==='club')acts++})});
   const ws=pkey(keys[0]),we=pkey(keys[6]);
   const lbl=ui.week===0?'This week':ui.week===1?'Next week':ui.week===-1?'Last week':'In '+ui.week+' weeks';
-  let lo=24*60,hi=0; keys.forEach(k=>{const d=plan.days[k];if(!d)return;lo=Math.min(lo,d.ds);d.blocks.forEach(b=>{if(b.kind!=='leisure'){lo=Math.min(lo,b.start);hi=Math.max(hi,b.start+b.len)}})});
-  const h0=Math.min(7,Math.floor(lo/60)), h1=24, H=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--hour'))||46, height=(h1-h0)*H, y=m=>(m-h0*60)/60*H;
+  const showMeals=!!ui.showMeals;
+  const visible=b=>b.kind!=='buffer'&&b.kind!=='leisure'&&(showMeals||b.kind!=='meal');
+  // only the hours you're awake, stretched to fit anything that runs earlier/later
+  let lo=Math.min(tm(st.wake.wk),tm(st.wake.we)), hi=Math.max(tm(st.bed.wk)||22*60,tm(st.bed.we)||22*60);
+  if(hi<=lo)hi=24*60;
+  keys.forEach(k=>{const d=plan.days[k];if(!d)return;d.blocks.forEach(b=>{if(!visible(b))return;lo=Math.min(lo,b.start);hi=Math.max(hi,b.start+b.len)})});
+  const h0=Math.floor(lo/60), h1=Math.min(24,Math.ceil(hi/60)), H=56, height=(h1-h0)*H, y=m=>(m-h0*60)/60*H;
   const dues={}; state.tasks.forEach(t=>{if(t.due&&!t.completed)(dues[t.due]=dues[t.due]||[]).push(t)});
-  let g='<div class="dh" style="border-left:0"></div>';
+  let g='<div class="wh corner"></div>';
   keys.forEach(k=>{const d=pkey(k),dd=plan.days[k],cls=k===plan.tKey?' today':k<plan.tKey?' past':'';
     const ld=dd?Math.min(1,dd.focus/Math.max(1,dd.cap)):0, col=ld<.7?'var(--ok)':ld<.9?'var(--warn)':ld<1?'var(--orange)':'var(--bad)';
-    g+=`<div class="dh${cls}"><div class="d">${DAY[d.getDay()]} <span>${MON[d.getMonth()]} ${d.getDate()}</span></div>${dd&&k>=plan.tKey?`<div class="load" title="Focus ${fmtD(dd.focus)} of ${fmtD(dd.cap)}"><i style="width:${ld*100}%;background:${col}"></i></div><div class="load-l">${fmtD(dd.focus)} / ${fmtD(dd.cap)}</div>`:''}${(dues[k]||[]).map(t=>`<button class="due" data-edit="${t.id}" title="${esc(t.course+' '+t.title)}">${t.type==='exam'?'Exam':'Due'} · ${esc(t.course==='Recruiting'?t.title:t.course)}</button>`).join('')}</div>`});
-  g+=`<div class="hrs" style="height:${height}px">${Array.from({length:h1-h0},(_,i)=>i?`<div style="top:${i*H}px">${fmtT((h0+i)*60)}</div>`:'').join('')}</div>`;
+    const ds=(dues[k]||[]);
+    g+=`<div class="wh${cls}"><div class="whd"><span class="wdn">${DAY[d.getDay()]}</span><span class="wdd">${d.getDate()}</span></div>
+      ${dd&&k>=plan.tKey?`<div class="wload" title="Focus ${fmtD(dd.focus)} of ${fmtD(dd.cap)}"><i style="width:${Math.max(4,ld*100)}%;background:${col}"></i></div><div class="wll">${fmtD(dd.focus)} focus</div>`:'<div class="wll">&nbsp;</div>'}
+      <div class="wdues">${ds.slice(0,2).map(t=>`<button class="wduechip${t.type==='exam'?' exam':''}" data-edit="${t.id}" title="${esc(t.course+' · '+t.title)}">${t.type==='exam'?'Exam':'Due'} · ${esc(t.course||t.title)}</button>`).join('')}${ds.length>2?`<span class="wmore">+${ds.length-2} more</span>`:''}</div></div>`});
+  g+=`<div class="whrs" style="height:${height}px">${Array.from({length:h1-h0},(_,i)=>`<div style="top:${i*H}px">${fmtT((h0+i)*60).replace(':00','')}</div>`).join('')}</div>`;
   keys.forEach(k=>{const d=plan.days[k],cls=k===plan.tKey?' today':k<plan.tKey?' past':'';
-    g+=`<div class="col${cls}" style="height:${height}px">`;
-    if(d)d.blocks.slice().sort((a,b)=>a.start-b.start).forEach(b=>{if(b.start<h0*60)return;const h=Math.max(12,b.len/60*H-2),tiny=h<34;
-      g+=`<button class="blk ${kindCls(b.kind)} ${b.fixed?'fixed':'flex'}${b.done?' done':''}${tiny?' tiny':''}" style="top:${y(b.start)+1}px;height:${h}px" data-open="${k}|${d.blocks.indexOf(b)}"><span class="t">${esc(b.title)}</span>${b.sub?`<span class="s">${esc(b.sub)}</span>`:''}<span class="tm">${fmtT(b.start)}–${fmtT(b.start+b.len)}</span></button>`});
-    if(k===plan.tKey&&plan.nowMin>=h0*60)g+=`<div class="nowline" style="top:${y(plan.nowMin)}px"></div>`;
+    g+=`<div class="wcol${cls}" style="height:${height}px;--H:${H}px">`;
+    if(d){
+      const L=d.blocks.find(b=>b.kind==='leisure'&&b.start>=h0*60); if(L){const top=y(L.start);g+=`<div class="wband" style="top:${top}px;height:${Math.max(0,height-top)}px"><span>Downtime</span></div>`}
+      d.blocks.filter(visible).sort((a,b)=>a.start-b.start).forEach(b=>{if(b.start+b.len<=h0*60)return;
+        const top=y(Math.max(b.start,h0*60))+1, h=Math.max(18,(b.start+b.len-Math.max(b.start,h0*60))/60*H-3), size=h<30?' xs':h<52?' sm':'';
+        const title=b.kind==='class'?b.title:b.title, sub=b.kind==='class'?(b.sub||'').replace(/ \((first|second) half\)/,''):(b.kind==='gym'||b.kind==='club')?'':b.sub||'';
+        g+=`<button class="wb ${kindCls(b.kind)} ${b.fixed?'fx':'pl'}${b.done?' done':''}${size}" style="top:${top}px;height:${h}px" data-open="${k}|${d.blocks.indexOf(b)}" title="${esc(b.title+' · '+fmtT(b.start)+'–'+fmtT(b.start+b.len))}"><span class="wbt">${esc(title)}</span><span class="wbm">${fmtT(b.start)}–${fmtT(b.start+b.len)}${sub?' · '+esc(sub):''}</span></button>`});
+      if(k===plan.tKey&&plan.nowMin>=h0*60&&plan.nowMin<=h1*60)g+=`<div class="wnow" style="top:${y(plan.nowMin)}px"></div>`;
+    }
     g+='</div>'});
-  $('#view-week').innerHTML=`<div class="weekbar">
-      <div class="stats" style="margin:0"><div class="stat"><b>${fmtD(focus)}</b><small>Focused work</small></div><div class="stat"><b>${gym}</b><small>Gym sessions</small></div><div class="stat"><b>${fmtD(leis)}</b><small>Downtime</small></div></div>
-      <div class="weeknav"><button class="btn" data-week="-1" aria-label="Previous week" ${ui.week<=-1?'disabled':''}>‹</button><span class="lbl">${lbl}<br><span class="small muted">${MON[ws.getMonth()]} ${ws.getDate()} – ${MON[we.getMonth()]} ${we.getDate()}</span></span><button class="btn" data-week="1" aria-label="Next week" ${ui.week>=MAXWEEK?'disabled':''}>›</button></div></div>
-    ${ui.week===0?pressureHtml():''}
-    <div class="gridwrap" style="margin-top:12px"><div class="grid">${g}</div></div>
-    <div class="legend"><span><i class="k-class"></i>Class</span><span><i class="k-exam"></i>Exam</span><span><i class="k-club"></i>Activity</span><span><i class="k-gym"></i>Gym</span><span><i class="k-study"></i>Study / work</span><span><i class="k-prep"></i>Group meeting / warm-up</span><span><i class="k-meal"></i>Meals</span><span><i class="k-leisure"></i>Downtime</span><span style="margin-left:auto">Dashed = placed by the planner. Click any block to see why.</span></div>`;
+  $('#view-week').innerHTML=`<div class="wtop">
+      <div class="wnav"><button class="btn" data-week="-1" aria-label="Previous week" ${ui.week<=-1?'disabled':''}>‹</button><div class="wlbl"><b>${lbl}</b><span>${MON[ws.getMonth()]} ${ws.getDate()} – ${MON[we.getMonth()]} ${we.getDate()}</span></div><button class="btn" data-week="1" aria-label="Next week" ${ui.week>=MAXWEEK?'disabled':''}>›</button>${ui.week!==0?'<button class="btn" data-week="0" data-weekreset>Today</button>':''}</div>
+      <div class="wstats"><span><b>${fmtD(focus)}</b> focus</span><span><b>${gym}</b> gym</span><span><b>${acts}</b> games</span><span><b>${fmtD(leis)}</b> downtime</span></div>
+      <button class="mini wtoggle" data-togglemeals aria-pressed="${showMeals}">${showMeals?'Hide meals':'Show meals'}</button></div>
+    <div class="wgridwrap"><div class="wgrid">${g}</div></div>
+    <div class="wlegend"><span><i class="k-class"></i>Class</span><span><i class="k-study"></i>Work</span><span><i class="k-exam"></i>Exam</span><span><i class="k-club"></i>Basketball / pickleball</span><span><i class="k-gym"></i>Gym</span><span><i class="k-prep"></i>Group meeting</span><span><i class="k-leisure"></i>Downtime</span><span class="wnote">Striped edge = planned by Blockwise · click any block for why</span></div>`;
 }
 
 function taskCard(t){
@@ -1289,6 +1360,8 @@ document.addEventListener('click',e=>{
   if(e.target.closest('[data-import]')){$('#importFile').click();return}
   if(e.target.closest('[data-clearsamples]')){const b=e.target.closest('[data-clearsamples]');if(!b.dataset.armed){b.dataset.armed='1';b.textContent='Click again to remove them';return}clearSamples();return}
   const tab=e.target.closest('[data-tab]'); if(tab){ui.tab=tab.dataset.tab;saveUi();closePop();renderAll();scrollTo(0,0);return}
+  if(e.target.closest('[data-togglemeals]')){ui.showMeals=!ui.showMeals;renderAll();return}
+  if(e.target.closest('[data-weekreset]')){ui.week=0;renderAll();return}
   const wk=e.target.closest('[data-week]'); if(wk){ui.week=Math.max(-1,Math.min(MAXWEEK,ui.week+ +wk.dataset.week));renderAll();return}
   if(e.target.closest('[data-new]')){openEditor(null);return}
   const ed=e.target.closest('[data-edit]'); if(ed){closePop();openEditor(ed.dataset.edit);return}

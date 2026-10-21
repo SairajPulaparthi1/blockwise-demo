@@ -16,11 +16,14 @@ Calendars show when things are due, not when to do them. Blockwise takes a stude
 - **Watches the load.** A pressure meter compares the next 7 days of work with realistic focus time (green, yellow, orange, red), and flags anything that won't fit before its due date.
 - **Learns from check-ins.** Mark blocks Done, Different time or Skipped; completed tasks record estimate vs. actual by course and type.
 
-## Screens
+## Built for daily use
 
-**Today** (briefing and check-ins) · **Week** (time grid with daily load) · **Tasks** (ranking, stages and connections) · **Routine** (classes, gym, meals, weekly goals) · **How it decides** (the rules, written out)
+- **Today, at a glance:** one "Up next" card with **▶ Start focus** (a countdown ring that logs the time when you finish) and **✓ Mark done**, then a one-line-per-item timeline of the rest of the day, what's due soon, and the week's load.
+- **Add a task in one line:** press **N** (or **+ Add task**) and type *"SQL homework 4210 due fri 2h"*. It picks out the course, due date, time needed and type, and shows a preview before you press Enter.
+- **Quick check-ins:** past blocks ask Done / Other time / Skipped, and anything unfinished moves to a later slot on its own.
+- **Me:** your name, classes, gym, weekly activities (basketball, pickleball), meals, sleep, a backup download and restore, and the full "how it decides" rules.
 
-Styled in University of Florida orange and blue.
+Four screens: **Today · Week · Tasks · Me**, in University of Florida blue and orange.
 
 ## About this demo
 

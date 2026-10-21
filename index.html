@@ -63,9 +63,7 @@ h1,h2,h3{font-family:var(--display);text-wrap:balance;margin:0;letter-spacing:-.
 .muted{color:var(--muted)} .small{font-size:12.5px}
 .top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding-block:18px 14px}
 .brand{display:flex;align-items:baseline;gap:10px;margin-right:auto}
-.brand h1{font-size:26px;font-weight:700;color:var(--gator-blue)}
-.brand h1::after{content:'';display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--gator-orange);margin-left:4px;vertical-align:baseline}
-body::before{content:'';display:block;height:5px;margin-inline:-16px;background:linear-gradient(90deg,var(--gator-blue) 0 62%,var(--gator-orange) 62% 100%)}
+.brand h1{font-size:26px;font-weight:700}
 .brand span{color:var(--muted);font-size:13px}
 .tabs{display:flex;flex-wrap:wrap;background:var(--surface-2);border-radius:10px;padding:3px;gap:2px}
 .tabs button{border:0;background:transparent;padding:7px 12px;border-radius:8px;font-weight:600;color:var(--muted);font-size:14px}
@@ -254,29 +252,169 @@ fieldset p{margin:0;font-size:13px;color:var(--muted)}
 .pop .meta{font-size:13px;color:var(--muted)}
 .pop .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px}
 @media (prefers-reduced-motion:no-preference){.blk,.rrow,.btn{transition:filter .12s,background-color .12s,border-color .12s}}
+
+/* ===== Gators header ===== */
+body{overflow-x:hidden}
+.top{position:relative;color:#fff;padding-block:16px;margin-bottom:18px}
+.top::before{content:"";position:absolute;inset:0 -100vw;background:var(--gator-blue);z-index:-1;border-bottom:5px solid var(--gator-orange)}
+.brand h1{font-size:26px;font-weight:700;color:#fff}
+.brand h1::after{content:"";display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--gator-orange);margin-left:5px}
+.brand span{color:rgba(255,255,255,.75)}
+.tabs{background:rgba(255,255,255,.12)}
+.tabs button{color:rgba(255,255,255,.85)}
+.tabs button:hover{color:#fff}
+.tabs button[aria-selected="true"]{background:var(--gator-orange);color:#fff;box-shadow:none}
+.saved{color:rgba(255,255,255,.7)}
+.btn.primary,.mini.primary{background:var(--gator-orange);border-color:var(--gator-orange);color:#fff}
+.card h2,.card h3{color:var(--gator-blue)}
+:root[data-theme="dark"] .card h2,:root[data-theme="dark"] .card h3{color:var(--ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .card h2,:root:not([data-theme="light"]) .card h3{color:var(--ink)}}
+.col.today{background-color:color-mix(in srgb,var(--gator-orange) 7%,var(--surface))}
+/* ===== Simple Today ===== */
+.today2{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.hero{background:linear-gradient(135deg,#0021A5 0%,#00177A 100%);color:#fff;border-radius:16px;padding:20px 22px;box-shadow:0 10px 30px rgba(0,33,165,.25);position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;background:var(--gator-orange);opacity:.18}
+.hero-top{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,.8);position:relative;z-index:1}
+.hero-load{font-weight:700;background:rgba(255,255,255,.14);padding:3px 10px;border-radius:999px}
+.hero-now{margin-top:12px;font-size:14px;color:rgba(255,255,255,.85);position:relative;z-index:1}
+.hero-label{margin-top:14px;font:700 12px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;color:#FFB38F;position:relative;z-index:1}
+.hero h2{font-size:clamp(22px,4vw,30px);margin-top:6px;color:#fff;position:relative;z-index:1}
+.hero-meta{margin-top:6px;color:rgba(255,255,255,.85);font-size:14px;position:relative;z-index:1}
+.hero-acts{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;position:relative;z-index:1}
+.hbtn{border:1px solid rgba(255,255,255,.4);background:transparent;color:#fff;font-weight:700;font-size:15px;padding:10px 18px;border-radius:10px}
+.hbtn.go{background:var(--gator-orange);border-color:var(--gator-orange)}
+.hbtn:hover{filter:brightness(1.08)}
+.tiles{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:560px){.tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--gator-orange);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column}
+.tile:nth-child(even){border-top-color:var(--gator-blue)}
+.tile b{font:600 20px/1.2 var(--display)}
+.tile span{font-size:12px;color:var(--muted)}
+.riskbar{text-align:left;border:0;background:var(--gator-orange);color:#fff;border-radius:12px;padding:12px 14px;font-size:14px}
+.card.simple h3{font:700 13px/1 var(--body);letter-spacing:.08em;text-transform:uppercase;margin:0 0 8px;padding-bottom:8px;border-bottom:3px solid var(--gator-orange);display:inline-block}
+.row2{display:grid;grid-template-columns:64px 10px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.row2:first-child{border-top:0}
+.row2 .when{font:12px var(--mono);color:var(--muted)}
+.row2 .dot{width:10px;height:10px;border-radius:3px}
+.row2 .what b{display:block;font-weight:600;line-height:1.3}
+.row2 .what .sub{font-size:12.5px;color:var(--muted)}
+.row2 .acts{display:flex;gap:4px}
+.row2.fixedrow .what b{font-weight:500;color:var(--muted)}
+.linkish{border:0;background:none;padding:0;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.linkish:hover b{color:var(--gator-blue);text-decoration:underline}
+
+/* ===== v3 shell: Gator sidebar ===== */
+body{padding:0!important;margin:0;overflow-x:hidden}
+.shell{display:grid;grid-template-columns:232px minmax(0,1fr);min-height:100vh}
+.side{position:sticky;top:0;height:100vh;background:var(--gator-blue);color:#fff;display:flex;flex-direction:column;gap:14px;padding:22px 16px;border-right:5px solid var(--gator-orange)}
+.logo{font:700 26px/1 var(--display);letter-spacing:-.01em;color:#fff}
+.ldot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--gator-orange);margin-left:4px}
+.tag{font-size:12px;color:rgba(255,255,255,.7);margin-top:-8px}
+.nav{display:flex;flex-direction:column;gap:4px;margin-top:8px}
+.nav button{display:flex;align-items:center;gap:10px;border:0;background:transparent;color:rgba(255,255,255,.85);font:600 15px var(--body);padding:10px 12px;border-radius:10px;text-align:left}
+.nav button:hover{background:rgba(255,255,255,.1);color:#fff}
+.nav button[aria-selected="true"]{background:#fff;color:var(--gator-blue)}
+.nav button[aria-selected="true"] .ic{color:var(--gator-orange)}
+.nav .ic{width:20px;text-align:center;font-size:15px}
+.addbtn{margin-top:6px;border:0;background:var(--gator-orange);color:#fff;font:700 15px var(--body);padding:12px;border-radius:12px;box-shadow:0 6px 16px rgba(250,70,22,.35)}
+.addbtn:hover{filter:brightness(1.06)}
+.addbtn kbd{font:500 11px var(--mono);background:rgba(255,255,255,.22);border-radius:4px;padding:1px 5px;margin-left:6px}
+.side-foot{margin-top:auto;font-size:12px}
+.side .saved{color:rgba(255,255,255,.7)}
+.main{padding:26px clamp(16px,3vw,40px) 60px;min-width:0}
+@media (max-width:860px){
+  .shell{grid-template-columns:1fr}
+  .side{position:static;height:auto;flex-direction:row;flex-wrap:wrap;align-items:center;border-right:0;border-bottom:5px solid var(--gator-orange);padding:12px 16px}
+  .tag,.side-foot{display:none}
+  .nav{flex-direction:row;margin:0;flex-wrap:wrap}
+  .nav button{padding:8px 10px}
+  .addbtn{margin:0 0 0 auto;padding:9px 12px}
+  .addbtn kbd{display:none}
+}
+.notice{margin-bottom:16px}
+/* ===== v3 Today ===== */
+.today2{max-width:none;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:20px;align-items:start}
+@media (max-width:1100px){.today2{grid-template-columns:1fr}}
+.tmain,.tside{display:flex;flex-direction:column;gap:14px;min-width:0}
+.hero{padding:22px 24px}
+.hero-load{background:rgba(255,255,255,.16)}
+.hero-body{display:flex;gap:20px;align-items:center;justify-content:space-between;position:relative;z-index:1}
+.hero-body>div:first-child{min-width:0}
+.hbtn.ghost{border-color:transparent;color:rgba(255,255,255,.8)}
+.ring{position:relative;width:132px;height:132px;flex:none}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.r-bg{fill:none;stroke:rgba(255,255,255,.18);stroke-width:10}
+.r-fg{fill:none;stroke:var(--gator-orange);stroke-width:10;stroke-linecap:round;transition:stroke-dashoffset 1s linear}
+.r-txt{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.r-txt b{font:700 28px/1 var(--mono);color:#fff}
+.r-txt span{font-size:12px;color:rgba(255,255,255,.75);margin-top:4px}
+.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
+.qa .qa-in,.qbox .qa-in{width:100%;font-size:15px;padding:11px 12px;border:2px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.qa-in:focus{outline:none;border-color:var(--gator-orange)}
+.qa-prev{margin-top:8px;font-size:13px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;min-height:22px}
+.qa-prev .chip{font-size:12px;padding:2px 8px;border-radius:999px;background:color-mix(in srgb,var(--gator-blue) 10%,var(--surface));color:var(--gator-blue);font-weight:600}
+.qa-prev .chip.c{background:var(--gator-blue);color:#fff}
+.qa-prev .chip.warn{background:color-mix(in srgb,var(--gator-orange) 15%,var(--surface));color:#A32E00}
+.qa-row{display:flex;gap:8px;margin-top:10px}
+.qbox{background:var(--surface);border-radius:16px;padding:20px;width:min(560px,calc(100vw - 32px));margin:12vh auto 0;box-shadow:0 30px 60px rgba(0,10,50,.35);border-top:6px solid var(--gator-orange)}
+.qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.qhead b{font:700 20px var(--display);color:var(--gator-blue)}
+.wstrip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.wday{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:6px 2px;display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--ink)}
+.wday.on{border-color:var(--gator-orange);box-shadow:inset 0 0 0 1px var(--gator-orange)}
+.wday .wd{font:700 11px var(--body);text-transform:uppercase;color:var(--muted)}
+.wday.on .wd{color:var(--gator-orange)}
+.wbar{width:14px;height:48px;border-radius:7px;background:var(--surface-2);display:flex;align-items:flex-end;overflow:hidden}
+.wbar i{display:block;width:100%;background:var(--gator-blue);border-radius:7px}
+.wday.on .wbar i{background:var(--gator-orange)}
+.wn{font:11px var(--mono);color:var(--muted)}
+.wdue{font-size:10px;font-weight:700;color:#A32E00}
+.wdue.none{color:transparent}
+.row2.due{grid-template-columns:54px 10px minmax(0,1fr) auto}
+/* ===== Me ===== */
+.mehead{margin-bottom:16px}
+.card.me{border-top:5px solid var(--gator-orange)}
+.row-btns{display:flex;gap:8px;flex-wrap:wrap}
+.rulesbox{margin-top:16px}
+.rulesbox summary{cursor:pointer;padding:4px 0}
+.rulesbox[open] summary{margin-bottom:12px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;background:var(--gator-blue);color:#fff;padding:10px 18px;border-radius:999px;font-weight:600;font-size:14px;z-index:10000;transition:all .25s;border-bottom:3px solid var(--gator-orange);pointer-events:none}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+@media (prefers-reduced-motion:reduce){#toast,.r-fg{transition:none}}
 </style>
 
-<div class="wrap">
-  <div class="top">
-    <div class="brand"><h1>Blockwise</h1><span>What to work on, for how long, and why</span></div>
-    <div class="tabs" role="tablist">
-      <button role="tab" id="tab-today" data-tab="today">Today</button>
-      <button role="tab" id="tab-week" data-tab="week">Week</button>
-      <button role="tab" id="tab-tasks" data-tab="tasks">Tasks</button>
+<div class="shell">
+  <aside class="side">
+    <div class="logo">Blockwise<span class="ldot"></span></div>
+    <div class="tag">Plan smart. Chomp it.</div>
+    <nav class="nav" role="tablist" aria-label="Sections">
+      <button role="tab" id="tab-today" data-tab="today"><span class="ic">☀</span>Today</button>
+      <button role="tab" id="tab-week" data-tab="week"><span class="ic">▦</span>Week</button>
+      <button role="tab" id="tab-tasks" data-tab="tasks"><span class="ic">✓</span>Tasks</button>
+      <button role="tab" id="tab-routine" data-tab="routine"><span class="ic">◉</span>Me</button>
       <button role="tab" id="tab-recruit" data-tab="recruit" hidden>Recruiting</button>
-      <button role="tab" id="tab-routine" data-tab="routine">Routine</button>
-      <button role="tab" id="tab-rules" data-tab="rules">How it decides</button>
-    </div>
-    <span class="saved" id="saved">Loading…</span>
-  </div>
-  <div class="notice" id="notice" hidden></div>
-  <section id="view-today" hidden></section>
-  <section id="view-week" hidden></section>
-  <section id="view-tasks" hidden></section>
-  <section id="view-recruit" hidden></section>
-  <section id="view-routine" hidden></section>
-  <section id="view-rules" hidden></section>
+      <button role="tab" id="tab-rules" data-tab="rules" hidden>How it decides</button>
+    </nav>
+    <button class="addbtn" data-quickadd>+ Add task <kbd>N</kbd></button>
+    <div class="side-foot"><span class="saved" id="saved">Loading…</span></div>
+  </aside>
+  <main class="main">
+    <div class="notice" id="notice" hidden></div>
+    <section id="view-today" hidden></section>
+    <section id="view-week" hidden></section>
+    <section id="view-tasks" hidden></section>
+    <section id="view-recruit" hidden></section>
+    <section id="view-routine" hidden></section>
+    <section id="view-rules" hidden></section>
+  </main>
 </div>
+<div class="overlay" id="quick" hidden><div class="qbox" role="dialog" aria-modal="true" aria-label="Add a task">
+  <div class="qhead"><b>Add a task</b><button class="x" data-qclose aria-label="Close">×</button></div>
+  <input type="text" id="qa-modal" class="qa-in" data-qa placeholder="e.g. Film response paper IDS due tue 3h" autocomplete="off" aria-label="Task">
+  <div class="qa-prev" id="qa-modal-prev"></div>
+  <p class="small muted" style="margin:6px 0 0">Understands course codes (4210, BUL), due dates (today, fri, next mon, 11/3, nov 3), time (2h, 90m) and ! for important.</p>
+  <div class="qa-row"><button class="btn primary" data-qago="qa-modal">Add task</button><button class="btn" data-qamore="qa-modal">More options…</button></div>
+</div></div>
 
 <div class="overlay" id="editor" hidden>
   <form class="sheet" id="taskForm" novalidate>
@@ -348,11 +486,11 @@ fieldset p{margin:0;font-size:13px;color:var(--muted)}
 <div class="pop" id="pop" hidden></div>
 
 <div id="demoRibbon" style="position:fixed;left:12px;bottom:12px;z-index:9999;display:flex;gap:8px;align-items:center;padding:7px 12px;border-radius:999px;background:#0021A5;color:#fff;font:500 12px/1.2 system-ui,sans-serif;box-shadow:0 6px 20px rgba(0,0,0,.25)">
-  <b>Demo</b><span>My real class schedule, sample assignments. Changes stay in your browser.</span>
+  <b>Demo</b><span>Sai's real UF schedule, sample assignments. Your changes stay in this browser.</span>
   <button onclick="try{['blockwise-demo.v2','blockwise-demo.ui2','blockwise-demo.frozen2'].forEach(k=>localStorage.removeItem(k))}catch(e){};location.reload()" style="font:inherit;color:#fff;background:#FA4616;border:0;border-radius:999px;padding:3px 9px;cursor:pointer">Reset</button>
   <button onclick="this.parentNode.remove()" aria-label="Hide" style="font:inherit;color:#fff;background:transparent;border:0;cursor:pointer">✕</button>
 </div>
-<script id="seedData" type="application/json">{"v": 2, "updated": 1790000000000, "seedRev": 2, "demoBase": "2026-10-19", "settings": {"wake": {"wk": "08:30", "we": "08:30"}, "bed": {"wk": "22:00", "we": "22:00"}, "softEnd": "20:00", "hardEnd": "21:30", "classBuffer": 15, "warmup": 0, "focusCap": {"wk": 300, "we": 360}, "meals": {"lunch": {"win": ["11:30", "15:00"], "min": 30}, "dinner": {"win": ["17:00", "21:00"], "min": 40}}}, "gym": {"minutes": 60, "detail": "Afternoon workout", "pplStart": "2026-10-19", "days": {"1": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "2": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "3": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "4": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "5": {"win": ["13:45", "16:30"], "note": "Around 2pm"}}, "skips": []}, "club": {"title": "", "days": [], "start": "18:00", "end": "19:00", "overrides": {}}, "activities": [{"title": "Basketball", "days": [1, 3], "start": "18:00", "end": "20:00"}, {"title": "Pickleball", "days": [2, 4], "start": "19:00", "end": "21:00"}], "recruit": {"minutes": 0, "win": ["09:00", "20:00"], "label": ""}, "weekly": [{"id": "wbul", "title": "Online lectures + readings", "course": "BUL 4310", "minutes": 180, "block": 60, "from": "2026-08-24", "until": "2026-12-04", "assumed": true}, {"id": "wids", "title": "Films, readings + discussion posts", "course": "IDS 2935", "minutes": 150, "block": 50, "from": "2026-08-24", "until": "2026-12-04", "assumed": true}], "classes": [{"id": "c3254", "code": "ISM 3254", "title": "Business Systems I (first half)", "room": "", "days": [1, 3], "start": "09:35", "end": "11:30", "from": "2026-08-24", "until": "2026-10-16", "skip": []}, {"id": "c3255", "code": "ISM 3255", "title": "Business Systems II (second half)", "room": "", "days": [1, 3], "start": "09:35", "end": "11:30", "from": "2026-10-19", "until": "2026-12-09", "skip": ["2026-11-25"]}, {"id": "c4113", "code": "ISM 4113", "title": "Systems Analysis and Design (first half)", "room": "", "days": [1, 3], "start": "11:45", "end": "13:40", "from": "2026-08-24", "until": "2026-10-16", "skip": []}, {"id": "c4210", "code": "ISM 4210", "title": "Database Management (second half)", "room": "", "days": [1, 3], "start": "11:45", "end": "13:40", "from": "2026-10-19", "until": "2026-12-09", "skip": ["2026-11-25"]}], "events": [{"id": "e4210ex", "kind": "exam", "title": "ISM 4210 Exam 1", "date": "2026-11-04", "start": "11:45", "end": "13:40"}, {"id": "ebulex", "kind": "exam", "title": "BUL 4310 Exam 2 (online)", "date": "2026-11-13", "start": "10:00", "end": "11:30"}, {"id": "e3255fin", "kind": "exam", "title": "ISM 3255 Final exam", "date": "2026-12-09", "start": "09:35", "end": "11:30"}], "pipeline": [], "tasks": [{"id": "t3255lab", "title": "Lab 2: Excel automation", "course": "ISM 3255", "type": "assignment", "importance": 2, "due": "2026-10-22", "start": "2026-10-19", "finishEarly": 0, "estMin": 90, "conf": "high"}, {"id": "t3255proj", "title": "Business systems project: inventory tracker", "course": "ISM 3255", "type": "project", "importance": 3, "due": "2026-10-30", "start": "2026-10-20", "finishEarly": 1, "estMin": 300, "conf": "med", "stages": [{"label": "Read the brief + plan the workbook", "min": 30}, {"label": "Build the data model", "min": 90}, {"label": "Forms and automation", "min": 120}, {"label": "Test + write-up", "min": 60}]}, {"id": "t4210er", "title": "ER diagram + normalization assignment", "course": "ISM 4210", "type": "assignment", "importance": 3, "due": "2026-10-23", "start": "2026-10-19", "finishEarly": 1, "estMin": 150, "conf": "med", "feeds": "t4210ex"}, {"id": "t4210sql", "title": "SQL queries homework", "course": "ISM 4210", "type": "assignment", "importance": 3, "due": "2026-10-28", "start": "2026-10-22", "finishEarly": 1, "estMin": 120, "conf": "med", "feeds": "t4210ex"}, {"id": "t4210ex", "title": "Exam 1 study", "course": "ISM 4210", "type": "exam", "importance": 4, "due": "2026-11-04", "start": "2026-10-26", "finishEarly": 1, "estMin": 360, "conf": "med", "eventId": "e4210ex", "stages": [{"label": "List topics + weak spots", "min": 30}, {"label": "ER modeling + normalization review", "min": 90}, {"label": "SQL practice: joins, grouping, subqueries", "min": 120}, {"label": "Timed practice exam", "min": 75}, {"label": "Fix weak areas", "min": 45}]}, {"id": "t4210grp", "title": "Group project: database design", "course": "ISM 4210", "type": "group", "importance": 3, "due": "2026-11-13", "start": "2026-10-21", "finishEarly": 1, "estMin": 300, "conf": "low", "stages": [{"label": "Group: pick a business + split the work", "min": 45, "gate": true}, {"label": "Draft your tables + sample data", "min": 120}, {"label": "Group: review the schema", "min": 45, "gate": true}, {"label": "Write your queries + slides", "min": 90}]}, {"id": "tbulquiz", "title": "Module 7 quiz", "course": "BUL 4310", "type": "quiz", "importance": 2, "due": "2026-10-24", "start": "2026-10-20", "finishEarly": 0, "estMin": 45, "conf": "high"}, {"id": "tbulcase", "title": "Case brief: contract dispute", "course": "BUL 4310", "type": "case", "importance": 2, "due": "2026-10-31", "start": "2026-10-24", "finishEarly": 1, "estMin": 120, "conf": "med"}, {"id": "tidspaper", "title": "Film response paper", "course": "IDS 2935", "type": "assignment", "importance": 2, "due": "2026-10-27", "start": "2026-10-21", "finishEarly": 1, "estMin": 180, "conf": "med", "stages": [{"label": "Rewatch key scenes + take notes", "min": 60}, {"label": "Outline the argument", "min": 30}, {"label": "Write the draft", "min": 60}, {"label": "Edit + cite", "min": 30}]}], "logs": [], "skips": [], "history": []}</script>
+<script id="seedData" type="application/json">{"v": 2, "updated": 1790000000000, "seedRev": 3, "demoBase": "2026-10-19", "settings": {"wake": {"wk": "08:30", "we": "08:30"}, "bed": {"wk": "22:00", "we": "22:00"}, "softEnd": "20:00", "hardEnd": "21:30", "classBuffer": 15, "warmup": 0, "focusCap": {"wk": 300, "we": 360}, "meals": {"lunch": {"win": ["11:30", "15:00"], "min": 30}, "dinner": {"win": ["17:00", "21:00"], "min": 40}}}, "gym": {"minutes": 60, "detail": "Afternoon workout", "pplStart": "2026-10-19", "days": {"1": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "2": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "3": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "4": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "5": {"win": ["13:45", "16:30"], "note": "Around 2pm"}}, "skips": []}, "club": {"title": "", "days": [], "start": "18:00", "end": "19:00", "overrides": {}}, "activities": [{"title": "Basketball", "days": [1, 3], "start": "18:00", "end": "20:00"}, {"title": "Pickleball", "days": [2, 4], "start": "19:00", "end": "21:00"}], "recruit": {"minutes": 0, "win": ["09:00", "20:00"], "label": ""}, "weekly": [{"id": "wbul", "title": "Online lectures + readings", "course": "BUL 4310", "minutes": 180, "block": 60, "from": "2026-08-24", "until": "2026-12-04", "assumed": true}, {"id": "wids", "title": "Films, readings + discussion posts", "course": "IDS 2935", "minutes": 150, "block": 50, "from": "2026-08-24", "until": "2026-12-04", "assumed": true}], "classes": [{"id": "c3254", "code": "ISM 3254", "title": "Business Systems I (first half)", "room": "", "days": [1, 3], "start": "09:35", "end": "11:30", "from": "2026-08-24", "until": "2026-10-16", "skip": []}, {"id": "c3255", "code": "ISM 3255", "title": "Business Systems II (second half)", "room": "", "days": [1, 3], "start": "09:35", "end": "11:30", "from": "2026-10-19", "until": "2026-12-09", "skip": ["2026-11-25"]}, {"id": "c4113", "code": "ISM 4113", "title": "Systems Analysis and Design (first half)", "room": "", "days": [1, 3], "start": "11:45", "end": "13:40", "from": "2026-08-24", "until": "2026-10-16", "skip": []}, {"id": "c4210", "code": "ISM 4210", "title": "Database Management (second half)", "room": "", "days": [1, 3], "start": "11:45", "end": "13:40", "from": "2026-10-19", "until": "2026-12-09", "skip": ["2026-11-25"]}], "events": [{"id": "e4210ex", "kind": "exam", "title": "ISM 4210 Exam 1", "date": "2026-11-04", "start": "11:45", "end": "13:40", "sample": true}, {"id": "ebulex", "kind": "exam", "title": "BUL 4310 Exam 2 (online)", "date": "2026-11-13", "start": "10:00", "end": "11:30", "sample": true}, {"id": "e3255fin", "kind": "exam", "title": "ISM 3255 Final exam", "date": "2026-12-09", "start": "09:35", "end": "11:30", "sample": true}], "pipeline": [], "tasks": [{"id": "t3255lab", "title": "Lab 2: Excel automation", "course": "ISM 3255", "type": "assignment", "importance": 2, "due": "2026-10-22", "start": "2026-10-19", "finishEarly": 0, "estMin": 90, "conf": "high", "sample": true}, {"id": "t3255proj", "title": "Business systems project: inventory tracker", "course": "ISM 3255", "type": "project", "importance": 3, "due": "2026-10-30", "start": "2026-10-20", "finishEarly": 1, "estMin": 300, "conf": "med", "stages": [{"label": "Read the brief + plan the workbook", "min": 30}, {"label": "Build the data model", "min": 90}, {"label": "Forms and automation", "min": 120}, {"label": "Test + write-up", "min": 60}], "sample": true}, {"id": "t4210er", "title": "ER diagram + normalization assignment", "course": "ISM 4210", "type": "assignment", "importance": 3, "due": "2026-10-23", "start": "2026-10-19", "finishEarly": 1, "estMin": 150, "conf": "med", "feeds": "t4210ex", "sample": true}, {"id": "t4210sql", "title": "SQL queries homework", "course": "ISM 4210", "type": "assignment", "importance": 3, "due": "2026-10-28", "start": "2026-10-22", "finishEarly": 1, "estMin": 120, "conf": "med", "feeds": "t4210ex", "sample": true}, {"id": "t4210ex", "title": "Exam 1 study", "course": "ISM 4210", "type": "exam", "importance": 4, "due": "2026-11-04", "start": "2026-10-26", "finishEarly": 1, "estMin": 360, "conf": "med", "eventId": "e4210ex", "stages": [{"label": "List topics + weak spots", "min": 30}, {"label": "ER modeling + normalization review", "min": 90}, {"label": "SQL practice: joins, grouping, subqueries", "min": 120}, {"label": "Timed practice exam", "min": 75}, {"label": "Fix weak areas", "min": 45}], "sample": true}, {"id": "t4210grp", "title": "Group project: database design", "course": "ISM 4210", "type": "group", "importance": 3, "due": "2026-11-13", "start": "2026-10-21", "finishEarly": 1, "estMin": 300, "conf": "low", "stages": [{"label": "Group: pick a business + split the work", "min": 45, "gate": true}, {"label": "Draft your tables + sample data", "min": 120}, {"label": "Group: review the schema", "min": 45, "gate": true}, {"label": "Write your queries + slides", "min": 90}], "sample": true}, {"id": "tbulquiz", "title": "Module 7 quiz", "course": "BUL 4310", "type": "quiz", "importance": 2, "due": "2026-10-24", "start": "2026-10-20", "finishEarly": 0, "estMin": 45, "conf": "high", "sample": true}, {"id": "tbulcase", "title": "Case brief: contract dispute", "course": "BUL 4310", "type": "case", "importance": 2, "due": "2026-10-31", "start": "2026-10-24", "finishEarly": 1, "estMin": 120, "conf": "med", "sample": true}, {"id": "tidspaper", "title": "Film response paper", "course": "IDS 2935", "type": "assignment", "importance": 2, "due": "2026-10-27", "start": "2026-10-21", "finishEarly": 1, "estMin": 180, "conf": "med", "stages": [{"label": "Rewatch key scenes + take notes", "min": 60}, {"label": "Outline the argument", "min": 30}, {"label": "Write the draft", "min": 60}, {"label": "Edit + cite", "min": 30}], "sample": true}], "logs": [], "skips": [], "history": []}</script>
 <script>
 (function(){
 const LS='blockwise-demo.v2', LSUI='blockwise-demo.ui2', LSF='blockwise-demo.frozen2', DOC='planner/state', CELL=15, MAXWEEK=5;
@@ -445,7 +583,7 @@ function ensureLinked(){
     const linked=S.tasks.find(t=>t.eventId===e.id);
     if(linked){if(!linked.completed&&linked.due!==e.date){linked.due=e.date;changed=true}return}
     if(S.dismissed.includes('e:'+e.id))return;
-    const m=(e.title||'').match(/^([A-Z]{2,5}\s?\d{3}[A-Z]?)\s*(.*)$/), stg=examStages();
+    const m=(e.title||'').match(/^([A-Z]{2,5}\s?\d{3,4}[A-Z]?)\s*(.*)$/), stg=examStages();
     S.tasks.push({id:'auto-'+e.id,title:m?m[2]||'Exam':e.title,course:m?m[1]:'',type:'exam',importance:4,due:e.date,start:addK(e.date,-10)>tKey?addK(e.date,-10):tKey,finishEarly:1,estMin:stg.reduce((a,x)=>a+x.min,0),conf:'med',stages:stg,eventId:e.id,auto:true,doneMin:0,notes:'Created automatically from the exam on '+nice(e.date)+'. Swap the generic stages for the syllabus topics.'});
     changed=true;
   });
@@ -753,6 +891,7 @@ function renderAll(){
   if(loaded&&!state.tasks.length&&!state.classes.length){n.hidden=false;n.textContent='No plan data yet. Add your classes in Routine and your work in Tasks.'}
   else if(assumed.length){n.hidden=false;n.innerHTML='<b>Check these dates:</b> '+assumed.map(t=>esc(t.title)+' ('+nice(t.due)+')').join(', ')+'. They are placeholders until you confirm them. Open a task to fix its date.'}
   else n.hidden=true;
+  {const rb=document.getElementById('demoRibbon');if(rb)rb.hidden=!state.tasks.some(t=>t.sample);}
   ({today:renderToday,week:renderWeek,tasks:renderTasks,recruit:renderRecruit,routine:renderRoutine,rules:renderRules})[ui.tab]();
   $('#courseList').innerHTML=[...new Set(state.tasks.map(t=>t.course).concat(state.classes.map(c=>c.code)).filter(Boolean))].map(c=>`<option value="${esc(c)}">`).join('');
 }
@@ -784,54 +923,65 @@ function itemHtml(b,k,withActs){
     <span class="what"><b>${esc(b.title)}</b><span class="sub">${fmtD(b.len)}${b.sub?' · '+esc(b.sub):''}${b.len>=50&&isWork(b.kind)?' · ≈'+Math.round(b.len/30)+' pomodoros':''}</span>${b.why?`<div class="why">${esc(b.why)}</div>`:''}</span>
     <span class="acts">${canLog?`<button class="mini primary" data-logq="${k}|${idx}">Done</button>`:''}${b.done?'<span class="small muted">Logged</span>':''}<button class="mini" data-open="${k}|${idx}" aria-label="More options">•••</button></span></li>`;
 }
+function greet(){const h=new Date().getHours(),n=(state.settings.name||'').trim();return (h<12?'Good morning':h<17?'Good afternoon':'Good evening')+(n?', '+esc(n):'')}
 function renderToday(){
-  const k=plan.tKey, d=plan.days[k], now=new Date(), R=state;
+  const k=plan.tKey, d=plan.days[k], now=new Date();
   if(!d){$('#view-today').innerHTML='<p class="empty">Loading…</p>';return}
-  const upcoming=d.blocks.filter(b=>!b.done&&b.start+b.len>plan.nowMin).sort((a,b)=>a.start-b.start);
-  const groups={must:[],should:[],maint:[],fixed:[]};
-  upcoming.forEach(b=>groups[classify(b)].push(b));
-  const doneToday=d.blocks.filter(b=>b.done).sort((a,b)=>a.start-b.start);
-  const workToday=d.blocks.filter(b=>isWork(b.kind)).reduce((a,b)=>a+b.len,0);
-  const plannedLeft=upcoming.filter(b=>isWork(b.kind)).reduce((a,b)=>a+b.len,0);
-  const freeLeft=d.freeSoft||0, workBeforeSoft=upcoming.filter(b=>isWork(b.kind)).reduce((a,b)=>a+Math.max(0,Math.min(b.start+b.len,plan.soft)-b.start),0);
-  const tj=plan.taskJobs.filter(j=>j.todayMin>0).sort((a,b)=>b.score-a.score)[0];
-  const gym=d.blocks.find(b=>b.kind==='gym');
-  const nextDue=plan.taskJobs.filter(j=>j.t.due&&j.t.due>=k).sort((a,b)=>a.t.due.localeCompare(b.t.due)).slice(0,6);
-  let impact='';
-  if(tj){const left=Math.max(1,span(k,tj.target)+1);
-    impact=left>1?`Doing today's ${fmtD(tj.todayMin)} on <b>${esc(tj.label)}</b> keeps it on track to finish by ${nice(tj.lastKey)}. Skipping it adds about ${fmtD(Math.ceil(tj.todayMin/(left-1)/CELL)*CELL)} to each of the ${left-1} remaining day${left-1===1?'':'s'} before your target.`
-      :`<b>${esc(tj.label)}</b> hits its finish-early target today, so today's ${fmtD(tj.todayMin)} is the last planned push.`}
+  const idxOf=b=>d.blocks.indexOf(b);
+  const live=d.blocks.filter(b=>b.kind!=='buffer'&&!b.done&&b.start+b.len>plan.nowMin).sort((a,b)=>a.start-b.start);
+  const nowB=live.find(b=>b.start<=plan.nowMin&&b.kind!=='leisure');
+  const T=timerState(), tBlock=T&&T.k===k?d.blocks.find(b=>b.taskId===T.taskId&&b.start===T.start):null;
+  const nextWork=tBlock||live.find(b=>isWork(b.kind));
+  const workLeft=live.filter(b=>isWork(b.kind)).reduce((a,b)=>a+b.len,0);
+  const sessionsLeft=live.filter(b=>isWork(b.kind)).length;
+  const doneMin=d.blocks.filter(b=>b.done&&isWork(b.kind)).reduce((a,b)=>a+b.len,0);
+  const p=plan.pressure;
   const risk=plan.taskJobs.filter(j=>j.status&&(j.status[1]==='At risk'||j.status[1]==='Past due'));
   const checks=pendingCheckins();
-  // optional: get ahead
-  let optional='';
-  const capLeft=d.cap-d.focus; const slot=findSlot(d.occ,30,Math.max(d.ds,plan.nowMin),plan.soft);
-  if(capLeft>=30&&slot>=0){const cand=plan.taskJobs.filter(j=>j.unsched===0&&j.remaining>j.todayMin&&j.start<=k).sort((a,b)=>b.score-a.score)[0];
-    if(cand)optional=`<li class="item"><span class="when">${fmtT(slot)}</span><span class="dot k-study"></span><span class="what"><b>Get ahead: +30 min on ${esc(cand.label)}</b><span class="sub">${esc(cand.course)} · optional</span><div class="why">You have ${fmtD(capLeft)} of focus capacity left today. Extra time here shortens a later session.</div></span><span></span></li>`}
-  const grp=(key,title,list,extra)=>`<div class="card group"><h3>${title} <span>${list.length?fmtD(list.filter(b=>b.kind!=='leisure').reduce((a,b)=>a+b.len,0)):''}</span></h3><ul class="items">${list.map(b=>itemHtml(b,k,true)).join('')||extra||'<li class="empty">Nothing here.</li>'}</ul></div>`;
-  $('#view-today').innerHTML=`<div class="today"><div class="tcol">
-    <div class="card brief">
-      <h2>${DAYL[now.getDay()]} plan</h2>
-      <p>You have <b>${fmtD(freeLeft)}</b> of open time left before ${fmtT(plan.soft)}, after classes, gym and meals. Recommended focus for the rest of today: <b>${fmtD(plannedLeft)}</b>${tj?`. Top priority: <b>${esc(tj.label)}</b> (${esc(tj.course)})`:''}. ${gym?`Gym is protected at ${fmtT(gym.start)}.`:d.gymMissed?'Gym didn’t fit today.':''} ${fmtD(Math.max(0,freeLeft-workBeforeSoft))} stays open as buffer.</p>
-      ${impact?`<div class="impact">${impact}</div>`:''}
-      ${risk.length?`<div class="impact" style="background:var(--bad-bg);color:var(--bad)"><b>At risk:</b> ${risk.map(j=>esc(j.label)+' ('+esc(j.status[2])+')').join(' · ')}</div>`:''}
-      ${pressureHtml()}
-      <div class="stats"><div class="stat"><b>${fmtD(workToday)}</b><small>Focus today</small></div><div class="stat"><b>${fmtD(d.cap)}</b><small>Daily cap</small></div><div class="stat"><b>${doneToday.filter(b=>isWork(b.kind)).length}</b><small>Sessions logged</small></div><div class="stat"><b>${plan.taskJobs.filter(j=>j.status&&j.status[1]==='On track').length}/${plan.taskJobs.length}</b><small>Tasks on track</small></div></div>
-    </div>
-    ${checks.length?`<div class="card group"><h3>Check in <span>${checks.length}</span></h3><p class="small muted" style="margin:0 0 6px">How did these go? Anything not done moves to a later slot on its own.</p><ul class="items">${checks.map((b,i)=>`<li class="item"><span class="when">${b.date===k?'':short(b.date)+' '}${fmtT(b.start)}</span><span class="dot ${kindCls(b.kind)}"></span><span class="what"><b>${esc(b.title)}</b><span class="sub">Planned ${fmtD(b.len)}${b.sub?' · '+esc(b.sub):''}</span><div class="partial" id="pt-${i}" hidden><input type="number" min="5" step="5" id="ptv-${i}" value="${b.len}" aria-label="Minutes actually spent"><span class="small muted">min</span><button class="mini primary" data-ptsave="${i}">Save</button></div></span>
-      <span class="acts"><button class="mini primary" data-ck="${i}|done">Done</button><button class="mini" data-ck="${i}|part">Different time</button><button class="mini" data-ck="${i}|skip">Skipped</button></span></li>`).join('')}</ul></div>`:''}
-    ${grp('must','Must do',groups.must)}
-    ${grp('should','Should do',groups.should)}
-    <div class="card group"><h3>Optional</h3><ul class="items">${optional||'<li class="empty">No spare capacity today. That’s fine.</li>'}</ul></div>
-    ${grp('maint','Maintenance',groups.maint)}
-    ${doneToday.length?`<div class="card group"><h3>Done today <span>${fmtD(doneToday.reduce((a,b)=>a+b.len,0))}</span></h3><ul class="items">${doneToday.map(b=>itemHtml(b,k,false)).join('')}</ul></div>`:''}
-  </div>
-  <aside class="tcol">
-    <div class="card"><h2>Fixed today</h2>${groups.fixed.filter(b=>b.kind!=='buffer').length?`<ul class="items">${groups.fixed.filter(b=>b.kind!=='buffer').map(b=>`<li class="item" style="grid-template-columns:70px 10px minmax(0,1fr)"><span class="when">${fmtT(b.start)}</span><span class="dot ${kindCls(b.kind)}"></span><span class="what"><b>${esc(b.title)}</b><span class="sub">${fmtT(b.start)}–${fmtT(b.start+b.len)}${b.sub?' · '+esc(b.sub):''}</span></span></li>`).join('')}</ul>`:'<p class="empty">No more classes or events today.</p>'}</div>
-    <div class="card"><h2>Priority ranking <small>changes daily</small></h2><div class="rank">${rankRows(6)}</div><button class="btn" style="margin-top:10px;width:100%" data-tab="tasks">All tasks</button></div>
-    <div class="card"><h2>Coming up</h2><ul class="items">${nextDue.map(j=>`<li class="item" style="grid-template-columns:78px minmax(0,1fr) auto"><span class="when">${nice(j.t.due)}</span><span class="what"><b>${esc(j.label)}</b><span class="sub">${esc(j.course)}</span></span><span class="pill ${j.status[0]}">${j.status[1]}</span></li>`).join('')||'<li class="empty">Nothing due.</li>'}</ul></div>
+  const due=plan.taskJobs.filter(j=>j.t.due&&j.t.due>=k).sort((a,b)=>a.t.due.localeCompare(b.t.due)).slice(0,5);
+  const label=b=>b.kind==='leisure'?'Downtime':b.title;
+  const top=`<div class="hero-top"><span>${greet()} · ${DAYL[now.getDay()]}, ${MON[now.getMonth()]} ${now.getDate()}</span><span class="hero-load">This week: ${p.name}</span></div>`;
+  let hero;
+  if(nextWork){
+    const running=T&&tBlock===nextWork;
+    hero=`<div class="hero">${top}
+      ${nowB&&nowB!==nextWork?`<div class="hero-now">Now: <b>${esc(label(nowB))}</b> until ${fmtT(nowB.start+nowB.len)}</div>`:''}
+      <div class="hero-body"><div>
+        <div class="hero-label">${running?'Focus session':nextWork.start<=plan.nowMin?'Working on now':'Up next'}</div>
+        <h2>${esc(nextWork.title)}</h2>
+        <div class="hero-meta">${fmtT(nextWork.start)} · ${fmtD(nextWork.len)}${nextWork.sub?' · '+esc(nextWork.sub):''}</div>
+        <div class="hero-acts">${running
+          ?`<button class="hbtn go" data-tstop="log">✓ Done, log it</button><button class="hbtn" data-tstop="cancel">Cancel timer</button>`
+          :`<button class="hbtn go" data-tstart="${k}|${idxOf(nextWork)}">▶ Start focus</button><button class="hbtn" data-logq="${k}|${idxOf(nextWork)}">✓ Mark done</button><button class="hbtn ghost" data-open="${k}|${idxOf(nextWork)}">Why this?</button>`}</div>
+      </div>${running?timerRing():''}</div></div>`;
+  } else {
+    hero=`<div class="hero">${top}<div class="hero-label">All done for today</div><h2>No more work planned. Enjoy the evening. 🐊</h2>${nowB?`<div class="hero-meta">Now: ${esc(label(nowB))} until ${fmtT(nowB.start+nowB.len)}</div>`:''}</div>`;
+  }
+  const tiles=`<div class="tiles">
+      <div class="tile"><b>${fmtD(workLeft)}</b><span>focus left today</span></div>
+      <div class="tile"><b>${sessionsLeft}</b><span>session${sessionsLeft===1?'':'s'} left</span></div>
+      <div class="tile"><b>${fmtD(doneMin)}</b><span>done today</span></div></div>`;
+  const riskBar=risk.length?`<button class="riskbar" data-edit="${risk[0].t.id}">⚠ ${risk.length===1?`<b>${esc(risk[0].label)}</b> won't fit before it's due.`:`<b>${risk.length} tasks</b> won't fit before they're due.`} Open it to fix.</button>`:'';
+  const checkCard=checks.length?`<div class="card simple"><h3>Quick check-in</h3><p class="small muted" style="margin:0 0 4px">Did these happen? Anything not done moves to a later slot.</p><ul class="items">${checks.map((b,i)=>`<li class="row2"><span class="when">${b.date===k?'':short(b.date)+' '}${fmtT(b.start)}</span><span class="dot ${kindCls(b.kind)}"></span><span class="what"><b>${esc(b.title)}</b><div class="partial" id="pt-${i}" hidden><input type="number" min="5" step="5" id="ptv-${i}" value="${b.len}" aria-label="Minutes actually spent"><span class="small muted">min</span><button class="mini primary" data-ptsave="${i}">Save</button></div></span>
+      <span class="acts"><button class="mini primary" data-ck="${i}|done">Done</button><button class="mini" data-ck="${i}|part">Other time</button><button class="mini" data-ck="${i}|skip">Skipped</button></span></li>`).join('')}</ul></div>`:'';
+  const rows=live.filter(b=>b!==nextWork);
+  const leisure=rows.find(b=>b.kind==='leisure');
+  const list=rows.filter(b=>b.kind!=='leisure').map(b=>{const work=isWork(b.kind);
+    return `<li class="row2${work?'':' fixedrow'}"><span class="when">${fmtT(b.start)}</span><span class="dot ${kindCls(b.kind)}"></span><span class="what"><b>${esc(label(b))}</b><span class="sub">${fmtD(b.len)}${b.sub&&work?' · '+esc(b.sub):''}</span></span>
+      <span class="acts">${work?`<button class="mini primary" data-logq="${k}|${idxOf(b)}">Done</button>`:''}<button class="mini" data-open="${k}|${idxOf(b)}" aria-label="More">•••</button></span></li>`}).join('');
+  const wk=weekKeys(), maxF=Math.max(60,...wk.map(x=>(plan.days[x]||{}).cap||0));
+  const strip=`<div class="card simple"><h3>This week</h3><div class="wstrip">${wk.map(x=>{const dd=plan.days[x],dt=pkey(x),f=dd?dd.focus:0,c=dd?dd.cap:0,dues=plan.taskJobs.filter(j=>j.t.due===x).length;
+    return `<button class="wday${x===k?' on':''}" data-tab="week"><span class="wd">${DAY[dt.getDay()]}</span><span class="wbar"><i style="height:${dd?Math.min(100,Math.round(f/maxF*100)):0}%"></i></span><span class="wn">${dd?fmtD(f):'–'}</span>${dues?`<span class="wdue">${dues} due</span>`:'<span class="wdue none">·</span>'}</button>`}).join('')}</div></div>`;
+  $('#view-today').innerHTML=`<div class="today2"><div class="tmain">
+    ${hero}${tiles}${riskBar}${checkCard}
+    <div class="card simple"><h3>Rest of today</h3><ul class="items">${list||'<li class="empty">Nothing else scheduled.</li>'}${leisure?`<li class="row2 fixedrow"><span class="when">${fmtT(leisure.start)}</span><span class="dot k-leisure"></span><span class="what"><b>Downtime</b><span class="sub">No work after this</span></span><span></span></li>`:''}</ul></div>
+  </div><aside class="tside">
+    ${quickAddHtml('qa-today')}
+    <div class="card simple"><h3>Due soon</h3><ul class="items">${due.map(j=>`<li class="row2 due"><span class="when">${esc(short(j.t.due))}</span><span class="dot k-study"></span><button class="what linkish" data-edit="${j.t.id}"><b>${esc(j.label)}</b><span class="sub">${esc(j.course)}</span></button><span class="pill ${j.status[0]}">${j.status[1]}</span></li>`).join('')||'<li class="empty">Nothing due.</li>'}</ul></div>
+    ${strip}
   </aside></div>`;
   $('#view-today')._checks=checks;
+  if(T&&tBlock)tickTimer();
 }
 function rankRows(n){
   const js=plan.taskJobs.filter(j=>j.remaining>0).sort((a,b)=>b.score-a.score).slice(0,n||99);
@@ -931,7 +1081,11 @@ function renderRecruit(){
 function daysBtns(path,arr){return `<div class="days" data-days="${path}">${DAY1.map((l,i)=>`<button type="button" aria-pressed="${(arr||[]).includes(i)}" data-dow="${i}" title="${DAY[i]}">${l}</button>`).join('')}</div>`}
 function renderRoutine(){
   const S=state, st=S.settings, G=S.gym, C=S.club;
-  $('#view-routine').innerHTML=`<div class="rgrid">
+  renderRules(); const rulesHtml=$('#view-rules').innerHTML; const nSample=S.tasks.filter(t=>t.sample).length;
+  $('#view-routine').innerHTML=`<div class="mehead"><div class="card me"><h2>You</h2><div class="fields"><label class="f">Your name (for the greeting)<input type="text" id="meName" value="${esc(st.name||'')}" placeholder="Sai"></label></div>
+    <p class="help" style="margin-top:12px">Your plan is saved in this browser on this laptop. Download a backup now and then, especially before clearing browser data.</p>
+    <div class="row-btns"><button class="btn primary" data-export>Download backup</button><button class="btn" data-import>Restore a backup</button><input type="file" id="importFile" accept=".json,application/json" hidden>${nSample?`<button class="btn" data-clearsamples>Remove ${nSample} sample tasks</button>`:''}</div></div></div>
+  <div class="rgrid">
   <div class="card"><h2>Your day</h2><p class="help">Work stops at the soft end so evenings stay free. Only a deadline a day or two out can use time up to the hard end.</p>
     <div class="fields">
       <label class="f">Wake, weekdays<input type="time" data-st="wake.wk" value="${st.wake.wk}"></label><label class="f">Wake, weekends<input type="time" data-st="wake.we" value="${st.wake.we}"></label>
@@ -959,7 +1113,8 @@ function renderRoutine(){
     ${S.events.slice().map((e,i)=>({e,i})).sort((a,b)=>(a.e.date||'').localeCompare(b.e.date||'')).map(({e,i})=>`<tr><td><input type="text" data-ev="${i}|title" value="${esc(e.title)}" aria-label="Title"></td><td><select data-ev="${i}|kind" aria-label="Kind">${['exam','event','busy'].map(x=>`<option value="${x}" ${e.kind===x?'selected':''}>${x==='exam'?'Exam':x==='busy'?'Busy':'Event'}</option>`).join('')}</select></td>
       <td><input type="date" data-ev="${i}|date" value="${e.date}" aria-label="Date"></td><td><input type="time" data-ev="${i}|start" value="${e.start}" aria-label="Start"></td><td><input type="time" data-ev="${i}|end" value="${e.end}" aria-label="End"></td><td><button class="x" data-evdel="${i}" aria-label="Remove event">×</button></td></tr>`).join('')}
     </tbody></table></div><button class="btn" id="addEv" style="margin-top:10px">Add event</button></div>
-  </div>`;
+  </div>
+  <details class="card rulesbox"><summary><b>How Blockwise decides</b> <span class="muted small">the rules behind every block</span></summary>${rulesHtml}</details>`;
 }
 
 function renderRules(){
@@ -1035,6 +1190,15 @@ addEventListener('scroll',closePop,true);
 
 /* ---------- global clicks ---------- */
 document.addEventListener('click',e=>{
+  if(e.target.closest('[data-quickadd]')){openQuick();return}
+  if(e.target.closest('[data-qclose]')||e.target.id==='quick'){closeQuick();return}
+  const qg=e.target.closest('[data-qago]'); if(qg){qaAdd(qg.dataset.qago);return}
+  const qm=e.target.closest('[data-qamore]'); if(qm){qaMore(qm.dataset.qamore);return}
+  const ts=e.target.closest('[data-tstart]'); if(ts){const [k,i]=ts.dataset.tstart.split('|');startTimer(k,+i);return}
+  const tp=e.target.closest('[data-tstop]'); if(tp){stopTimer(tp.dataset.tstop==='log');return}
+  if(e.target.closest('[data-export]')){exportData();return}
+  if(e.target.closest('[data-import]')){$('#importFile').click();return}
+  if(e.target.closest('[data-clearsamples]')){const b=e.target.closest('[data-clearsamples]');if(!b.dataset.armed){b.dataset.armed='1';b.textContent='Click again to remove them';return}clearSamples();return}
   const tab=e.target.closest('[data-tab]'); if(tab){ui.tab=tab.dataset.tab;saveUi();closePop();renderAll();scrollTo(0,0);return}
   const wk=e.target.closest('[data-week]'); if(wk){ui.week=Math.max(-1,Math.min(MAXWEEK,ui.week+ +wk.dataset.week));renderAll();return}
   if(e.target.closest('[data-new]')){openEditor(null);return}
@@ -1051,7 +1215,11 @@ document.addEventListener('click',e=>{
   const ps=e.target.closest('[data-ptsave]'); if(ps){const i=+ps.dataset.ptsave,b=$('#view-today')._checks[i],m=+document.getElementById('ptv-'+i).value||0;if(b&&m>0)logWork(b,b.date,m);return}
   if(!e.target.closest('#pop'))closePop();
 });
-document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePop();if(!$('#editor').hidden)closeEditor()}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closePop();closeQuick();if(!$('#editor').hidden)closeEditor()}
+  if(e.key==='Enter'&&e.target.matches('[data-qa]')){e.preventDefault();qaAdd(e.target.id)}
+  if((e.key==='n'||e.key==='N')&&!e.metaKey&&!e.ctrlKey&&!e.target.matches('input,textarea,select')&&$('#editor').hidden){e.preventDefault();openQuick()}});
+document.addEventListener('input',e=>{if(e.target.matches('[data-qa]'))qaPreview(e.target)});
+document.addEventListener('change',e=>{if(e.target.id==='importFile'&&e.target.files[0])importData(e.target.files[0]);if(e.target.id==='meName'){state.settings.name=e.target.value.trim();commit();renderAll()}});
 
 /* ---------- recruiting + routine editing ---------- */
 function setPath(obj,path,v){const ps=path.split('.');let o=obj;for(let i=0;i<ps.length-1;i++)o=o[ps[i]];o[ps[ps.length-1]]=v}
@@ -1182,6 +1350,79 @@ Instructions:
     else out.textContent=e&&e.code==='rate_limited'?'Too many requests right now. Try again in a minute.':'Couldn’t get an estimate. Try again, or set the stages yourself.';
   }finally{btn.disabled=false}
 });
+
+/* ---------- toast ---------- */
+function toast(msg){let t=$('#toast');if(!t){t=document.createElement('div');t.id='toast';t.setAttribute('role','status');document.body.appendChild(t)}t.textContent=msg;t.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('show'),2600)}
+
+/* ---------- quick add: "sql hw due fri 2h" ---------- */
+const QA_TYPES=[[/\b(midterm|final|exam|test)\b/i,'exam'],[/\bquiz\b/i,'quiz'],[/\b(project)\b/i,'project'],[/\b(group)\b/i,'group'],[/\b(case)\b/i,'case'],[/\b(read|reading|chapter|chapters|ch\.?)\b/i,'reading'],[/\b(paper|essay|response|write-?up|report)\b/i,'assignment'],[/\b(hw|homework|assignment|lab|problem set|ps\d*)\b/i,'assignment']];
+const QA_EST={exam:300,project:300,group:240,case:150,assignment:120,quiz:60,reading:60,other:60};
+function courseList(){const set=new Map();state.classes.forEach(c=>set.set(c.code,c.title||''));state.weekly.forEach(w=>{if(w.course&&!set.has(w.course))set.set(w.course,w.title||'')});state.tasks.forEach(t=>{if(t.course&&!set.has(t.course))set.set(t.course,'')});return [...set.entries()].filter(([c])=>c&&c.trim())}
+function parseQuick(raw){
+  let s=' '+raw.trim()+' '; const out={type:'assignment',importance:2}; const today=pkey(dkey(new Date()));
+  const cut=re=>{const m=s.match(re);if(m){s=s.replace(m[0],' ');return m}return null};
+  // importance
+  if(cut(/\s(!!|urgent|important)\s/i))out.importance=4; else if(cut(/\s!\s/))out.importance=3;
+  // duration
+  let m=cut(/\s(\d+(?:\.\d+)?)\s*(h|hr|hrs|hour|hours)(?:\s*(\d+)\s*(m|min|mins))?\s/i);
+  if(m)out.estMin=Math.round(parseFloat(m[1])*60+(m[3]?+m[3]:0)); else if((m=cut(/\s(\d+)\s*(m|min|mins|minutes)\s/i)))out.estMin=+m[1];
+  // due date
+  const W=['sun','mon','tue','wed','thu','fri','sat'], MO=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+  let due=null;
+  if((m=cut(/\s(?:due\s+|by\s+|on\s+)?(today|tonight)\s/i)))due=today;
+  else if((m=cut(/\s(?:due\s+|by\s+|on\s+)?(tomorrow|tmrw|tmr)\s/i)))due=addDays(today,1);
+  else if((m=cut(/\s(?:due\s+|by\s+|on\s+)?in\s+(\d+)\s+days?\s/i)))due=addDays(today,+m[1]);
+  else if((m=cut(/\s(?:due\s+|by\s+|on\s+)?(\d{1,2})\/(\d{1,2})\s/i))){due=new Date(today.getFullYear(),+m[1]-1,+m[2]);if(due<today)due.setFullYear(due.getFullYear()+1)}
+  else if((m=cut(new RegExp('\\s(?:due\\s+|by\\s+|on\\s+)?('+MO.join('|')+')[a-z]*\\.?\\s+(\\d{1,2})\\s','i')))){due=new Date(today.getFullYear(),MO.indexOf(m[1].toLowerCase().slice(0,3)),+m[2]);if(due<today)due.setFullYear(due.getFullYear()+1)}
+  else if((m=cut(new RegExp('\\s(?:due\\s+|by\\s+|on\\s+)?(next\\s+)?('+W.join('|')+')[a-z]*\\s','i')))){const wd=W.indexOf(m[2].toLowerCase().slice(0,3));let n=(wd-today.getDay()+7)%7;if(m[1])n+=7;due=addDays(today,n)}
+  if(due)out.due=dkey(due);
+  // course
+  const cl=courseList(); let hit=null;
+  for(const [code,title] of cl){const num=(code.match(/\d{3,4}[A-Z]?/)||[''])[0], dept=(code.match(/^[A-Z]{2,4}/)||[''])[0];
+    const pats=[code.replace(/\s+/g,'\\s*'),num?'(?:[a-z]{2,4}\\s*)?'+num:null].filter(Boolean);
+    for(const pt of pats){const r=new RegExp('\\s('+pt+')\\s','i');if(r.test(s)){hit=code;s=s.replace(r,' ');break}}
+    if(hit)break;
+    if(dept&&cl.filter(c=>c[0].startsWith(dept)).length===1){const r=new RegExp('\\s('+dept+')\\s','i');if(r.test(s)){hit=code;s=s.replace(r,' ');break}}
+    const words=(title||'').toLowerCase().split(/[^a-z]+/).filter(w=>w.length>=6);
+    for(const w of words){const r=new RegExp('\\s('+w+')\\s','i');if(r.test(s)){hit=code;break}}
+    if(hit)break;}
+  if(hit)out.course=hit;
+  for(const [re,ty] of QA_TYPES){if(re.test(s)){out.type=ty;break}}
+  if(out.type==='exam'&&out.importance<4)out.importance=4;
+  out.title=s.replace(/\s(due|by|for|on)\s/gi,' ').replace(/\s+/g,' ').trim();
+  if(out.title)out.title=out.title[0].toUpperCase()+out.title.slice(1);
+  if(!out.estMin)out.estMin=QA_EST[out.type]||90;
+  return out;
+}
+function quickAddHtml(id){return `<div class="card simple qa"><h3>Add a task</h3>
+  <input type="text" id="${id}" class="qa-in" data-qa placeholder="e.g. SQL homework 4210 due fri 2h" autocomplete="off" aria-label="Quick add a task">
+  <div class="qa-prev" id="${id}-prev"><span class="muted">Type a task, a course, when it's due and how long it'll take. Press Enter.</span></div>
+  <div class="qa-row"><button class="mini primary" data-qago="${id}">Add</button><button class="mini" data-qamore="${id}">More options…</button></div></div>`}
+function qaPreview(inp){const box=document.getElementById(inp.id+'-prev');if(!box)return;const v=inp.value.trim();if(!v){box.innerHTML='<span class="muted">Type a task, a course, when it\'s due and how long it\'ll take. Press Enter.</span>';return}
+  const q=parseQuick(v);box.innerHTML=[`<b>${esc(q.title||'Untitled')}</b>`,q.course?`<span class="chip c">${esc(q.course)}</span>`:'<span class="chip warn">no course</span>',q.due?`<span class="chip">due ${esc(nice(q.due))}</span>`:'<span class="chip warn">no due date</span>',`<span class="chip">${fmtD(q.estMin)}</span>`,`<span class="chip">${esc(TYPES[q.type]||q.type)}</span>`].join(' ')}
+function qaAdd(id){const inp=document.getElementById(id);if(!inp||!inp.value.trim())return;const q=parseQuick(inp.value);const tKey=dkey(new Date());
+  if(!q.due){q.due=addK(tKey,7)}
+  const t={id:'t'+uid(),title:q.title||'Untitled',course:q.course||'',type:q.type,importance:q.importance,due:q.due,start:tKey,finishEarly:span(tKey,q.due)>=2?1:0,estMin:q.estMin,conf:'med',stages:buildStages(q.type,q.estMin),doneMin:0,notes:''};
+  state.tasks.push(t);commit();inp.value='';closeQuick();renderAll();toast('Added: '+t.title+' · due '+nice(t.due))}
+function qaMore(id){const inp=document.getElementById(id);const q=parseQuick(inp?inp.value:'');closeQuick();openEditor(null);if(q.title)F('title').value=q.title;if(q.course)F('course').value=q.course;F('type').value=q.type;if(q.due)F('due').value=q.due;F('est').value=+(q.estMin/60).toFixed(2);(document.getElementById('f-i'+q.importance)||{}).checked=true;rebuildIfUntouched()}
+function openQuick(){$('#quick').hidden=false;const i=$('#qa-modal');i.value='';qaPreview(i);setTimeout(()=>i.focus(),20)}
+function closeQuick(){const q=$('#quick');if(q)q.hidden=true}
+
+/* ---------- focus timer ---------- */
+const LST='blockwise-demo.timer';
+function timerState(){try{return JSON.parse(localStorage.getItem(LST)||'null')}catch(e){return null}}
+function startTimer(k,i){const b=plan.days[k].blocks[i];try{localStorage.setItem(LST,JSON.stringify({k,taskId:b.taskId,start:b.start,title:b.title,len:b.len,at:Date.now()}))}catch(e){}renderAll()}
+function stopTimer(log){const T=timerState();try{localStorage.removeItem(LST)}catch(e){}if(log&&T){const d=plan.days[T.k],b=d&&d.blocks.find(x=>x.taskId===T.taskId&&x.start===T.start);const min=Math.max(5,Math.round((Date.now()-T.at)/60000));if(b){logWork(b,T.k,Math.min(min,b.len*2));toast('Logged '+fmtD(Math.min(min,b.len*2))+' on '+T.title);return}}renderAll()}
+function timerRing(){return `<div class="ring"><svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" class="r-bg"/><circle cx="60" cy="60" r="52" class="r-fg" id="tmr-ring" pathLength="100" stroke-dasharray="100" stroke-dashoffset="0"/></svg><div class="r-txt"><b id="tmr-txt">--:--</b><span id="tmr-sub">left</span></div></div>`}
+function tickTimer(){const T=timerState();const tx=document.getElementById('tmr-txt');if(!T||!tx)return;const el=(Date.now()-T.at)/1000, tot=T.len*60, left=Math.max(0,tot-el);
+  tx.textContent=`${Math.floor(left/60)}:${String(Math.floor(left%60)).padStart(2,'0')}`;document.getElementById('tmr-ring').setAttribute('stroke-dashoffset',String(Math.min(100,el/tot*100)));
+  if(left<=0){document.getElementById('tmr-sub').textContent='time! log it';if(!T.rang){T.rang=true;try{localStorage.setItem(LST,JSON.stringify(T))}catch(e){}toast('Session complete. Nice work. 🐊')}}}
+setInterval(tickTimer,1000);
+
+/* ---------- your data ---------- */
+function exportData(){const blob=new Blob([JSON.stringify(state,null,1)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='blockwise-backup-'+dkey(new Date())+'.json';document.body.appendChild(a);a.click();a.remove();toast('Backup downloaded')}
+function importData(file){const r=new FileReader();r.onload=()=>{try{const d=JSON.parse(r.result);if(!hasData(d))throw 0;state=migrate(d);commit();renderAll();toast('Backup restored')}catch(e){toast("That file isn't a Blockwise backup")}};r.readAsText(file)}
+function clearSamples(){const before=state.tasks.length;state.tasks=state.tasks.filter(t=>!t.sample&&!(t.auto&&t.eventId&&(state.events.find(e=>e.id===t.eventId)||{}).sample));state.events=state.events.filter(e=>!e.sample);commit();renderAll();toast('Removed '+(before-state.tasks.length)+' sample tasks. Add your own with + Add.')}
 
 /* ---------- boot ---------- */
 renderAll();

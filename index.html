@@ -528,6 +528,94 @@ input,select,textarea{background:#0B1430;color:var(--ink);border-color:var(--lin
 .wlegend i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-2px;margin-right:6px}
 .wlegend i.k-class{background:#3D6BFF}.wlegend i.k-study{background:#FF5A1F}.wlegend i.k-exam{background:#FF7A3D}.wlegend i.k-club{background:#00D6FF}.wlegend i.k-gym{background:#3DF2A6}.wlegend i.k-prep{background:#FF69B4}.wlegend i.k-leisure{background:#A084FF}
 .wnote{margin-left:auto;color:var(--faint)}
+/* ===== v6: Tasks ===== */
+.tpage{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start}
+@media (max-width:1100px){.tpage{grid-template-columns:1fr}}
+.tmainc{display:flex;flex-direction:column;gap:14px;min-width:0}
+.phead{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.phead h1{font:700 28px var(--display);color:#fff;margin:0}
+.phead span{font:13px var(--mono);color:var(--muted)}
+.tfilters{display:flex;flex-wrap:wrap;gap:6px}
+.fchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:rgba(15,26,51,.8);color:#C9D3F2;border-radius:999px;padding:5px 12px;font:600 12.5px var(--body)}
+.fchip i{width:8px;height:8px;border-radius:50%;background:var(--cc);box-shadow:0 0 6px var(--cc)}
+.fchip:hover{border-color:rgba(61,107,255,.6)}
+.fchip.on{background:var(--gator-orange);border-color:var(--gator-orange);color:#fff;box-shadow:var(--glow-o)}
+.fchip.on i{background:#fff;box-shadow:none}
+.tgroup{display:flex;flex-direction:column;gap:6px}
+.tgroup h3{font:600 12px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#A9BFFF;margin:8px 0 2px;display:flex;align-items:center;gap:8px}
+.tgroup h3 span{font-weight:500;color:var(--muted);letter-spacing:0}
+.tgroup.od h3{color:#FF8A4C}
+.donegrp summary{list-style:none;cursor:pointer}
+.donegrp summary::-webkit-details-marker{display:none}
+.donegrp summary h3::before{content:"▸ ";color:var(--muted)}
+.donegrp[open] summary h3::before{content:"▾ "}
+.trow{background:var(--surface);border:1px solid var(--line);border-radius:12px;transition:border-color .15s}
+.trow:hover{border-color:rgba(61,107,255,.45)}
+.trow.open{border-color:rgba(61,107,255,.6);box-shadow:var(--glow-b)}
+.trow-main{display:grid;grid-template-columns:30px minmax(0,1fr) 110px 74px;gap:12px;align-items:center;padding:10px 14px}
+.tcheck{width:26px;height:26px;border-radius:50%;border:2px solid rgba(169,191,255,.45);background:transparent;color:#0A0F1E;font-weight:800;display:grid;place-items:center}
+.tcheck:hover{border-color:var(--gator-orange);box-shadow:var(--glow-o)}
+.trow.completed .tcheck{background:var(--ok);border-color:var(--ok)}
+.ttog{border:0;background:none;padding:0;text-align:left;color:inherit;display:flex;flex-direction:column;gap:3px;min-width:0;cursor:pointer}
+.tt{font:600 15px var(--body);color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trow.completed .tt{text-decoration:line-through;color:var(--muted)}
+.tmeta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12.5px;color:var(--muted);align-items:center}
+.tmeta .od{color:#FF8A4C;font-weight:700}
+.cchip{display:inline-flex;align-items:center;gap:5px;font:600 11.5px var(--mono);color:var(--cc)}
+.cchip::before{content:"";width:7px;height:7px;border-radius:2px;background:var(--cc);box-shadow:0 0 6px var(--cc)}
+.tprog{position:relative;height:6px;border-radius:3px;background:rgba(169,191,255,.10)}
+.tprog i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:linear-gradient(90deg,#3D6BFF,#6F92FF);box-shadow:0 0 8px rgba(61,107,255,.6)}
+.tprog b{position:absolute;right:0;top:-16px;font:500 10.5px var(--mono);color:var(--muted)}
+.prio{justify-self:end;font:700 10.5px var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:6px;background:rgba(142,156,198,.12);color:#C9D3F2}
+.prio.p-none{background:none}
+.prio.p-Critical{background:var(--gator-orange);color:#0A0F1E;box-shadow:var(--glow-o)}
+.prio.p-High{background:rgba(255,90,31,.18);color:#FFB28E}
+.prio.p-Medium{background:rgba(61,107,255,.18);color:#A9BFFF}
+.prio.p-Low,.prio.p-Later{background:rgba(142,156,198,.10);color:var(--muted)}
+.tdetail{border-top:1px solid var(--line);padding:12px 14px 14px 56px}
+.tstatus{margin:0 0 10px;font-size:13px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.steps{list-style:none;margin:0 0 12px;padding:0;display:flex;flex-direction:column;gap:2px}
+.steps li{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:10px;align-items:center;padding:5px 0}
+.stepck{width:20px;height:20px;border-radius:6px;border:2px solid rgba(169,191,255,.4);background:transparent;color:#0A0F1E;font:800 12px var(--body);display:grid;place-items:center}
+.stepck.ok{background:var(--gator-orange);border-color:var(--gator-orange);box-shadow:0 0 8px rgba(255,90,31,.6)}
+.steps .sdone{color:var(--muted);text-decoration:line-through}
+.smin{font:11px var(--mono);color:var(--muted)}
+.tnotes{font-size:13px;color:var(--muted);margin:0 0 12px;padding:8px 10px;border-left:2px solid var(--gator-blue);background:rgba(61,107,255,.06);border-radius:0 8px 8px 0}
+.topthree{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.topthree button{width:100%;display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:10px;align-items:center}
+.topthree .n{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:700 12px var(--mono);background:rgba(61,107,255,.2);color:#A9BFFF}
+.topthree li:first-child .n{background:var(--gator-orange);color:#0A0F1E;box-shadow:var(--glow-o)}
+.topthree .tx{display:flex;flex-direction:column;min-width:0}
+.topthree .tx b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600}
+.topthree .sub{font-size:12px;color:var(--muted)}
+.cbar{display:grid;grid-template-columns:78px minmax(0,1fr) auto;gap:10px;align-items:center;padding:6px 0;font-size:13px}
+.cn{font:600 12px var(--mono);color:#C9D3F2;white-space:nowrap}
+.cbt{height:6px;border-radius:3px;background:rgba(169,191,255,.08);overflow:hidden}
+.cbt i{display:block;height:100%;border-radius:3px}
+.cm{font:12px var(--mono);color:var(--muted)}
+.cm.warn{color:#FFC857}.cm.ok{color:var(--ok)}
+/* ===== v6: Me ===== */
+.mesum{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+.mesum div{flex:1 1 150px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;border-top:2px solid var(--gator-blue)}
+.mesum div:nth-child(even){border-top-color:var(--gator-orange)}
+.mesum b{display:block;font:600 17px var(--mono);color:#fff}
+.mesum span{font-size:12px;color:var(--muted)}
+.rgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:1000px){.rgrid{grid-template-columns:1fr}}
+.rgrid .card.wide{grid-column:1/-1}
+.tbl{overflow-x:auto}
+.tbl table{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{font:600 11px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:left;padding:8px 6px;border-bottom:1px solid var(--line)}
+.tbl td{padding:6px;border-bottom:1px solid rgba(98,132,255,.08)}
+.days{display:inline-flex;gap:3px}
+.days button{width:26px;height:26px;border-radius:7px;border:1px solid var(--line);background:rgba(15,26,51,.9);color:var(--muted);font:600 11px var(--mono)}
+.days button[aria-pressed="true"]{background:var(--gator-blue);border-color:var(--gator-blue);color:#fff;box-shadow:0 0 8px rgba(61,107,255,.5)}
+.x{border:0;background:rgba(255,93,115,.12);color:#FF8A9A;border-radius:7px;width:28px;height:28px;font-size:16px}
+.x:hover{background:rgba(255,93,115,.25)}
+.acrow{display:grid;grid-template-columns:minmax(0,1.3fr) auto 96px 96px 32px;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid rgba(98,132,255,.08)}
+@media (max-width:700px){.acrow{grid-template-columns:1fr 1fr}}
+.gymrow{grid-template-columns:40px 128px 128px minmax(0,1fr)!important;gap:8px!important}
+.gymrow input[type=time]{min-width:0}
 </style>
 
 <div class="shell">
@@ -637,7 +725,7 @@ input,select,textarea{background:#0B1430;color:var(--ink);border-color:var(--lin
   <button onclick="try{['blockwise-demo.v2','blockwise-demo.ui2','blockwise-demo.frozen2'].forEach(k=>localStorage.removeItem(k))}catch(e){};location.reload()" style="font:inherit;color:#fff;background:#FA4616;border:0;border-radius:999px;padding:3px 9px;cursor:pointer">Reset</button>
   <button onclick="this.parentNode.remove()" aria-label="Hide" style="font:inherit;color:#fff;background:transparent;border:0;cursor:pointer">✕</button>
 </div>
-<script id="seedData" type="application/json">{"v": 2, "updated": 1790000000000, "seedRev": 3, "demoBase": "2026-10-19", "settings": {"wake": {"wk": "08:30", "we": "08:30"}, "bed": {"wk": "22:00", "we": "22:00"}, "softEnd": "20:00", "hardEnd": "21:30", "classBuffer": 15, "warmup": 0, "focusCap": {"wk": 300, "we": 360}, "meals": {"lunch": {"win": ["11:30", "15:00"], "min": 30}, "dinner": {"win": ["17:00", "21:00"], "min": 40}}}, "gym": {"minutes": 60, "detail": "Afternoon workout", "pplStart": "2026-10-19", "days": {"1": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "2": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "3": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "4": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "5": {"win": ["13:45", "16:30"], "note": "Around 2pm"}}, "skips": []}, "club": {"title": "", "days": [], "start": "18:00", "end": "19:00", "overrides": {}}, "activities": [{"title": "Basketball", "days": [1, 3], "start": "18:00", "end": "20:00"}, {"title": "Pickleball", "days": [2, 4], "start": "19:00", "end": "21:00"}], "recruit": {"minutes": 0, "win": ["09:00", "20:00"], "label": ""}, "weekly": [{"id": "wbul", "title": "Online lectures + readings", "course": "BUL 4310", "minutes": 180, "block": 60, "from": "2026-08-24", "until": "2026-12-04", "assumed": true}, {"id": "wids", "title": "Films, readings + discussion posts", "course": "IDS 2935", "minutes": 150, "block": 50, "from": "2026-08-24", "until": "2026-12-04", "assumed": true}], "classes": [{"id": "c3254", "code": "ISM 3254", "title": "Business Systems I (first half)", "room": "", "days": [1, 3], "start": "09:35", "end": "11:30", "from": "2026-08-24", "until": "2026-10-16", "skip": []}, {"id": "c3255", "code": "ISM 3255", "title": "Business Systems II (second half)", "room": "", "days": [1, 3], "start": "09:35", "end": "11:30", "from": "2026-10-19", "until": "2026-12-09", "skip": ["2026-11-25"]}, {"id": "c4113", "code": "ISM 4113", "title": "Systems Analysis and Design (first half)", "room": "", "days": [1, 3], "start": "11:45", "end": "13:40", "from": "2026-08-24", "until": "2026-10-16", "skip": []}, {"id": "c4210", "code": "ISM 4210", "title": "Database Management (second half)", "room": "", "days": [1, 3], "start": "11:45", "end": "13:40", "from": "2026-10-19", "until": "2026-12-09", "skip": ["2026-11-25"]}], "events": [{"id": "e4210ex", "kind": "exam", "title": "ISM 4210 Exam 1", "date": "2026-11-04", "start": "11:45", "end": "13:40", "sample": true}, {"id": "ebulex", "kind": "exam", "title": "BUL 4310 Exam 2 (online)", "date": "2026-11-13", "start": "10:00", "end": "11:30", "sample": true}, {"id": "e3255fin", "kind": "exam", "title": "ISM 3255 Final exam", "date": "2026-12-09", "start": "09:35", "end": "11:30", "sample": true}], "pipeline": [], "tasks": [{"id": "t3255lab", "title": "Lab 2: Excel automation", "course": "ISM 3255", "type": "assignment", "importance": 2, "due": "2026-10-22", "start": "2026-10-19", "finishEarly": 0, "estMin": 90, "conf": "high", "sample": true}, {"id": "t3255proj", "title": "Business systems project: inventory tracker", "course": "ISM 3255", "type": "project", "importance": 3, "due": "2026-10-30", "start": "2026-10-20", "finishEarly": 1, "estMin": 300, "conf": "med", "stages": [{"label": "Read the brief + plan the workbook", "min": 30}, {"label": "Build the data model", "min": 90}, {"label": "Forms and automation", "min": 120}, {"label": "Test + write-up", "min": 60}], "sample": true}, {"id": "t4210er", "title": "ER diagram + normalization assignment", "course": "ISM 4210", "type": "assignment", "importance": 3, "due": "2026-10-23", "start": "2026-10-19", "finishEarly": 1, "estMin": 150, "conf": "med", "feeds": "t4210ex", "sample": true}, {"id": "t4210sql", "title": "SQL queries homework", "course": "ISM 4210", "type": "assignment", "importance": 3, "due": "2026-10-28", "start": "2026-10-22", "finishEarly": 1, "estMin": 120, "conf": "med", "feeds": "t4210ex", "sample": true}, {"id": "t4210ex", "title": "Exam 1 study", "course": "ISM 4210", "type": "exam", "importance": 4, "due": "2026-11-04", "start": "2026-10-26", "finishEarly": 1, "estMin": 360, "conf": "med", "eventId": "e4210ex", "stages": [{"label": "List topics + weak spots", "min": 30}, {"label": "ER modeling + normalization review", "min": 90}, {"label": "SQL practice: joins, grouping, subqueries", "min": 120}, {"label": "Timed practice exam", "min": 75}, {"label": "Fix weak areas", "min": 45}], "sample": true}, {"id": "t4210grp", "title": "Group project: database design", "course": "ISM 4210", "type": "group", "importance": 3, "due": "2026-11-13", "start": "2026-10-21", "finishEarly": 1, "estMin": 300, "conf": "low", "stages": [{"label": "Group: pick a business + split the work", "min": 45, "gate": true}, {"label": "Draft your tables + sample data", "min": 120}, {"label": "Group: review the schema", "min": 45, "gate": true}, {"label": "Write your queries + slides", "min": 90}], "sample": true}, {"id": "tbulquiz", "title": "Module 7 quiz", "course": "BUL 4310", "type": "quiz", "importance": 2, "due": "2026-10-24", "start": "2026-10-20", "finishEarly": 0, "estMin": 45, "conf": "high", "sample": true}, {"id": "tbulcase", "title": "Case brief: contract dispute", "course": "BUL 4310", "type": "case", "importance": 2, "due": "2026-10-31", "start": "2026-10-24", "finishEarly": 1, "estMin": 120, "conf": "med", "sample": true}, {"id": "tidspaper", "title": "Film response paper", "course": "IDS 2935", "type": "assignment", "importance": 2, "due": "2026-10-27", "start": "2026-10-21", "finishEarly": 1, "estMin": 180, "conf": "med", "stages": [{"label": "Rewatch key scenes + take notes", "min": 60}, {"label": "Outline the argument", "min": 30}, {"label": "Write the draft", "min": 60}, {"label": "Edit + cite", "min": 30}], "sample": true}], "logs": [], "skips": [], "history": []}</script>
+<script id="seedData" type="application/json">{"v": 2, "updated": 1790000000000, "seedRev": 3, "demoBase": "2026-10-19", "settings": {"wake": {"wk": "08:30", "we": "08:30"}, "bed": {"wk": "22:00", "we": "22:00"}, "softEnd": "20:00", "hardEnd": "21:30", "classBuffer": 15, "warmup": 0, "focusCap": {"wk": 300, "we": 360}, "meals": {"lunch": {"win": ["11:30", "15:00"], "min": 30}, "dinner": {"win": ["17:00", "21:00"], "min": 40}}}, "gym": {"minutes": 60, "detail": "Afternoon workout.", "pplStart": "2026-10-19", "days": {"1": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "2": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "3": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "4": {"win": ["13:45", "16:30"], "note": "Around 2pm"}, "5": {"win": ["13:45", "16:30"], "note": "Around 2pm"}}, "skips": []}, "club": {"title": "", "days": [], "start": "18:00", "end": "19:00", "overrides": {}}, "activities": [{"title": "Basketball", "days": [1, 3], "start": "18:00", "end": "20:00"}, {"title": "Pickleball", "days": [2, 4], "start": "19:00", "end": "21:00"}], "recruit": {"minutes": 0, "win": ["09:00", "20:00"], "label": ""}, "weekly": [{"id": "wbul", "title": "Online lectures + readings", "course": "BUL 4310", "minutes": 180, "block": 60, "from": "2026-08-24", "until": "2026-12-04", "assumed": true}, {"id": "wids", "title": "Films, readings + discussion posts", "course": "IDS 2935", "minutes": 150, "block": 50, "from": "2026-08-24", "until": "2026-12-04", "assumed": true}], "classes": [{"id": "c3254", "code": "ISM 3254", "title": "Business Systems I (first half)", "room": "", "days": [1, 3], "start": "09:35", "end": "11:30", "from": "2026-08-24", "until": "2026-10-16", "skip": []}, {"id": "c3255", "code": "ISM 3255", "title": "Business Systems II (second half)", "room": "", "days": [1, 3], "start": "09:35", "end": "11:30", "from": "2026-10-19", "until": "2026-12-09", "skip": ["2026-11-25"]}, {"id": "c4113", "code": "ISM 4113", "title": "Systems Analysis and Design (first half)", "room": "", "days": [1, 3], "start": "11:45", "end": "13:40", "from": "2026-08-24", "until": "2026-10-16", "skip": []}, {"id": "c4210", "code": "ISM 4210", "title": "Database Management (second half)", "room": "", "days": [1, 3], "start": "11:45", "end": "13:40", "from": "2026-10-19", "until": "2026-12-09", "skip": ["2026-11-25"]}], "events": [{"id": "e4210ex", "kind": "exam", "title": "ISM 4210 Exam 1", "date": "2026-11-04", "start": "11:45", "end": "13:40", "sample": true}, {"id": "ebulex", "kind": "exam", "title": "BUL 4310 Exam 2 (online)", "date": "2026-11-13", "start": "10:00", "end": "11:30", "sample": true}, {"id": "e3255fin", "kind": "exam", "title": "ISM 3255 Final exam", "date": "2026-12-09", "start": "09:35", "end": "11:30", "sample": true}], "pipeline": [], "tasks": [{"id": "t3255lab", "title": "Lab 2: Excel automation", "course": "ISM 3255", "type": "assignment", "importance": 2, "due": "2026-10-22", "start": "2026-10-19", "finishEarly": 0, "estMin": 90, "conf": "high", "sample": true}, {"id": "t3255proj", "title": "Business systems project: inventory tracker", "course": "ISM 3255", "type": "project", "importance": 3, "due": "2026-10-30", "start": "2026-10-20", "finishEarly": 1, "estMin": 300, "conf": "med", "stages": [{"label": "Read the brief + plan the workbook", "min": 30}, {"label": "Build the data model", "min": 90}, {"label": "Forms and automation", "min": 120}, {"label": "Test + write-up", "min": 60}], "sample": true}, {"id": "t4210er", "title": "ER diagram + normalization assignment", "course": "ISM 4210", "type": "assignment", "importance": 3, "due": "2026-10-23", "start": "2026-10-19", "finishEarly": 1, "estMin": 150, "conf": "med", "feeds": "t4210ex", "sample": true}, {"id": "t4210sql", "title": "SQL queries homework", "course": "ISM 4210", "type": "assignment", "importance": 3, "due": "2026-10-28", "start": "2026-10-22", "finishEarly": 1, "estMin": 120, "conf": "med", "feeds": "t4210ex", "sample": true}, {"id": "t4210ex", "title": "Exam 1 study", "course": "ISM 4210", "type": "exam", "importance": 4, "due": "2026-11-04", "start": "2026-10-26", "finishEarly": 1, "estMin": 360, "conf": "med", "eventId": "e4210ex", "stages": [{"label": "List topics + weak spots", "min": 30}, {"label": "ER modeling + normalization review", "min": 90}, {"label": "SQL practice: joins, grouping, subqueries", "min": 120}, {"label": "Timed practice exam", "min": 75}, {"label": "Fix weak areas", "min": 45}], "sample": true}, {"id": "t4210grp", "title": "Group project: database design", "course": "ISM 4210", "type": "group", "importance": 3, "due": "2026-11-13", "start": "2026-10-21", "finishEarly": 1, "estMin": 300, "conf": "low", "stages": [{"label": "Group: pick a business + split the work", "min": 45, "gate": true}, {"label": "Draft your tables + sample data", "min": 120}, {"label": "Group: review the schema", "min": 45, "gate": true}, {"label": "Write your queries + slides", "min": 90}], "sample": true}, {"id": "tbulquiz", "title": "Module 7 quiz", "course": "BUL 4310", "type": "quiz", "importance": 2, "due": "2026-10-24", "start": "2026-10-20", "finishEarly": 0, "estMin": 45, "conf": "high", "sample": true}, {"id": "tbulcase", "title": "Case brief: contract dispute", "course": "BUL 4310", "type": "case", "importance": 2, "due": "2026-10-31", "start": "2026-10-24", "finishEarly": 1, "estMin": 120, "conf": "med", "sample": true}, {"id": "tidspaper", "title": "Film response paper", "course": "IDS 2935", "type": "assignment", "importance": 2, "due": "2026-10-27", "start": "2026-10-21", "finishEarly": 1, "estMin": 180, "conf": "med", "stages": [{"label": "Rewatch key scenes + take notes", "min": 60}, {"label": "Outline the argument", "min": 30}, {"label": "Write the draft", "min": 60}, {"label": "Edit + cite", "min": 30}], "sample": true}], "logs": [], "skips": [], "history": []}</script>
 <script>
 (function(){
 const LS='blockwise-demo.v2', LSUI='blockwise-demo.ui2', LSF='blockwise-demo.frozen2', DOC='planner/state', CELL=15, MAXWEEK=5;
@@ -1183,36 +1271,59 @@ function renderWeek(){
     <div class="wlegend"><span><i class="k-class"></i>Class</span><span><i class="k-study"></i>Work</span><span><i class="k-exam"></i>Exam</span><span><i class="k-club"></i>Basketball / pickleball</span><span><i class="k-gym"></i>Gym</span><span><i class="k-prep"></i>Group meeting</span><span><i class="k-leisure"></i>Downtime</span><span class="wnote">Striped edge = planned by Blockwise · click any block for why</span></div>`;
 }
 
-function taskCard(t){
-  const j=jobFor(t.id), total=taskTotal(t), done=Math.min(total,t.doneMin||0), est=t.estMin||0;
-  const sa=stageAt({stages:taskStages(t),pos:done});
-  let c=0; const stg=taskStages(t).map((s,i)=>{const st=c;c+=s.min;return `<span class="${done>=c?'ok':sa&&sa.i===i?'on':''}">${esc(s.label)}${s.gate?' 👥':''}</span>`}).join('');
-  return `<div class="tcard"><div class="row">${j&&!t.completed?`<span class="chip pr-${j.priority}">${j.priority}</span>`:''}<span class="ttl">${esc(t.title)}</span>${t.assumed?'<span class="tag warn">Date assumed</span>':''}</div>
-    <div class="facts"><span>${TYPES[t.type]||'Other'}</span>${t.due?`<span>Due <b>${nice(t.due)}</b></span>`:'<span>No due date</span>'}<span>Importance <b>${IMP[t.importance]}</b></span>${t.weight?`<span>${t.weight}% of grade</span>`:''}</div>
-    <div class="facts"><span>Estimate <b>${fmtD(est)}</b>${CONF[t.conf]>1?' – '+fmtD(total):''} (${CONFL[t.conf]})</span><span>Done <b>${fmtD(done)}</b></span>${j?`<span>Planned <b>${fmtD(j.planned)}</b> in ${j.sessions}</span>`:''}${t.start&&t.start>plan.tKey?`<span>Starts ${nice(t.start)}</span>`:''}</div>
-    <div class="stages">${stg}</div>
-    ${j&&!t.completed?`<div><span class="pill ${j.status[0]}">${j.status[1]}</span> <span class="small muted">${esc(j.status[2])}</span></div>`:''}
-    ${(()=>{const out=[];const f=t.feeds&&state.tasks.find(x=>x.id===t.feeds);if(f)out.push(`Builds toward <button class="mini" data-edit="${f.id}">${esc(f.course+' '+f.title)}</button>`);
-      const fe=state.tasks.filter(x=>x.feeds===t.id);if(fe.length)out.push('Connected work: '+fe.map(x=>`<button class="mini" data-edit="${x.id}">${esc(x.title)}${x.completed?' ✓':''}</button>`).join(' '));
-      const p=t.pid&&state.pipeline.find(x=>x.id===t.pid);if(p){const ev=(p.events||[]).filter(e=>e.date>=plan.tKey).sort((a,b)=>(a.date+a.start).localeCompare(b.date+b.start));out.push('Linked to '+esc(p.company)+(ev.length?' · interview '+ev.map(e=>nice(e.date)+' '+fmtT(tm(e.start))).join(', '):''))}
-      const ev=t.eventId&&state.events.find(x=>x.id===t.eventId);if(ev)out.push('Linked to exam: '+nice(ev.date)+' '+fmtT(tm(ev.start)));
-      return out.length?`<div class="small muted" style="display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center">${out.join('<span>·</span>')}</div>`:''})()}
-    ${t.notes?`<div class="small muted">${esc(t.notes)}</div>`:''}
-    <div class="acts"><button class="btn" data-edit="${t.id}">Edit</button>${t.completed?`<button class="btn ghost" data-reopen="${t.id}">Reopen</button>`:`<button class="btn ghost" data-complete="${t.id}">Mark complete</button>`}</div></div>`;
+function relDue(k){const n=span(plan.tKey,k);return n<0?`${-n}d overdue`:n===0?'Due today':n===1?'Due tomorrow':n<7?'Due '+DAYL[pkey(k).getDay()]:`Due in ${n} days`}
+function courseColor(c){const list=[...new Set(state.classes.map(x=>x.code).concat(state.weekly.map(w=>w.course)).concat(state.tasks.map(t=>t.course)).filter(Boolean))];const pal=['#3D6BFF','#FF5A1F','#00D6FF','#3DF2A6','#FF69B4','#FFC857','#A084FF','#7FE9FF'];const i=list.indexOf(c);return pal[(i<0?list.length:i)%pal.length]}
+function trow(t){
+  const j=jobFor(t.id), total=taskTotal(t), done=Math.min(total,t.doneMin||0), pct=total?Math.round(done/total*100):0, open=ui.openTask===t.id;
+  let c=0; const steps=taskStages(t).map((s,i)=>{c+=s.min;const ok=done>=c;return `<li><button class="stepck${ok?' ok':''}" data-step="${t.id}|${i}" aria-pressed="${ok}" aria-label="${ok?'Undo':'Finish'} step: ${esc(s.label)}">${ok?'✓':''}</button><span class="${ok?'sdone':''}">${esc(s.label)}${s.gate?' <span class="muted">· group</span>':''}</span><span class="smin">${fmtD(s.min)}</span></li>`}).join('');
+  const od=t.due&&t.due<plan.tKey&&!t.completed;
+  return `<div class="trow${open?' open':''}${t.completed?' completed':''}">
+    <div class="trow-main">
+      <button class="tcheck" data-${t.completed?'reopen':'complete'}="${t.id}" aria-label="${t.completed?'Reopen':'Complete'} ${esc(t.title)}">${t.completed?'✓':''}</button>
+      <button class="ttog" data-tasktoggle="${t.id}" aria-expanded="${open}">
+        <span class="tt">${esc(t.title)}</span>
+        <span class="tmeta"><span class="cchip" style="--cc:${courseColor(t.course)}">${esc(t.course||'General')}</span>${t.due?`<span class="${od?'od':''}">${relDue(t.due)}</span>`:'<span>No due date</span>'}<span>${t.completed?fmtD(done)+' logged':fmtD(Math.max(0,total-done))+' left'}</span></span>
+      </button>
+      <span class="tprog" title="${pct}% done"><i style="width:${pct}%"></i><b>${pct}%</b></span>
+      ${j&&!t.completed?`<span class="prio p-${j.priority}">${j.priority}</span>`:'<span class="prio p-none"></span>'}
+    </div>
+    ${open?`<div class="tdetail">
+      ${j&&!t.completed?`<p class="tstatus"><span class="pill ${j.status[0]}">${j.status[1]}</span> <span class="muted">${esc(j.status[2])}</span></p>`:''}
+      <p class="small muted" style="margin:0 0 6px">Steps. Tick one when it's done and the plan adjusts.</p>
+      <ol class="steps">${steps}</ol>
+      ${t.notes?`<p class="tnotes">${esc(t.notes)}</p>`:''}
+      <div class="row-btns"><button class="btn" data-edit="${t.id}">Edit details</button>${t.completed?`<button class="btn" data-reopen="${t.id}">Reopen</button>`:`<button class="btn primary" data-complete="${t.id}">✓ Mark complete</button>`}</div>
+    </div>`:''}
+  </div>`;
 }
 function renderTasks(){
-  const open=state.tasks.filter(t=>!t.completed), by={};
-  open.forEach(t=>{(by[t.course||'Other']=by[t.course||'Other']||[]).push(t)});
-  const courses=Object.keys(by).sort((a,b)=>a==='Recruiting'?-1:b==='Recruiting'?1:a.localeCompare(b));
-  // estimate learning
-  const hist={}; state.history.forEach(h=>{if(!h.est||!h.actual)return;const key=h.course+'|'+h.type;(hist[key]=hist[key]||{n:0,e:0,a:0});hist[key].n++;hist[key].e+=h.est;hist[key].a+=h.actual});
-  const hk=Object.keys(hist);
-  const done=state.tasks.filter(t=>t.completed);
-  $('#view-tasks').innerHTML=`<div class="tasks-head"><p>Importance is how much a task matters, and you set it once. Priority is computed daily from importance, work left and days left, so a midterm three weeks out can be Medium today and Critical next week.</p><button class="btn primary" data-new>Add a task</button></div>
-    <div class="twocol"><div class="card"><h2>Priority ranking <small>recomputed every time the page opens</small></h2><div class="rank">${rankRows()}</div></div>
-    <div class="card"><h2>Estimate accuracy</h2>${hk.length?`<ul class="items">${hk.map(key=>{const h=hist[key],[c,ty]=key.split('|'),r=h.a/h.e;return `<li class="item" style="grid-template-columns:minmax(0,1fr) auto"><span class="what"><b>${esc(c)} · ${esc(TYPES[ty]||ty)}</b><span class="sub">${h.n} finished · estimated ${fmtD(h.e)}, took ${fmtD(h.a)}</span></span><span class="pill ${r>1.15?'lv-orange':r<.85?'lv-ok':'lv-done'}">${r.toFixed(2)}×</span></li>`}).join('')}</ul><p class="small muted">New tasks in these courses suggest an adjusted estimate.</p>`:'<p class="empty">When you mark tasks complete, Blockwise compares logged time to your estimate by course and type and uses it to adjust future estimates.</p>'}</div></div>
-    ${courses.map(c=>`<div class="coursegrp"><h3>${esc(c)} <small>${by[c].length} open · ${fmtD(by[c].reduce((a,t)=>a+Math.max(0,taskTotal(t)-(t.doneMin||0)),0))} left</small></h3><div class="tlist">${by[c].sort((a,b)=>(a.due||'9').localeCompare(b.due||'9')).map(taskCard).join('')}</div></div>`).join('')}
-    ${done.length?`<div class="coursegrp"><h3>Completed <small>${done.length}</small></h3><div class="tlist">${done.map(taskCard).join('')}</div></div>`:''}`;
+  const k=plan.tKey, f=ui.taskFilter||'all';
+  const allOpen=state.tasks.filter(t=>!t.completed);
+  let open=allOpen;
+  if(f==='week')open=open.filter(t=>t.due&&span(k,t.due)<=7); else if(f!=='all')open=open.filter(t=>(t.course||'General')===f);
+  const groups=[['Overdue',t=>t.due&&t.due<k],['This week',t=>t.due&&t.due>=k&&span(k,t.due)<=6],['Next week',t=>t.due&&span(k,t.due)>6&&span(k,t.due)<=13],['Later',()=>true]];
+  const used=new Set();
+  const sect=groups.map(([name,fn])=>{const ts=open.filter(t=>!used.has(t.id)&&fn(t)).sort((a,b)=>(a.due||'9').localeCompare(b.due||'9'));ts.forEach(t=>used.add(t.id));
+    return ts.length?`<section class="tgroup${name==='Overdue'?' od':''}"><h3>${name} <span>${ts.length}</span></h3>${ts.map(trow).join('')}</section>`:''}).join('');
+  const done=state.tasks.filter(t=>t.completed).sort((a,b)=>(b.due||'').localeCompare(a.due||''));
+  const courses=[...new Set(allOpen.map(t=>t.course||'General'))].sort();
+  const left=allOpen.reduce((a,t)=>a+Math.max(0,taskTotal(t)-(t.doneMin||0)),0);
+  const top=plan.taskJobs.filter(j=>j.remaining>0).sort((a,b)=>b.score-a.score).slice(0,3);
+  const byC={}; allOpen.forEach(t=>{const c=t.course||'General';byC[c]=(byC[c]||0)+Math.max(0,taskTotal(t)-(t.doneMin||0))});
+  const maxC=Math.max(60,...Object.values(byC));
+  const hist={}; state.history.forEach(h=>{if(!h.est||!h.actual)return;const key=h.course||'General';(hist[key]=hist[key]||{n:0,e:0,a:0});hist[key].n++;hist[key].e+=h.est;hist[key].a+=h.actual});
+  const chip=(v,l,col)=>`<button class="fchip${f===v?' on':''}" data-tfilter="${esc(v)}"${col?` style="--cc:${col}"`:''}>${col?'<i></i>':''}${esc(l)}</button>`;
+  $('#view-tasks').innerHTML=`<div class="tpage"><div class="tmainc">
+    <div class="phead"><h1>Tasks</h1><span>${allOpen.length} open · ${fmtD(left)} of work left</span></div>
+    ${quickAddHtml('qa-tasks')}
+    <div class="tfilters">${chip('all','All')}${chip('week','Due in 7 days')}${courses.map(c=>chip(c,c,courseColor(c))).join('')}</div>
+    ${sect||'<div class="card simple"><p class="empty">Nothing here. Add a task above, or press N anywhere.</p></div>'}
+    ${done.length?`<details class="tgroup donegrp"><summary><h3>Done <span>${done.length}</span></h3></summary>${done.map(trow).join('')}</details>`:''}
+  </div><aside class="tside">
+    <div class="card simple"><h3>Do these first</h3>${top.length?`<ol class="topthree">${top.map((j,i)=>`<li><button class="linkish" data-tasktoggle="${j.t.id}"><span class="n">${i+1}</span><span class="tx"><b>${esc(j.label)}</b><span class="sub">${esc(j.course)} · ${esc(j.status[1])}</span></span><span class="prio p-${j.priority}">${j.priority}</span></button></li>`).join('')}</ol>`:'<p class="empty">Nothing open.</p>'}</div>
+    <div class="card simple"><h3>Work left by course</h3>${Object.keys(byC).length?Object.entries(byC).sort((a,b)=>b[1]-a[1]).map(([c,m])=>`<div class="cbar"><span class="cn">${esc(c)}</span><span class="cbt"><i style="width:${Math.max(4,m/maxC*100)}%;background:${courseColor(c)};box-shadow:0 0 8px ${courseColor(c)}"></i></span><span class="cm">${fmtD(m)}</span></div>`).join(''):'<p class="empty">No open work.</p>'}</div>
+    <div class="card simple"><h3>How good are my estimates?</h3>${Object.keys(hist).length?Object.entries(hist).map(([c,h])=>{const r=h.a/h.e;return `<div class="cbar"><span class="cn">${esc(c)}</span><span class="small muted">${h.n} done</span><span class="cm ${r>1.15?'warn':r<.85?'ok':''}">${r>1.15?'+'+Math.round((r-1)*100)+'% longer':r<.85?Math.round((1-r)*100)+'% faster':'on target'}</span></div>`}).join(''):'<p class="small muted" style="margin:0">Finish a few tasks and this shows whether you tend to under- or over-estimate each course.</p>'}</div>
+  </aside></div>`;
 }
 
 function renderRecruit(){
@@ -1245,6 +1356,8 @@ function renderRoutine(){
   $('#view-routine').innerHTML=`<div class="mehead"><div class="card me"><h2>You</h2><div class="fields"><label class="f">Your name (for the greeting)<input type="text" id="meName" value="${esc(st.name||'')}" placeholder="Sai"></label></div>
     <p class="help" style="margin-top:12px">Your plan is saved in this browser on this laptop. Download a backup now and then, especially before clearing browser data.</p>
     <div class="row-btns"><button class="btn primary" data-export>Download backup</button><button class="btn" data-import>Restore a backup</button><input type="file" id="importFile" accept=".json,application/json" hidden>${nSample?`<button class="btn" data-clearsamples>Remove ${nSample} sample tasks</button>`:''}</div></div></div>
+  ${(()=>{const cl=S.classes.filter(c=>(!c.until||c.until>=plan.tKey)&&(!c.from||c.from<=addK(plan.tKey,7)));const gd=Object.keys(G.days||{}).length;const ac=(S.activities||[]);
+    return `<div class="mesum"><div><b>${cl.length} classes</b><span>${esc(cl.map(c=>c.code).join(', ')||'none this week')}</span></div><div><b>Gym ${gd}×/week</b><span>${G.minutes} min, ${esc((Object.values(G.days||{})[0]||{}).note||'')}</span></div>${ac.map(a=>`<div><b>${esc(a.title)}</b><span>${a.days.map(x=>DAY[x]).join(' + ')} · ${fmtT(tm(a.start))}–${fmtT(tm(a.end))}</span></div>`).join('')}<div><b>${fmtT(tm(st.wake.wk))} – ${fmtT(tm(st.bed.wk))}</b><span>awake · work stops ${fmtT(tm(st.softEnd))}</span></div></div>`})()}
   <div class="rgrid">
   <div class="card"><h2>Your day</h2><p class="help">Work stops at the soft end so evenings stay free. Only a deadline a day or two out can use time up to the hard end.</p>
     <div class="fields">
@@ -1257,7 +1370,9 @@ function renderRoutine(){
   <div class="card"><h2>Gym</h2><p class="help">${esc(G.detail||'')} Placed in each day's window. If the window is full it moves elsewhere that day. The push/pull/legs label rotates Mon–Fri from the start date.</p>
     <div class="fields" style="margin-bottom:10px"><label class="f">Session (min)<input type="number" step="15" min="0" data-gym="minutes" value="${G.minutes}"></label><label class="f">Rotation starts (a Push day)<input type="date" data-gym="pplStart" value="${G.pplStart||''}"></label></div>
     ${[1,2,3,4,5,6,0].map(dw=>{const g=(G.days||{})[dw];return `<div class="gymrow"><b>${DAY[dw]}</b>${g?`<input type="time" value="${g.win[0]}" data-gd="${dw}|0" aria-label="${DAY[dw]} window start"><input type="time" value="${g.win[1]}" data-gd="${dw}|1" aria-label="${DAY[dw]} window end"><span style="display:flex;gap:4px"><input type="text" value="${esc(g.note||'')}" data-gd="${dw}|note" aria-label="${DAY[dw]} note"><button class="x" data-gdel="${dw}" aria-label="No gym on ${DAY[dw]}">×</button></span>`:`<span class="small muted" style="grid-column:2/4">Rest day</span><button class="mini" data-gadd="${dw}">Add</button>`}</div>`}).join('')}</div>
-  <div class="card"><h2>Weekly activities</h2><p class="help">These happen every listed day, and work is planned around them.</p><ul class="items">${(S.activities||[]).map(a=>`<li class="item" style="grid-template-columns:120px minmax(0,1fr)"><b>${esc(a.title)}</b><span>${a.days.map(x=>DAY[x]).join(" + ")} · ${fmtT(tm(a.start))}–${fmtT(tm(a.end))}</span></li>`).join("")}</ul></div>
+  <div class="card"><h2>Weekly activities</h2><p class="help">Sports, clubs, work shifts: anything that happens on the same days every week. Work is planned around them.</p>
+    ${(S.activities||[]).map((a,i)=>`<div class="acrow"><input type="text" data-ac="${i}|title" value="${esc(a.title)}" aria-label="Activity name">${daysBtns('act:'+i,a.days)}<input type="time" data-ac="${i}|start" value="${a.start}" aria-label="Start"><input type="time" data-ac="${i}|end" value="${a.end}" aria-label="End"><button class="x" data-acdel="${i}" aria-label="Remove ${esc(a.title)}">×</button></div>`).join('')}
+    <button class="btn" id="addAc" style="margin-top:10px">Add activity</button></div>
   <div class="card"><h2>Meals + weekly goals</h2><p class="help">Meals fit into the first open slot in each window. Weekly goals are recurring work with no due date.</p>
     <div class="fields"><label class="f">Lunch from<input type="time" data-st="meals.lunch.win.0" value="${st.meals.lunch.win[0]}"></label><label class="f">Lunch until<input type="time" data-st="meals.lunch.win.1" value="${st.meals.lunch.win[1]}"></label><label class="f">Lunch (min)<input type="number" step="15" min="0" data-st="meals.lunch.min" value="${st.meals.lunch.min}"></label>
       <label class="f">Dinner from<input type="time" data-st="meals.dinner.win.0" value="${st.meals.dinner.win[0]}"></label><label class="f">Dinner until<input type="time" data-st="meals.dinner.win.1" value="${st.meals.dinner.win[1]}"></label><label class="f">Dinner (min)<input type="number" step="15" min="0" data-st="meals.dinner.min" value="${st.meals.dinner.min}"></label></div>
@@ -1360,6 +1475,9 @@ document.addEventListener('click',e=>{
   if(e.target.closest('[data-import]')){$('#importFile').click();return}
   if(e.target.closest('[data-clearsamples]')){const b=e.target.closest('[data-clearsamples]');if(!b.dataset.armed){b.dataset.armed='1';b.textContent='Click again to remove them';return}clearSamples();return}
   const tab=e.target.closest('[data-tab]'); if(tab){ui.tab=tab.dataset.tab;saveUi();closePop();renderAll();scrollTo(0,0);return}
+  const tg=e.target.closest('[data-tasktoggle]'); if(tg){const id=tg.dataset.tasktoggle;ui.openTask=ui.openTask===id?null:id;if(ui.tab!=='tasks'){ui.tab='tasks';saveUi()}renderAll();return}
+  const tf=e.target.closest('[data-tfilter]'); if(tf){ui.taskFilter=tf.dataset.tfilter;renderAll();return}
+  const sp=e.target.closest('[data-step]'); if(sp){const [id,i]=sp.dataset.step.split('|');const t=state.tasks.find(x=>x.id===id);if(t){const st=taskStages(t);let before=0;for(let x=0;x<+i;x++)before+=st[x].min;const through=before+st[+i].min;t.doneMin=(t.doneMin||0)>=through?before:through;commit();renderAll()}return}
   if(e.target.closest('[data-togglemeals]')){ui.showMeals=!ui.showMeals;renderAll();return}
   if(e.target.closest('[data-weekreset]')){ui.week=0;renderAll();return}
   const wk=e.target.closest('[data-week]'); if(wk){ui.week=Math.max(-1,Math.min(MAXWEEK,ui.week+ +wk.dataset.week));renderAll();return}
@@ -1394,6 +1512,7 @@ document.addEventListener('change',e=>{
   if((d=el.dataset.gym)!=null){S.gym[d]=el.type==='number'?Math.max(0,+el.value||0):el.value;commit();return}
   if((d=el.dataset.gd)!=null){const [dw,f]=d.split('|');const g=S.gym.days[dw];if(f==='note')g.note=el.value;else g.win[+f]=el.value;commit();return}
   if((d=el.dataset.club)!=null){S.club[d]=el.value;commit();return}
+  if((d=el.dataset.ac)!=null){const [i,f]=d.split('|');S.activities[+i][f]=el.value;commit();return}
   if((d=el.dataset.wk)!=null){const [i,f]=d.split('|');S.weekly[+i][f]=el.type==='number'?Math.max(0,+el.value||0):el.value;commit();return}
   if((d=el.dataset.cl)!=null){const [i,f]=d.split('|');S.classes[+i][f]=f==='skip'?el.value.split(/[,\s]+/).filter(x=>/^\d{4}-\d{2}-\d{2}$/.test(x)):el.value;commit();return}
   if((d=el.dataset.ev)!=null){const [i,f]=d.split('|');S.events[+i][f]=el.value;commit();return}
@@ -1401,11 +1520,13 @@ document.addEventListener('change',e=>{
 document.addEventListener('click',e=>{
   const S=state, t=e.target; let d;
   const dow=t.closest('[data-dow]'); if(dow){const host=dow.parentElement.dataset.days,i=+dow.dataset.dow;
-    const arr=host==='club'?S.club.days:S.classes[+host.split(':')[1]].days;const at=arr.indexOf(i);if(at>=0)arr.splice(at,1);else arr.push(i);dow.setAttribute('aria-pressed',at<0);commit();return}
+    const arr=host==='club'?S.club.days:host.startsWith('act:')?S.activities[+host.split(':')[1]].days:S.classes[+host.split(':')[1]].days;const at=arr.indexOf(i);if(at>=0)arr.splice(at,1);else arr.push(i);dow.setAttribute('aria-pressed',at<0);commit();return}
   if((d=t.closest('[data-gdel]'))){delete S.gym.days[d.dataset.gdel];commit();renderRoutine();return}
   if((d=t.closest('[data-gadd]'))){S.gym.days[d.dataset.gadd]={win:['16:00','19:00'],note:''};commit();renderRoutine();return}
   if((d=t.closest('[data-wkdel]'))){S.weekly.splice(+d.dataset.wkdel,1);commit();renderRoutine();return}
   if(t.id==='addWk'){S.weekly.push({id:uid(),title:'New weekly goal',course:'',minutes:60,block:30});commit();renderRoutine();return}
+  if((d=t.closest('[data-acdel]'))){S.activities.splice(+d.dataset.acdel,1);commit();renderRoutine();return}
+  if(t.id==='addAc'){(S.activities=S.activities||[]).push({title:'New activity',days:[2],start:'18:00',end:'19:00'});commit();renderRoutine();return}
   if((d=t.closest('[data-cldel]'))){S.classes.splice(+d.dataset.cldel,1);commit();renderRoutine();return}
   if(t.id==='addCl'){S.classes.push({id:uid(),code:'NEW 101',title:'',days:[1],start:'09:00',end:'10:15',from:plan.tKey,until:'',skip:[]});commit();renderRoutine();return}
   if((d=t.closest('[data-evdel]'))){S.events.splice(+d.dataset.evdel,1);commit();renderRoutine();return}

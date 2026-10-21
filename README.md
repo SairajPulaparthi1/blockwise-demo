@@ -21,7 +21,8 @@ Calendars show when things are due, not when to do them. Blockwise takes a stude
 - **Today, at a glance:** one "Up next" card with **▶ Start focus** (a countdown ring that logs the time when you finish) and **✓ Mark done**, then a one-line-per-item timeline of the rest of the day, what's due soon, and the week's load.
 - **Add a task in one line:** press **N** (or **+ Add task**) and type *"SQL homework 4210 due fri 2h"*. It picks out the course, due date, time needed and type, and shows a preview before you press Enter.
 - **Quick check-ins:** past blocks ask Done / Other time / Skipped, and anything unfinished moves to a later slot on its own.
-- **Me:** your name, classes, gym, weekly activities (basketball, pickleball), meals, sleep, a backup download and restore, and the full "how it decides" rules.
+- **Tasks, grouped by when they're due:** Overdue, This week, Next week, Later. One line each, with a round checkbox, course color, due date in plain words, a progress bar and priority. Click a task to tick off its steps, and the plan adjusts. A side panel shows what to do first and the work left per course.
+- **Me:** a one-line summary of your week, then your name, classes, gym, editable weekly activities (basketball, pickleball), meals, sleep, a backup download and restore, and the full "how it decides" rules.
 
 Four screens: **Today · Week · Tasks · Me**, in a dark, futuristic theme with University of Florida blue and orange as neon accents.
 
